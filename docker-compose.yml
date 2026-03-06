@@ -1,0 +1,189 @@
+
+services:
+  neo4j:
+    image: neo4j:5.15-community
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    environment:
+      - NEO4J_AUTH=${NEO4J_USERNAME:-neo4j}/${NEO4J_PASSWORD:-password}
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "cypher-shell", "-u", "${NEO4J_USERNAME:-neo4j}", "-p", "${NEO4J_PASSWORD:-password}", "RETURN 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "8080:8080"
+    environment:
+      - NEO4J_URI=${NEO4J_URI:-bolt://neo4j:7687}
+      - NEO4J_USERNAME=${NEO4J_USERNAME:-neo4j}
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD:-password}
+      - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
+      - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
+      - JWT_EXPIRATION_MINUTES=${JWT_EXPIRATION_MINUTES:-60}
+    volumes:
+      - ./backend/src:/app/src:ro
+      - backend_venv:/app/.venv
+    networks:
+      - app_network
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    command: uv run uvicorn src.app:app --host 0.0.0.0 --port 8080 --reload
+
+  web:
+    build:
+      context: ./frontends/web
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:8080}
+      - VITE_WS_URL=${VITE_WS_URL:-ws://localhost:8080/ws}
+    volumes:
+      - ./frontends/web/src:/app/src:ro
+      - web_node_modules:/app/node_modules
+    networks:
+      - app_network
+    depends_on:
+      - backend
+    command: npm run dev -- --host 0.0.0.0
+
+  xr:
+    build:
+      context: ./frontends/xr
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "3001:3001"
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:8080}
+      - VITE_WS_URL=${VITE_WS_URL:-ws://localhost:8080/ws}
+    volumes:
+      - ./frontends/xr/src:/app/src:ro
+      - xr_node_modules:/app/node_modules
+    networks:
+      - app_network
+    depends_on:
+      - backend
+    command: npm run dev -- --host 0.0.0.0 --port 3001
+
+  # ============================================================================
+  # Reverse Proxy (Optional - Commented Out for Development)
+  # ============================================================================
+  # Uncomment this service to enable a unified entry point for all services.
+  # When enabled, all traffic routes through nginx on port 80:
+  #   - /api/*  → backend service (REST API)
+  #   - /ws/*   → backend service (WebSocket)
+  #   - /xr/*   → xr frontend
+  #   - /       → web frontend (default)
+  #
+  # To enable:
+  #   1. Uncomment the proxy service below
+  #   2. Create nginx.conf in the project root (see example below)
+  #   3. Update frontend environment variables to use proxy URLs:
+  #      - VITE_API_URL=http://localhost/api
+  #      - VITE_WS_URL=ws://localhost/ws
+  #   4. Run: docker compose up -d
+  #
+  # Example nginx.conf:
+  # -------------------
+  # events {
+  #     worker_connections 1024;
+  # }
+  #
+  # http {
+  #     upstream backend {
+  #         server backend:8080;
+  #     }
+  #
+  #     upstream web {
+  #         server web:3000;
+  #     }
+  #
+  #     upstream xr {
+  #         server xr:3001;
+  #     }
+  #
+  #     server {
+  #         listen 80;
+  #
+  #         # Backend API routes
+  #         location /api/ {
+  #             proxy_pass http://backend/;
+  #             proxy_set_header Host $host;
+  #             proxy_set_header X-Real-IP $remote_addr;
+  #             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  #             proxy_set_header X-Forwarded-Proto $scheme;
+  #         }
+  #
+  #         # WebSocket routes with upgrade headers
+  #         location /ws/ {
+  #             proxy_pass http://backend/ws/;
+  #             proxy_http_version 1.1;
+  #             proxy_set_header Upgrade $http_upgrade;
+  #             proxy_set_header Connection "upgrade";
+  #             proxy_set_header Host $host;
+  #             proxy_set_header X-Real-IP $remote_addr;
+  #             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  #             proxy_set_header X-Forwarded-Proto $scheme;
+  #             proxy_read_timeout 86400;
+  #         }
+  #
+  #         # XR frontend routes
+  #         location /xr/ {
+  #             proxy_pass http://xr/;
+  #             proxy_set_header Host $host;
+  #             proxy_set_header X-Real-IP $remote_addr;
+  #             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  #             proxy_set_header X-Forwarded-Proto $scheme;
+  #         }
+  #
+  #         # Web frontend (default)
+  #         location / {
+  #             proxy_pass http://web/;
+  #             proxy_set_header Host $host;
+  #             proxy_set_header X-Real-IP $remote_addr;
+  #             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  #             proxy_set_header X-Forwarded-Proto $scheme;
+  #         }
+  #     }
+  # }
+  # -------------------
+  #
+  # proxy:
+  #   image: nginx:1.25-alpine
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  #   networks:
+  #     - app_network
+  #   depends_on:
+  #     - backend
+  #     - web
+  #     - xr
+  #   restart: unless-stopped
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  backend_venv:
+  web_node_modules:
+  xr_node_modules:
