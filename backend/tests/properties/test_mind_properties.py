@@ -1087,3 +1087,619 @@ class TestVersionHistoryProperties:
         expected_versions = set(range(1, total_versions + 1))
         assert paginated_version_numbers == expected_versions, \
             "Pagination should retrieve all version numbers"
+
+
+
+class TestMindDeletionProperties:
+    """Test Mind deletion service-level properties."""
+
+    # Feature: mind-based-data-model-system, Property 26: Soft Delete Status Update
+    @pytest.mark.asyncio
+    @given(mind_data=mind_creation_strategy())
+    @settings(
+        max_examples=10,
+        deadline=5000,
+        suppress_health_check=[HealthCheck.function_scoped_fixture],
+    )
+    async def test_soft_delete_status_update(self, mind_data, clean_database):
+        """
+        Property 26: Soft Delete Status Update
+
+        For any Mind node soft delete request, the system shall create a new
+        version with status set to "deleted" following all version history rules.
+
+        **Validates: Requirements 7.1, 7.2**
+        """
+        service = MindService()
+
+        # Create initial Mind node
+        result = await service.create_mind(mind_data)
+        uuid = result.uuid
+        initial_version = result.version
+        initial_status = result.status
+
+        # Verify initial status is not deleted
+        assert initial_status != StatusEnum.DELETED, "Initial status should not be deleted"
+
+        # Perform soft delete
+        delete_result = await service.delete_mind(uuid, hard_delete=False)
+        assert delete_result is True, "Soft delete should return True"
+
+        # Retrieve the latest version
+        latest = await service.get_mind(uuid)
+
+        # Verify status is now deleted
+        assert latest.status == StatusEnum.DELETED, "Status should be 'deleted' after soft delete"
+
+        # Verify version was incremented (new version created)
+        assert latest.version == initial_version + 1, \
+            "Soft delete should create a new version with incremented version number"
+
+        # Verify UUID remains the same
+        assert latest.uuid == uuid, "UUID should remain unchanged after soft delete"
+
+        # Verify version history contains both versions
+        history = await service.get_version_history(uuid)
+        assert len(history) == 2, "History should contain original and deleted versions"
+
+        # Verify the deleted version is the latest
+        assert history[0].status == StatusEnum.DELETED, "Latest version should have deleted status"
+        assert history[0].version == initial_version + 1, "Latest version should have incremented version"
+
+        # Verify the original version still exists with original status
+        assert history[1].status == initial_status, "Original version should retain original status"
+        assert history[1].version == initial_version, "Original version should retain original version number"
+
+    # Feature: mind-based-data-model-system, Property 27: Hard Delete Completeness
+    @pytest.mark.asyncio
+    @given(
+        mind_data=mind_creation_strategy(),
+        num_updates=st.integers(min_value=0, max_value=5)
+    )
+    @settings(
+        max_examples=10,
+        deadline=10000,
+        suppress_health_check=[HealthCheck.function_scoped_fixture],
+    )
+    async def test_hard_delete_completeness(self, mind_data, num_updates, clean_database):
+        """
+        Property 27: Hard Delete Completeness
+
+        For any Mind node hard delete request with confirmation, the system
+        shall remove all versions of that node and all associated PREVIOUS
+        relationships from the database.
+
+        **Validates: Requirements 7.3, 7.4**
+        """
+        from neontology import GraphConnection
+        from src.schemas.minds import MindUpdate
+
+        service = MindService()
+
+        # Create initial Mind node
+        result = await service.create_mind(mind_data)
+        uuid = result.uuid
+
+        # Perform multiple updates to create version history
+        for i in range(num_updates):
+            update_data = MindUpdate(title=f"Update {i+1}")
+            await service.update_mind(uuid, update_data)
+
+        # Verify nodes exist before deletion
+        gc = GraphConnection()
+        count_before = gc.engine.evaluate_query(
+            "MATCH (n {uuid: $uuid}) RETURN count(n) as count",
+            {"uuid": str(uuid)}
+        )
+        nodes_before = count_before.records_raw[0]["count"]
+        expected_versions = num_updates + 1
+        assert nodes_before == expected_versions, \
+            f"Should have {expected_versions} versions before deletion"
+
+        # Count PREVIOUS relationships before deletion
+        rel_count_before = gc.engine.evaluate_query(
+            "MATCH ({uuid: $uuid})-[r:PREVIOUS]->({uuid: $uuid}) RETURN count(r) as count",
+            {"uuid": str(uuid)}
+        )
+        rels_before = rel_count_before.records_raw[0]["count"]
+        expected_rels = num_updates  # One less than number of versions
+        assert rels_before == expected_rels, \
+            f"Should have {expected_rels} PREVIOUS relationships before deletion"
+
+        # Perform hard delete with confirmation
+        delete_result = await service.delete_mind(uuid, hard_delete=True)
+        assert delete_result is True, "Hard delete should return True"
+
+        # Verify all nodes with this UUID are removed
+        count_after = gc.engine.evaluate_query(
+            "MATCH (n {uuid: $uuid}) RETURN count(n) as count",
+            {"uuid": str(uuid)}
+        )
+        nodes_after = count_after.records_raw[0]["count"]
+        assert nodes_after == 0, "All versions should be removed after hard delete"
+
+        # Verify all PREVIOUS relationships are removed
+        rel_count_after = gc.engine.evaluate_query(
+            "MATCH ({uuid: $uuid})-[r:PREVIOUS]->({uuid: $uuid}) RETURN count(r) as count",
+            {"uuid": str(uuid)}
+        )
+        rels_after = rel_count_after.records_raw[0]["count"]
+        assert rels_after == 0, "All PREVIOUS relationships should be removed after hard delete"
+
+        # Verify get_mind raises MindNotFoundError
+        from src.exceptions import MindNotFoundError
+
+        with pytest.raises(MindNotFoundError):
+            await service.get_mind(uuid)
+
+        # Verify version history is empty (should raise error or return empty)
+        with pytest.raises(MindNotFoundError):
+            await service.get_version_history(uuid)
+
+    # Feature: mind-based-data-model-system, Property 28: Hard Delete Confirmation Requirement
+    @pytest.mark.asyncio
+    @given(mind_data=mind_creation_strategy())
+    @settings(
+        max_examples=10,
+        deadline=5000,
+        suppress_health_check=[HealthCheck.function_scoped_fixture],
+    )
+    async def test_hard_delete_confirmation_requirement(self, mind_data, clean_database):
+        """
+        Property 28: Hard Delete Confirmation Requirement
+
+        For any hard delete request without an explicit confirmation parameter,
+        the system shall reject the request with an error.
+
+        Note: This property is implicitly validated by the default behavior of
+        delete_mind(hard_delete=False), which performs soft delete instead of
+        hard delete. The explicit confirmation is the hard_delete=True parameter.
+
+        **Validates: Requirements 7.6**
+        """
+        from neontology import GraphConnection
+
+        service = MindService()
+
+        # Create initial Mind node
+        result = await service.create_mind(mind_data)
+        uuid = result.uuid
+
+        # Perform delete WITHOUT hard_delete confirmation (default is False)
+        delete_result = await service.delete_mind(uuid)  # hard_delete defaults to False
+        assert delete_result is True, "Delete should succeed"
+
+        # Verify node still exists (soft delete creates new version)
+        gc = GraphConnection()
+        count_after = gc.engine.evaluate_query(
+            "MATCH (n {uuid: $uuid}) RETURN count(n) as count",
+            {"uuid": str(uuid)}
+        )
+        nodes_after = count_after.records_raw[0]["count"]
+        assert nodes_after > 0, \
+            "Nodes should still exist after delete without hard_delete confirmation (soft delete)"
+
+        # Verify the node is retrievable (soft deleted)
+        latest = await service.get_mind(uuid)
+        assert latest.status == StatusEnum.DELETED, \
+            "Without hard_delete=True, delete should perform soft delete (status=deleted)"
+
+        # Verify version history exists
+        history = await service.get_version_history(uuid)
+        assert len(history) >= 2, \
+            "Version history should exist after soft delete (original + deleted version)"
+
+        # Now test that explicit hard_delete=True performs hard delete
+        # Create another node for hard delete test
+        result2 = await service.create_mind(mind_data)
+        uuid2 = result2.uuid
+
+        # Perform hard delete WITH explicit confirmation
+        delete_result2 = await service.delete_mind(uuid2, hard_delete=True)
+        assert delete_result2 is True, "Hard delete with confirmation should succeed"
+
+        # Verify node is completely removed
+        count_after2 = gc.engine.evaluate_query(
+            "MATCH (n {uuid: $uuid}) RETURN count(n) as count",
+            {"uuid": str(uuid2)}
+        )
+        nodes_after2 = count_after2.records_raw[0]["count"]
+        assert nodes_after2 == 0, \
+            "With hard_delete=True, all nodes should be completely removed"
+
+
+
+class TestRelationshipProperties:
+    """Test relationship service-level properties."""
+
+    # Feature: mind-based-data-model-system, Property 29: Relationship Endpoint Validation
+    @pytest.mark.asyncio
+    @given(
+        mind_data1=mind_creation_strategy(),
+        mind_data2=mind_creation_strategy(),
+        relationship_type=st.sampled_from([
+            "contains", "depends_on", "assigned_to", "relates_to", "implements", "mitigates"
+        ])
+    )
+    @settings(
+        max_examples=10,
+        deadline=5000,
+        suppress_health_check=[HealthCheck.function_scoped_fixture],
+    )
+    async def test_relationship_endpoint_validation(
+        self, mind_data1, mind_data2, relationship_type, clean_database
+    ):
+        """
+        Property 29: Relationship Endpoint Validation
+
+        For any relationship creation request, if either the source or target
+        UUID does not exist, the system shall reject the request with a
+        validation error.
+
+        **Validates: Requirements 8.3**
+        """
+        from uuid import uuid4
+
+        from src.exceptions import MindNotFoundError
+
+        service = MindService()
+
+        # Create only the first Mind node
+        result1 = await service.create_mind(mind_data1)
+        valid_uuid = result1.uuid
+        invalid_uuid = uuid4()  # Generate a UUID that doesn't exist in database
+
+        # Test 1: Invalid source UUID
+        with pytest.raises(MindNotFoundError):
+            await service.create_relationship(
+                source_uuid=invalid_uuid,
+                target_uuid=valid_uuid,
+                relationship_type=relationship_type
+            )
+
+        # Test 2: Invalid target UUID
+        with pytest.raises(MindNotFoundError):
+            await service.create_relationship(
+                source_uuid=valid_uuid,
+                target_uuid=invalid_uuid,
+                relationship_type=relationship_type
+            )
+
+        # Test 3: Both UUIDs invalid
+        with pytest.raises(MindNotFoundError):
+            await service.create_relationship(
+                source_uuid=invalid_uuid,
+                target_uuid=uuid4(),
+                relationship_type=relationship_type
+            )
+
+        # Test 4: Valid UUIDs should succeed
+        result2 = await service.create_mind(mind_data2)
+        valid_uuid2 = result2.uuid
+
+        # This should succeed without raising an exception
+        relationship = await service.create_relationship(
+            source_uuid=valid_uuid,
+            target_uuid=valid_uuid2,
+            relationship_type=relationship_type
+        )
+
+        assert relationship is not None, "Valid relationship creation should succeed"
+        assert relationship.source_uuid == valid_uuid
+        assert relationship.target_uuid == valid_uuid2
+        assert relationship.relationship_type == relationship_type
+
+    # Feature: mind-based-data-model-system, Property 30: Relationship Storage Integrity
+    @pytest.mark.asyncio
+    @given(
+        mind_data1=mind_creation_strategy(),
+        mind_data2=mind_creation_strategy(),
+        relationship_type=st.sampled_from([
+            "contains", "depends_on", "assigned_to", "relates_to", "implements", "mitigates"
+        ])
+    )
+    @settings(
+        max_examples=10,
+        deadline=5000,
+        suppress_health_check=[HealthCheck.function_scoped_fixture],
+    )
+    async def test_relationship_storage_integrity(
+        self, mind_data1, mind_data2, relationship_type, clean_database
+    ):
+        """
+        Property 30: Relationship Storage Integrity
+
+        For any valid relationship creation request, the system shall store the
+        relationship in Neo4j with the correct type, direction, source UUID,
+        and target UUID.
+
+        **Validates: Requirements 8.4**
+        """
+        from neontology import GraphConnection
+
+        service = MindService()
+
+        # Create two Mind nodes
+        result1 = await service.create_mind(mind_data1)
+        result2 = await service.create_mind(mind_data2)
+        source_uuid = result1.uuid
+        target_uuid = result2.uuid
+
+        # Create relationship
+        relationship = await service.create_relationship(
+            source_uuid=source_uuid,
+            target_uuid=target_uuid,
+            relationship_type=relationship_type
+        )
+
+        # Verify relationship was returned correctly
+        assert relationship.source_uuid == source_uuid, "Source UUID should match"
+        assert relationship.target_uuid == target_uuid, "Target UUID should match"
+        assert relationship.relationship_type == relationship_type, "Relationship type should match"
+        assert relationship.created_at is not None, "Created timestamp should be set"
+
+        # Verify relationship exists in Neo4j with correct properties
+        gc = GraphConnection()
+        rel_type_upper = relationship_type.upper()
+
+        verify_cypher = f"""
+        MATCH (source {{uuid: $source_uuid}})-[r:{rel_type_upper}]->(target {{uuid: $target_uuid}})
+        RETURN type(r) as rel_type, source.uuid as source_uuid,
+               target.uuid as target_uuid, r.created_at as created_at
+        """
+
+        verify_result = gc.engine.evaluate_query(
+            verify_cypher,
+            {"source_uuid": str(source_uuid), "target_uuid": str(target_uuid)}
+        )
+
+        # Verify exactly one relationship exists
+        assert verify_result is not None, "Query should return results"
+        assert len(verify_result.records_raw) == 1, "Exactly one relationship should exist"
+
+        record = verify_result.records_raw[0]
+
+        # Verify stored relationship properties
+        assert record["rel_type"] == rel_type_upper, "Stored relationship type should match"
+        assert record["source_uuid"] == str(source_uuid), "Stored source UUID should match"
+        assert record["target_uuid"] == str(target_uuid), "Stored target UUID should match"
+        assert record["created_at"] is not None, "Stored created_at should exist"
+
+        # Verify direction is correct (source -> target, not target -> source)
+        reverse_cypher = f"""
+        MATCH (target {{uuid: $target_uuid}})-[r:{rel_type_upper}]->(source {{uuid: $source_uuid}})
+        RETURN count(r) as count
+        """
+
+        reverse_result = gc.engine.evaluate_query(
+            reverse_cypher,
+            {"source_uuid": str(source_uuid), "target_uuid": str(target_uuid)}
+        )
+
+        assert reverse_result.records_raw[0]["count"] == 0, \
+            "Relationship should not exist in reverse direction"
+
+    # Feature: mind-based-data-model-system, Property 31: Relationship Query Accuracy
+    @pytest.mark.asyncio
+    @given(
+        mind_data_list=st.lists(mind_creation_strategy(), min_size=3, max_size=5),
+        relationship_types=st.lists(
+            st.sampled_from([
+                "contains", "depends_on", "assigned_to", "relates_to", "implements", "mitigates"
+            ]),
+            min_size=2,
+            max_size=4
+        )
+    )
+    @settings(
+        max_examples=10,
+        deadline=10000,
+        suppress_health_check=[HealthCheck.function_scoped_fixture],
+    )
+    async def test_relationship_query_accuracy(
+        self, mind_data_list, relationship_types, clean_database
+    ):
+        """
+        Property 31: Relationship Query Accuracy
+
+        For any query for relationships of a specific type and direction, all
+        returned relationships shall match the specified criteria.
+
+        **Validates: Requirements 8.5**
+        """
+        service = MindService()
+
+        # Create multiple Mind nodes
+        minds = []
+        for mind_data in mind_data_list:
+            result = await service.create_mind(mind_data)
+            minds.append(result)
+
+        # Create relationships between nodes with different types
+        created_relationships = []
+        for i in range(len(minds) - 1):
+            rel_type = relationship_types[i % len(relationship_types)]
+            relationship = await service.create_relationship(
+                source_uuid=minds[i].uuid,
+                target_uuid=minds[i + 1].uuid,
+                relationship_type=rel_type
+            )
+            created_relationships.append({
+                "source": minds[i].uuid,
+                "target": minds[i + 1].uuid,
+                "type": rel_type,
+                "relationship": relationship
+            })
+
+        # Test 1: Query all relationships for first node (outgoing)
+        first_node_rels = await service.get_relationships(
+            uuid=minds[0].uuid,
+            direction="outgoing"
+        )
+
+        # Verify only outgoing relationships from first node are returned
+        expected_outgoing = [r for r in created_relationships if r["source"] == minds[0].uuid]
+        assert len(first_node_rels) == len(expected_outgoing), \
+            f"Should return {len(expected_outgoing)} outgoing relationships"
+
+        for rel in first_node_rels:
+            assert rel.source_uuid == minds[0].uuid, "All relationships should have first node as source"
+
+        # Test 2: Query incoming relationships for last node
+        last_node_rels = await service.get_relationships(
+            uuid=minds[-1].uuid,
+            direction="incoming"
+        )
+
+        # Verify only incoming relationships to last node are returned
+        expected_incoming = [r for r in created_relationships if r["target"] == minds[-1].uuid]
+        assert len(last_node_rels) == len(expected_incoming), \
+            f"Should return {len(expected_incoming)} incoming relationships"
+
+        for rel in last_node_rels:
+            assert rel.target_uuid == minds[-1].uuid, "All relationships should have last node as target"
+
+        # Test 3: Query relationships filtered by type
+        if len(set(relationship_types)) > 1:
+            # Pick a specific relationship type to filter by
+            filter_type = relationship_types[0]
+
+            filtered_rels = await service.get_relationships(
+                uuid=minds[0].uuid,
+                relationship_type=filter_type,
+                direction="both"
+            )
+
+            # Verify all returned relationships match the filter type
+            for rel in filtered_rels:
+                assert rel.relationship_type == filter_type, \
+                    f"All relationships should be of type '{filter_type}'"
+
+        # Test 4: Query both directions
+        middle_node_idx = len(minds) // 2
+        both_rels = await service.get_relationships(
+            uuid=minds[middle_node_idx].uuid,
+            direction="both"
+        )
+
+        # Verify both incoming and outgoing relationships are returned
+        expected_both = [
+            r for r in created_relationships
+            if r["source"] == minds[middle_node_idx].uuid or r["target"] == minds[middle_node_idx].uuid
+        ]
+
+        assert len(both_rels) == len(expected_both), \
+            f"Should return {len(expected_both)} relationships in both directions"
+
+        # Verify each relationship involves the middle node
+        for rel in both_rels:
+            assert (rel.source_uuid == minds[middle_node_idx].uuid or
+                    rel.target_uuid == minds[middle_node_idx].uuid), \
+                "All relationships should involve the queried node"
+
+    # Feature: mind-based-data-model-system, Property 32: Relationship Uniqueness Enforcement
+    @pytest.mark.asyncio
+    @given(
+        mind_data1=mind_creation_strategy(),
+        mind_data2=mind_creation_strategy(),
+        relationship_type=st.sampled_from([
+            "contains", "depends_on", "assigned_to", "relates_to", "implements", "mitigates"
+        ])
+    )
+    @settings(
+        max_examples=10,
+        deadline=5000,
+        suppress_health_check=[HealthCheck.function_scoped_fixture],
+    )
+    async def test_relationship_uniqueness_enforcement(
+        self, mind_data1, mind_data2, relationship_type, clean_database
+    ):
+        """
+        Property 32: Relationship Uniqueness Enforcement
+
+        For any attempt to create a duplicate relationship (same source, target,
+        type, and direction), the system shall reject the request.
+
+        **Validates: Requirements 8.6**
+        """
+        from src.exceptions import MindRelationshipError
+
+        service = MindService()
+
+        # Create two Mind nodes
+        result1 = await service.create_mind(mind_data1)
+        result2 = await service.create_mind(mind_data2)
+        source_uuid = result1.uuid
+        target_uuid = result2.uuid
+
+        # Create first relationship - should succeed
+        relationship1 = await service.create_relationship(
+            source_uuid=source_uuid,
+            target_uuid=target_uuid,
+            relationship_type=relationship_type
+        )
+
+        assert relationship1 is not None, "First relationship creation should succeed"
+        assert relationship1.source_uuid == source_uuid
+        assert relationship1.target_uuid == target_uuid
+        assert relationship1.relationship_type == relationship_type
+
+        # Attempt to create duplicate relationship - should fail
+        with pytest.raises(MindRelationshipError) as exc_info:
+            await service.create_relationship(
+                source_uuid=source_uuid,
+                target_uuid=target_uuid,
+                relationship_type=relationship_type
+            )
+
+        # Verify error message mentions duplicate or already exists
+        error_message = str(exc_info.value).lower()
+        assert "already exists" in error_message or "duplicate" in error_message, \
+            "Error message should indicate duplicate relationship"
+
+        # Verify only one relationship exists in database
+        from neontology import GraphConnection
+
+        gc = GraphConnection()
+        rel_type_upper = relationship_type.upper()
+
+        count_cypher = f"""
+        MATCH (source {{uuid: $source_uuid}})-[r:{rel_type_upper}]->(target {{uuid: $target_uuid}})
+        RETURN count(r) as count
+        """
+
+        count_result = gc.engine.evaluate_query(
+            count_cypher,
+            {"source_uuid": str(source_uuid), "target_uuid": str(target_uuid)}
+        )
+
+        assert count_result.records_raw[0]["count"] == 1, \
+            "Exactly one relationship should exist (duplicate should be rejected)"
+
+        # Test that reverse direction is allowed (different relationship)
+        relationship_reverse = await service.create_relationship(
+            source_uuid=target_uuid,  # Swap source and target
+            target_uuid=source_uuid,
+            relationship_type=relationship_type
+        )
+
+        assert relationship_reverse is not None, \
+            "Reverse direction relationship should be allowed (different relationship)"
+        assert relationship_reverse.source_uuid == target_uuid
+        assert relationship_reverse.target_uuid == source_uuid
+
+        # Test that different relationship type between same nodes is allowed
+        different_types = [
+            "contains", "depends_on", "assigned_to", "relates_to", "implements", "mitigates"
+        ]
+        different_type = next(t for t in different_types if t != relationship_type)
+
+        relationship_different_type = await service.create_relationship(
+            source_uuid=source_uuid,
+            target_uuid=target_uuid,
+            relationship_type=different_type
+        )
+
+        assert relationship_different_type is not None, \
+            "Different relationship type between same nodes should be allowed"
+        assert relationship_different_type.relationship_type == different_type
