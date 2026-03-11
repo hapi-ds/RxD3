@@ -24,15 +24,13 @@ from ..models.mind_types import (
     Employee,
     Failure,
     Knowledge,
-    Milestone,
-    Phase,
-    ProcessRequirement,
     Project,
     Risk,
     Task,
-    UserNeed,
-    UserStory,
-    WorkInstructionRequirement,
+    Resource,
+    Account,
+    ScheduleHistory,
+    ScheduledTask,
 )
 from ..schemas.minds import (
     MindBulkUpdate,
@@ -58,23 +56,21 @@ class MindService:
     # Mapping of mind_type strings to their corresponding model classes
     MIND_TYPE_MAP = {
         "project": Project,
-        "phase": Phase,
         "task": Task,
-        "milestone": Milestone,
         "company": Company,
         "department": Department,
         "employee": Employee,
         "email": Email,
         "knowledge": Knowledge,
-        "user_story": UserStory,
-        "user_need": UserNeed,
         "design_input": DesignInput,
         "design_output": DesignOutput,
-        "process_requirement": ProcessRequirement,
-        "work_instruction_requirement": WorkInstructionRequirement,
         "acceptance_criteria": AcceptanceCriteria,
         "risk": Risk,
         "failure": Failure,
+        "resource": Resource,
+        "account": Account,
+        "schedulehistory": ScheduleHistory,
+        "scheduledtask": ScheduledTask,
     }
 
     async def create_mind(self, mind_data: MindCreate) -> MindResponse:

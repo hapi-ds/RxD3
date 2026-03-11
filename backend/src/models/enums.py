@@ -1,9 +1,5 @@
 """
-Enumeration types for the Mind-Based Data Model System.
-
-This module defines the enumeration types used by the base Mind model
-and derived Mind types. These enums ensure type safety and validation
-for status, priority, severity, and probability attributes.
+Enumeration types for the Mind-Based Data Model System with TaskJuggler integration.
 
 **Validates: Requirements 1.6**
 """
@@ -12,19 +8,12 @@ from enum import Enum
 
 
 class StatusEnum(str, Enum):
-    """
-    Status enumeration for all Mind nodes.
-
-    Defines the lifecycle states that any Mind node can be in.
-    Used by the base Mind model and inherited by all derived types.
-
-    **Validates: Requirements 1.6**
-    """
-
+    """Status enumeration for all Mind nodes."""
     DRAFT = "draft"
     FROZEN = "frozen"
     ACCEPTED = "accepted"
     READY = "ready"
+    ACTIVE = "active"
     DONE = "done"
     ARCHIVED = "archived"
     OBSOLET = "obsolet"
@@ -32,15 +21,7 @@ class StatusEnum(str, Enum):
 
 
 class PriorityEnum(str, Enum):
-    """
-    Priority enumeration for Task and UserNeed types.
-
-    Defines priority levels for work items and user needs.
-    Used by Task and UserNeed derived Mind types.
-
-    **Validates: Requirements 9.2**
-    """
-
+    """Priority enumeration for Task and Requirement types."""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -48,15 +29,7 @@ class PriorityEnum(str, Enum):
 
 
 class SeverityEnum(str, Enum):
-    """
-    Severity enumeration for Risk type.
-
-    Defines severity levels for risk assessment.
-    Used by Risk derived Mind type.
-
-    **Validates: Requirements 9.4**
-    """
-
+    """Severity enumeration for Risk type."""
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -64,17 +37,127 @@ class SeverityEnum(str, Enum):
 
 
 class ProbabilityEnum(str, Enum):
-    """
-    Probability enumeration for Risk type.
-
-    Defines probability levels for risk likelihood assessment.
-    Used by Risk derived Mind type.
-
-    **Validates: Requirements 9.4**
-    """
-
+    """Probability enumeration for Risk type."""
     RARE = "rare"
     UNLIKELY = "unlikely"
     POSSIBLE = "possible"
     LIKELY = "likely"
     CERTAIN = "certain"
+
+
+class ResourceType(Enum):
+    """Resource type enumeration - PERSON, GROUP, or EQUIPMENT."""
+    PERSON = "PERSON"
+    GROUP = "GROUP"
+    EQUIPMENT = "EQUIPMENT"
+
+
+class AccountType(Enum):
+    """Account type enumeration for COST or REVENUE tracking."""
+    COST = "COST"
+    REVENUE = "REVENUE"
+
+
+class TaskType(Enum):
+    """Task type enumeration - all consolidated task variants."""
+    TASK = "TASK"  # Regular work item
+    PHASE = "PHASE"  # Project phase/stage
+    MILESTONE = "MILESTONE"  # Significant checkpoint
+    WORKPACKAGE = "WORKPACKAGE"  # Collection of activities
+
+
+class RequirementType(Enum):
+    """Requirement type enumeration for all requirement variants."""
+    USER_STORY = "USER_STORY"
+    USER_NEED = "USER_NEED"
+    DESIGN_INPUT = "DESIGN_INPUT"
+    DESIGN_OUTPUT = "DESIGN_OUTPUT"
+    PROCESS_REQUIREMENT = "PROCESS_REQUIREMENT"
+    WORK_INSTRUCTION_REQUIREMENT = "WORK_INSTRUCTION_REQUIREMENT"
+
+
+
+
+class ResourceType(Enum):
+    """Resource type enumeration - PERSON, GROUP, or EQUIPMENT."""
+    PERSON = "PERSON"
+    GROUP = "GROUP"
+    EQUIPMENT = "EQUIPMENT"
+
+
+class AccountType(Enum):
+    """Account type enumeration for COST or REVENUE tracking."""
+    COST = "COST"
+    REVENUE = "REVENUE"
+
+
+class TaskType(Enum):
+    """Task type enumeration - all consolidated task variants."""
+    TASK = "TASK"
+    PHASE = "PHASE"  # Project phase/stage
+    MILESTONE = "MILESTONE"  # Significant checkpoint
+    WORKPACKAGE = "WORKPACKAGE"  # Collection of activities
+
+
+class RequirementType(Enum):
+    """Requirement type enumeration for all requirement variants."""
+    USER_STORY = "USER_STORY"
+    USER_NEED = "USER_NEED"
+    DESIGN_INPUT = "DESIGN_INPUT"
+    DESIGN_OUTPUT = "DESIGN_OUTPUT"
+    PROCESS_REQUIREMENT = "PROCESS_REQUIREMENT"
+    WORK_INSTRUCTION_REQUIREMENT = "WORK_INSTRUCTION_REQUIREMENT"
+
+
+class ResourceType(Enum):
+    """Resource type enumeration."""
+    PERSON = "PERSON"
+    GROUP = "GROUP"
+    EQUIPMENT = "EQUIPMENT"
+
+
+class AccountType(Enum):
+    """Account type enumeration for COST or REVENUE tracking."""
+    COST = "COST"
+    REVENUE = "REVENUE"
+
+
+class ResourceType(Enum):
+    """Resource type enumeration."""
+    PERSON = "PERSON"
+    GROUP = "GROUP"
+    EQUIPMENT = "EQUIPMENT"
+
+
+class AccountType(Enum):
+    """Account type enumeration for COST or REVENUE tracking."""
+    COST = "COST"
+    REVENUE = "REVENUE"
+
+
+class TaskType(Enum):
+    """Task type enumeration for all task variants."""
+    TASK = "TASK"
+    PHASE = "PHASE"
+    MILESTONE = "MILESTONE"
+    WORKPACKAGE = "WORKPACKAGE"
+
+
+class RequirementType(Enum):
+    """Requirement type enumeration for all requirement variants."""
+    USER_STORY = "USER_STORY"
+    USER_NEED = "USER_NEED"
+    DESIGN_INPUT = "DESIGN_INPUT"
+    DESIGN_OUTPUT = "DESIGN_OUTPUT"
+    PROCESS_REQUIREMENT = "PROCESS_REQUIREMENT"
+    WORK_INSTRUCTION_REQUIREMENT = "WORK_INSTRUCTION_REQUIREMENT"
+
+
+class RequirementType(Enum):
+    """Requirement type enumeration for all requirement variants."""
+    USER_STORY = "USER_STORY"
+    USER_NEED = "USER_NEED"
+    DESIGN_INPUT = "DESIGN_INPUT"
+    DESIGN_OUTPUT = "DESIGN_OUTPUT"
+    PROCESS_REQUIREMENT = "PROCESS_REQUIREMENT"
+    WORK_INSTRUCTION_REQUIREMENT = "WORK_INSTRUCTION_REQUIREMENT"

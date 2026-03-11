@@ -1,7 +1,5 @@
-"""
-Services layer for the Mind-Based Data Model System.
+# Services module
+from .mind_service import MindService
+from .scheduler_service import SchedulerService, schedule_project
 
-This package contains service classes that implement business logic for
-Mind node operations. Services handle CRUD operations, version history
-management, relationship operations, and query execution.
-"""
+__all__ = ["MindService", "SchedulerService", "schedule_project"]

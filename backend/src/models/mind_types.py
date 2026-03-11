@@ -9,12 +9,22 @@ its own specialized fields.
 **Validates: Requirements 2.1, 2.2, 2.3, 9.1, 9.2, 9.3, 9.4**
 """
 
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from typing import Optional
+from uuid import UUID
 
 from pydantic import EmailStr, Field, field_validator
 
-from .enums import PriorityEnum, ProbabilityEnum, SeverityEnum
+from .enums import (
+    PriorityEnum,
+    ProbabilityEnum,
+    SeverityEnum,
+    ResourceType,
+    AccountType,
+    TaskType,
+    StatusEnum,
+    RequirementType,
+)
 from .mind import BaseMind
 
 
@@ -58,45 +68,7 @@ class Project(BaseMind):
         return v
 
 
-class Phase(BaseMind):
-    """
-    Phase Mind type representing a stage within a project or process.
-
-    Extends BaseMind with phase-specific attributes including start/end dates
-    and sequential phase numbering.
-
-    Attributes:
-        start_date: Phase start date
-        end_date: Phase end date (must be after start_date)
-        phase_number: Sequential phase number (1-based)
-
-    **Validates: Requirements 2.1, 2.2, 2.3, 9.1**
-    """
-
-    __primarylabel__: str = "Phase"
-
-    start_date: date = Field(
-        ...,
-        description="Phase start date"
-    )
-    end_date: date = Field(
-        ...,
-        description="Phase end date"
-    )
-    phase_number: int = Field(
-        ...,
-        ge=1,
-        description="Sequential phase number"
-    )
-
-    @field_validator("end_date")
-    @classmethod
-    def validate_end_date(cls, v: date, info) -> date:
-        """Validate that end_date is after start_date."""
-        if "start_date" in info.data and v < info.data["start_date"]:
-            raise ValueError("end_date must be after start_date")
-        return v
-
+# PHASE is now handled by Task with task_type=PHASE
 
 class Task(BaseMind):
     """
@@ -129,38 +101,29 @@ class Task(BaseMind):
         default=None,
         description="Optional due date for task completion"
     )
+    priority: PriorityEnum = Field(..., description="Task priority level")
+    assignee: str = Field(
+        ...,
+        min_length=1,
+        description="User identifier of the person assigned to the task"
+    )
+    due_date: Optional[date] = Field(default=None, description="Optional due date for task completion")
     estimated_hours: Optional[float] = Field(
         default=None,
         ge=0,
         description="Optional estimated effort in hours"
     )
-
-
-class Milestone(BaseMind):
-    """
-    Milestone Mind type representing a significant project checkpoint.
-
-    Extends BaseMind with milestone-specific attributes including target date
-    and completion tracking.
-
-    Attributes:
-        target_date: Target date for milestone achievement
-        completion_percentage: Completion percentage (0-100)
-
-    **Validates: Requirements 2.1, 2.2, 2.3, 9.1**
-    """
-
-    __primarylabel__: str = "Milestone"
-
-    target_date: date = Field(
-        ...,
-        description="Target date for milestone achievement"
+    
+    # Consolidated task types (PHASE, MILESTONE, WORKPACKAGE)
+    task_type: TaskType = Field(default=TaskType.TASK, description="Type of task")
+    phase_number: Optional[int] = Field(
+        default=None, ge=1, description="Sequential phase number (when task_type=PHASE)"
     )
-    completion_percentage: float = Field(
-        ...,
-        ge=0,
-        le=100,
-        description="Completion percentage (0-100)"
+    target_date: Optional[date] = Field(
+        default=None, description="Target date for milestones (when task_type=MILESTONE)"
+    )
+    completion_percentage: Optional[float] = Field(
+        default=None, ge=0, le=100, description="Completion percentage 0-100 (when task_type=MILESTONE)"
     )
 
 
@@ -340,71 +303,6 @@ class Knowledge(BaseMind):
         description="Knowledge article content"
     )
 
-
-class UserStory(BaseMind):
-    """
-    UserStory Mind type representing a user story in agile development.
-
-    Extends BaseMind with user story-specific attributes following the
-    "As a... I want... So that..." format, plus acceptance criteria references.
-
-    Attributes:
-        as_a: User role or persona
-        i_want: Desired functionality or feature
-        so_that: Business value or benefit
-        acceptance_criteria_ids: List of acceptance criteria identifiers
-
-    **Validates: Requirements 2.1, 2.2, 2.3**
-    """
-
-    __primarylabel__: str = "UserStory"
-
-    as_a: str = Field(
-        ...,
-        min_length=1,
-        description="User role or persona"
-    )
-    i_want: str = Field(
-        ...,
-        min_length=1,
-        description="Desired functionality or feature"
-    )
-    so_that: str = Field(
-        ...,
-        min_length=1,
-        description="Business value or benefit"
-    )
-    acceptance_criteria_ids: list[str] = Field(
-        default_factory=list,
-        description="List of acceptance criteria identifiers"
-    )
-
-
-class UserNeed(BaseMind):
-    """
-    UserNeed Mind type representing a user requirement or need.
-
-    Extends BaseMind with user need-specific attributes including need
-    statement and priority level.
-
-    Attributes:
-        need_statement: Description of the user need
-        priority: Priority level (low, medium, high, critical)
-
-    **Validates: Requirements 2.1, 2.2, 2.3**
-    """
-
-    __primarylabel__: str = "UserNeed"
-
-    need_statement: str = Field(
-        ...,
-        min_length=1,
-        description="Description of the user need"
-    )
-    priority: PriorityEnum = Field(
-        ...,
-        description="Priority level"
-    )
 
 
 class DesignInput(BaseMind):
@@ -643,3 +541,102 @@ class Failure(BaseMind):
         default=None,
         description="Optional method for detecting the failure"
     )
+
+
+# ============================================================================
+# TASKJUGGLER ENHANCED TYPES - INPUT LAYER
+# ============================================================================
+
+
+class Requirement(BaseMind):
+    """Requirement Mind type representing various requirement variants."""
+    
+    __primarylabel__: str = "Requirement"
+    
+    requirement_type: RequirementType = Field(..., description="Type of requirement")
+    content: str = Field(..., min_length=1, description="Requirement content or text")
+    
+    # Optional fields
+    source: Optional[str] = Field(default=None, description="Source of requirement")
+    acceptance_criteria: Optional[str] = Field(
+        default=None, description="Acceptance criteria"
+    )
+    compliance_standard: Optional[str] = Field(
+        default=None, description="Compliance standard reference"
+    )
+    safety_critical: bool = Field(
+        default=False, description="Safety-critical flag"
+    )
+
+class Resource(BaseMind):
+    """Resource Mind type representing a human or system resource."""
+
+    __primarylabel__: str = "Resource"
+
+    email: Optional[str] = Field(
+        default=None, description="Optional email address for the resource"
+    )
+    efficiency: float = Field(
+        default=1.0, ge=0.0, le=1.0, description="Work efficiency factor (0.0-1.0)"
+    )
+    daily_rate: float = Field(default=0.0, ge=0.0, description="Daily cost rate in currency units")
+    resource_type: ResourceType = Field(
+        default=ResourceType.PERSON, description="Type of resource"
+    )
+
+
+class Account(BaseMind):
+    """Account Mind type for cost/revenue tracking."""
+
+    __primarylabel__: str = "Account"
+
+    account_type: AccountType = Field(
+        default=AccountType.COST, description="Type of account (COST or REVENUE)"
+    )
+
+
+# ============================================================================
+# TASKJUGGLER ENHANCED TYPES - SCHEDULED LAYER
+# ============================================================================
+
+
+class ScheduleHistory(BaseMind):
+    """Schedule History node for version tracking."""
+
+    __primarylabel__: str = "ScheduleHistory"
+
+    schedule_id: str = Field(..., min_length=1, description="Unique schedule identifier")
+    scheduled_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc),
+        description="Timestamp when this schedule was computed",
+    )
+    status: StatusEnum = Field(default=StatusEnum.DONE, description="Schedule status")
+    
+    total_effort: Optional[float] = Field(default=None, ge=0.0, description="Total work effort")
+    total_cost: Optional[float] = Field(default=None, ge=0.0, description="Total project cost")
+    global_start: Optional[datetime] = Field(default=None, description="First task start date")
+    global_end: Optional[datetime] = Field(default=None, description="Last task end date")
+
+
+class ScheduledTask(BaseMind):
+    """Scheduled Task node with CPM-computed values."""
+
+    __primarylabel__: str = "ScheduledTask"
+
+    source_task_uuid: UUID = Field(..., description="UUID of the source INPUT Task")
+    scheduled_start: datetime = Field(..., description="Calculated start date")
+    scheduled_end: datetime = Field(..., description="Calculated end date")
+    scheduled_duration: Optional[float] = Field(
+        default=None, ge=0.0, description="Work duration in days"
+    )
+    scheduled_length: Optional[float] = Field(
+        default=None, ge=0.0, description="Calendar length in days"
+    )
+    is_critical: bool = Field(default=False, description="On critical path?")
+    slack_start: Optional[float] = Field(default=None, description="Float before start")
+    slack_end: Optional[float] = Field(default=None, description="Float before end")
+    base_cost: Optional[float] = Field(default=None, ge=0.0, description="Base cost")
+    variable_cost: Optional[float] = Field(
+        default=None, ge=0.0, description="Variable cost (resources)"
+    )
+    total_cost: Optional[float] = Field(default=None, ge=0.0, description="Total cost")

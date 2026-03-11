@@ -9,6 +9,7 @@ ORM integration and Pydantic for attribute validation.
 """
 
 from datetime import datetime, timezone
+from typing import Optional
 from uuid import UUID, uuid4
 
 from neontology import BaseNode, BaseRelationship
@@ -43,36 +44,20 @@ class BaseMind(BaseNode):
 
     uuid: UUID = Field(
         default_factory=uuid4,
-        description="Unique identifier that remains constant across all versions"
+        description="Unique identifier that remains constant across all versions",
     )
     title: str = Field(
-        ...,
-        min_length=1,
-        max_length=200,
-        description="Human-readable name for the Mind node"
+        ..., min_length=1, max_length=200, description="Human-readable name for the Mind node"
     )
-    version: int = Field(
-        default=1,
-        ge=1,
-        description="Auto-incrementing version number"
-    )
+    version: int = Field(default=1, ge=1, description="Auto-incrementing version number")
     updated_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
-        description="Timestamp of last modification"
+        description="Timestamp of last modification",
     )
-    creator: str = Field(
-        ...,
-        min_length=1,
-        description="User identifier who created the node"
-    )
-    status: StatusEnum = Field(
-        default=StatusEnum.DRAFT,
-        description="Current lifecycle state"
-    )
+    creator: str = Field(..., min_length=1, description="User identifier who created the node")
+    status: StatusEnum = Field(default=StatusEnum.DRAFT, description="Current lifecycle state")
     description: str | None = Field(
-        default=None,
-        max_length=1000,
-        description="Optional detailed description"
+        default=None, max_length=1000, description="Optional detailed description"
     )
 
 
@@ -91,3 +76,81 @@ class Previous(BaseRelationship):
 
     source: BaseMind
     target: BaseMind
+
+
+class Scheduled(BaseRelationship):
+    """
+    Relationship linking INPUT nodes to their SCHEDULED versions.
+
+    This relationship connects input specification nodes (Task, Project) with
+    their calculated schedule state nodes (ScheduledTask, ScheduleHistory).
+    It includes version and timestamp information for proper scheduling history.
+
+    **Validates: Requirements 5.4**
+    """
+
+    __relationshiptype__: str = "SCHEDULED"
+
+    source: BaseMind
+    target: BaseMind
+    version: int = Field(..., ge=1, description="Schedule version number")
+    scheduled_at: datetime = Field(..., description="Timestamp when this schedule was computed")
+
+
+class Contains(BaseRelationship):
+    """
+    Relationship for hierarchical containment within project structure.
+
+    Used to link parent nodes (Project, Phase) to their child elements
+    (Task, Milestone, Resource).
+
+    **Validates: Requirements 8.1**
+    """
+
+    __relationshiptype__: str = "CONTAINS"
+
+    source: BaseMind
+    target: BaseMind
+    level: int = Field(..., ge=0, description="Hierarchy level in WBS")
+
+
+class Predates(BaseRelationship):
+    """
+    Relationship linking predecessor tasks to their successor tasks.
+
+    This relationship defines task dependencies using TaskJuggler's dependency
+    types. It enables the Critical Path Method scheduler to calculate proper
+    scheduling based on task interdependencies.
+
+    **Validates: Requirements 8.2**
+    """
+
+    __relationshiptype__: str = "PREDATES"
+
+    source: BaseMind
+    target: BaseMind
+    dependency_type: str = Field(
+        ..., description="Dependency type (FINISH_START, START_START, FINISH_FINISH, START_FINISH)"
+    )
+    gap_duration: Optional[float] = Field(
+        default=None, ge=0.0, description="Time gap between tasks in days"
+    )
+
+
+class AssignedTo(BaseRelationship):
+    """
+    Relationship linking resources to tasks they work on.
+
+    This relationship connects Resource nodes to Task nodes with effort
+    allocation information for resource scheduling and cost calculation.
+
+    **Validates: Requirements 8.2**
+    """
+
+    __relationshiptype__: str = "ASSIGNED_TO"
+
+    source: BaseMind
+    target: BaseMind
+    effort_allocation: float = Field(
+        ..., ge=0.0, le=1.0, description="Effort allocation as percentage (0.0-1.0)"
+    )
