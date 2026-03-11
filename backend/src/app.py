@@ -18,8 +18,8 @@ from src.routes.minds import (
     mind_error_handler,
     mind_not_found_handler,
     mind_validation_handler,
-    value_error_handler,
     rate_limit_handler,
+    value_error_handler,
 )
 from src.routes.minds import (
     router as minds_router,
@@ -88,7 +88,7 @@ Tokens expire after 40 minutes. You'll need to login again to get a fresh token.
 )
 
 # CORS middleware for multiple frontends
-app.add_middleware(CORSMiddleware)  # type: ignore[arg-type]
+app.add_middleware(CORSMiddleware)
 
 
 FORMAT = "%(levelname)s: %(asctime)-15s: %(filename)s: %(funcName)s: %(module)s: %(message)s"

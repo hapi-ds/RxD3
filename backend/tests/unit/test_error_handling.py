@@ -7,8 +7,8 @@ connection failures, internal errors, and rate limit errors.
 **Validates: Requirements 12.3, 12.4, 12.5**
 """
 
-from datetime import datetime, timezone
-from unittest.mock import AsyncMock, MagicMock, patch
+from datetime import datetime
+from unittest.mock import patch
 from uuid import uuid4
 
 import pytest
@@ -17,7 +17,6 @@ from fastapi.testclient import TestClient
 
 from src.app import app
 from src.exceptions import MindDatabaseError, MindError, RateLimitError
-from src.schemas.minds import MindCreate
 
 
 class TestDatabaseErrorHandling:

@@ -125,8 +125,7 @@ class MindService:
         node_data.update(mind_data.type_specific_attributes)
 
         # Create and save the Mind node using neontology
-        # Type ignore: Dynamic class instantiation with union type
-        mind_node = model_class(**node_data)  # type: ignore[call-arg]
+        mind_node = model_class(**node_data)
         mind_node.create()  # create() modifies the node in place and returns self
 
         # Return complete node data (Requirement 3.7)
@@ -137,7 +136,7 @@ class MindService:
             version=mind_node.version,
             updated_at=mind_node.updated_at,
             creator=mind_node.creator,
-            status=mind_node.status,  # type: ignore[arg-type]
+            status=mind_node.status,
             description=mind_node.description,
             type_specific_attributes=self._extract_type_specific_attributes(
                 mind_node, mind_data.mind_type
@@ -213,8 +212,7 @@ class MindService:
         mind_type = None
 
         for type_name, model_class in self.MIND_TYPE_MAP.items():
-            # Use neontology's match method with the primary property (uuid)
-            node = model_class.match(str(uuid))  # type: ignore[attr-defined]
+            node = model_class.match(str(uuid))
             if node is not None:
                 # Found a node, but we need the latest version
                 # If there are multiple versions, match() returns the first one found
@@ -243,10 +241,10 @@ class MindService:
 
                     # Convert Neo4j datetime/date objects to Python datetime/date
                     for key, value in node_data.items():
-                        if hasattr(value, 'to_native'):  # Neo4j DateTime/Date objects
+                        if hasattr(value, "to_native"):  # Neo4j DateTime/Date objects
                             node_data[key] = value.to_native()
 
-                    mind_node = model_class(**node_data)  # type: ignore[call-arg]
+                    mind_node = model_class(**node_data)
                     mind_type = type_name
                     break
 
@@ -262,11 +260,9 @@ class MindService:
             version=mind_node.version,
             updated_at=mind_node.updated_at,
             creator=mind_node.creator,
-            status=mind_node.status,  # type: ignore[arg-type]
+            status=mind_node.status,
             description=mind_node.description,
-            type_specific_attributes=self._extract_type_specific_attributes(
-                mind_node, mind_type
-            ),
+            type_specific_attributes=self._extract_type_specific_attributes(mind_node, mind_type),
         )
 
     async def update_mind(self, uuid: UUID, mind_data: MindUpdate) -> MindResponse:
@@ -301,7 +297,7 @@ class MindService:
             raise ValueError(f"Unsupported mind_type: {current_response.mind_type}")
 
         # Fetch the actual node object to create relationship
-        current_node = model_class.match(str(uuid))  # type: ignore[attr-defined]
+        current_node = model_class.match(str(uuid))
         if current_node is None:
             raise MindNotFoundError(str(uuid))
 
@@ -319,7 +315,9 @@ class MindService:
             "updated_at": new_updated_at,
             "creator": current_response.creator,  # Preserve creator (Requirement 5.6)
             "status": mind_data.status if mind_data.status is not None else current_response.status,
-            "description": mind_data.description if mind_data.description is not None else current_response.description,
+            "description": mind_data.description
+            if mind_data.description is not None
+            else current_response.description,
         }
 
         # Handle type-specific attributes (Requirement 5.3)
@@ -334,8 +332,7 @@ class MindService:
         node_data.update(type_specific)
 
         # Create the new Mind node version
-        # Type ignore: Dynamic class instantiation with union type
-        new_mind_node = model_class(**node_data)  # type: ignore[call-arg]
+        new_mind_node = model_class(**node_data)
         new_mind_node.create()
 
         # Create PREVIOUS relationship to prior version (Requirement 5.4)
@@ -358,13 +355,15 @@ class MindService:
             {
                 "uuid": str(current_response.uuid),
                 "new_version": new_version,
-                "old_version": current_response.version
-            }
+                "old_version": current_response.version,
+            },
         )
 
         # Verify the relationship was created
         if not result or not result.records_raw or result.records_raw[0]["rel_count"] == 0:
-            raise ValueError(f"Failed to create PREVIOUS relationship for UUID {current_response.uuid}")
+            raise ValueError(
+                f"Failed to create PREVIOUS relationship for UUID {current_response.uuid}"
+            )
 
         # Return complete node data for the new version
         return MindResponse(
@@ -374,7 +373,7 @@ class MindService:
             version=new_mind_node.version,
             updated_at=new_mind_node.updated_at,
             creator=new_mind_node.creator,
-            status=new_mind_node.status,  # type: ignore[arg-type]
+            status=new_mind_node.status,
             description=new_mind_node.description,
             type_specific_attributes=self._extract_type_specific_attributes(
                 new_mind_node, current_response.mind_type
@@ -436,12 +435,7 @@ class MindService:
         """
 
         results = gc.engine.evaluate_query(
-            cypher,
-            {
-                "uuid": str(uuid),
-                "skip": skip,
-                "limit": page_size
-            }
+            cypher, {"uuid": str(uuid), "skip": skip, "limit": page_size}
         )
 
         # Convert results to MindResponse objects
@@ -453,11 +447,11 @@ class MindService:
 
                 # Convert Neo4j datetime/date objects to Python datetime/date
                 for key, value in node_data.items():
-                    if hasattr(value, 'to_native'):  # Neo4j DateTime/Date objects
+                    if hasattr(value, "to_native"):  # Neo4j DateTime/Date objects
                         node_data[key] = value.to_native()
 
                 # Instantiate the model class
-                mind_node = model_class(**node_data)  # type: ignore[call-arg]
+                mind_node = model_class(**node_data)
 
                 # Create MindResponse with all attributes (Requirements 6.3, 6.4)
                 version_history.append(
@@ -468,7 +462,7 @@ class MindService:
                         version=mind_node.version,
                         updated_at=mind_node.updated_at,
                         creator=mind_node.creator,
-                        status=mind_node.status,  # type: ignore[arg-type]
+                        status=mind_node.status,
                         description=mind_node.description,
                         type_specific_attributes=self._extract_type_specific_attributes(
                             mind_node, latest_response.mind_type
@@ -543,7 +537,6 @@ class MindService:
             await self.update_mind(uuid, update_data)
 
             return True
-
 
     async def create_relationship(
         self, source_uuid: UUID, target_uuid: UUID, relationship_type: str
@@ -651,7 +644,11 @@ class MindService:
         )
 
         # Verify the relationship was created
-        if not create_result or not create_result.records_raw or create_result.records_raw[0]["rel_count"] == 0:
+        if (
+            not create_result
+            or not create_result.records_raw
+            or create_result.records_raw[0]["rel_count"] == 0
+        ):
             raise MindRelationshipError(
                 f"Failed to create relationship: {source_uuid} -{relationship_type}-> {target_uuid}"
             )
@@ -664,11 +661,12 @@ class MindService:
             created_at=created_at,
             properties={},
         )
+
     async def get_relationships(
         self,
         uuid: UUID,
         relationship_type: Optional[str] = None,
-        direction: str = "both",
+        direction: Optional[str] = "both",
     ) -> list:
         """
         Query relationships for a Mind node by UUID.
@@ -920,7 +918,7 @@ class MindService:
         WITH n.uuid as uuid, MAX(n.version) as max_version
         MATCH (n)
         WHERE n.uuid = uuid AND n.version = max_version
-        {where_clause.replace('WHERE', 'AND') if where_clause else ''}
+        {where_clause.replace("WHERE", "AND") if where_clause else ""}
         WITH n
         {order_clause}
         WITH collect(n) as all_nodes, count(n) as total_count
@@ -967,7 +965,7 @@ class MindService:
                     # Try each model class to see which one fits
                     for type_name, model_class in self.MIND_TYPE_MAP.items():
                         try:
-                            test_node = model_class(**node_data)  # type: ignore[call-arg]
+                            _ = model_class(**node_data)
                             mind_type = type_name
                             break
                         except Exception:
@@ -981,7 +979,7 @@ class MindService:
                 model_class = self.MIND_TYPE_MAP[mind_type]
 
                 # Instantiate the model
-                mind_node = model_class(**node_data)  # type: ignore[call-arg]
+                mind_node = model_class(**node_data)
 
                 # Create MindResponse
                 items.append(
@@ -992,7 +990,7 @@ class MindService:
                         version=mind_node.version,
                         updated_at=mind_node.updated_at,
                         creator=mind_node.creator,
-                        status=mind_node.status,  # type: ignore[arg-type]
+                        status=mind_node.status,
                         description=mind_node.description,
                         type_specific_attributes=self._extract_type_specific_attributes(
                             mind_node, mind_type
@@ -1039,10 +1037,9 @@ class MindService:
         for idx, mind_data in enumerate(minds_data):
             # Check mind_type is supported
             if mind_data.mind_type not in self.MIND_TYPE_MAP:
-                validation_errors.append({
-                    "index": idx,
-                    "error": f"Unsupported mind_type: {mind_data.mind_type}"
-                })
+                validation_errors.append(
+                    {"index": idx, "error": f"Unsupported mind_type: {mind_data.mind_type}"}
+                )
                 continue
 
             # Validate required fields are present (already done by Pydantic)
@@ -1059,19 +1056,20 @@ class MindService:
                     "description": mind_data.description,
                 }
                 test_data.update(mind_data.type_specific_attributes)
-                # Type ignore: Dynamic class instantiation
-                model_class(**test_data)  # type: ignore[call-arg]
+                model_class(**test_data)
             except Exception as e:
-                validation_errors.append({
-                    "index": idx,
-                    "error": f"Validation failed for {mind_data.mind_type}: {str(e)}"
-                })
+                validation_errors.append(
+                    {
+                        "index": idx,
+                        "error": f"Validation failed for {mind_data.mind_type}: {str(e)}",
+                    }
+                )
 
         # If any validation fails, reject entire batch (Requirement 10.2)
         if validation_errors:
-            error_details = "; ".join([
-                f"Item {err['index']}: {err['error']}" for err in validation_errors
-            ])
+            error_details = "; ".join(
+                [f"Item {err['index']}: {err['error']}" for err in validation_errors]
+            )
             raise ValueError(f"Bulk create validation failed: {error_details}")
 
         # Create all nodes if validation passes (Requirement 10.3)
@@ -1119,25 +1117,25 @@ class MindService:
                 existing_node = await self.get_mind(update_data.uuid)
                 existing_nodes[str(update_data.uuid)] = existing_node
             except MindNotFoundError:
-                validation_errors.append({
-                    "index": idx,
-                    "error": f"UUID {update_data.uuid} not found in database"
-                })
+                validation_errors.append(
+                    {"index": idx, "error": f"UUID {update_data.uuid} not found in database"}
+                )
                 continue
 
             # Validate update fields
             # Check that at least one field is being updated
-            has_update = any([
-                update_data.title is not None,
-                update_data.description is not None,
-                update_data.status is not None,
-                update_data.type_specific_attributes is not None
-            ])
+            has_update = any(
+                [
+                    update_data.title is not None,
+                    update_data.description is not None,
+                    update_data.status is not None,
+                    update_data.type_specific_attributes is not None,
+                ]
+            )
             if not has_update:
-                validation_errors.append({
-                    "index": idx,
-                    "error": f"No fields to update for UUID {update_data.uuid}"
-                })
+                validation_errors.append(
+                    {"index": idx, "error": f"No fields to update for UUID {update_data.uuid}"}
+                )
                 continue
 
             # Validate type-specific attributes if provided
@@ -1145,10 +1143,9 @@ class MindService:
                 existing_node = existing_nodes[str(update_data.uuid)]
                 model_class = self.MIND_TYPE_MAP.get(existing_node.mind_type)
                 if model_class is None:
-                    validation_errors.append({
-                        "index": idx,
-                        "error": f"Unsupported mind_type: {existing_node.mind_type}"
-                    })
+                    validation_errors.append(
+                        {"index": idx, "error": f"Unsupported mind_type: {existing_node.mind_type}"}
+                    )
                     continue
 
                 try:
@@ -1158,27 +1155,31 @@ class MindService:
 
                     test_data = {
                         "uuid": existing_node.uuid,
-                        "title": update_data.title if update_data.title is not None else existing_node.title,
+                        "title": update_data.title
+                        if update_data.title is not None
+                        else existing_node.title,
                         "version": existing_node.version + 1,
                         "updated_at": datetime.now(timezone.utc),
                         "creator": existing_node.creator,
-                        "status": update_data.status if update_data.status is not None else existing_node.status,
-                        "description": update_data.description if update_data.description is not None else existing_node.description,
+                        "status": update_data.status
+                        if update_data.status is not None
+                        else existing_node.status,
+                        "description": update_data.description
+                        if update_data.description is not None
+                        else existing_node.description,
                     }
                     test_data.update(merged_attrs)
-                    # Type ignore: Dynamic class instantiation
-                    model_class(**test_data)  # type: ignore[call-arg]
+                    model_class(**test_data)
                 except Exception as e:
-                    validation_errors.append({
-                        "index": idx,
-                        "error": f"Validation failed for update: {str(e)}"
-                    })
+                    validation_errors.append(
+                        {"index": idx, "error": f"Validation failed for update: {str(e)}"}
+                    )
 
         # If any validation fails, reject entire batch (Requirement 10.2)
         if validation_errors:
-            error_details = "; ".join([
-                f"Item {err['index']}: {err['error']}" for err in validation_errors
-            ])
+            error_details = "; ".join(
+                [f"Item {err['index']}: {err['error']}" for err in validation_errors]
+            )
             raise ValueError(f"Bulk update validation failed: {error_details}")
 
         # Update all nodes if validation passes (Requirement 10.3)
@@ -1189,7 +1190,7 @@ class MindService:
                 title=update_data.title,
                 description=update_data.description,
                 status=update_data.status,
-                type_specific_attributes=update_data.type_specific_attributes
+                type_specific_attributes=update_data.type_specific_attributes,
             )
             # Use existing update_mind method for consistency and version tracking
             updated_node = await self.update_mind(update_data.uuid, mind_update)

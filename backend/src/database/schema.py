@@ -12,17 +12,17 @@ from neo4j import Driver
 def create_mind_schema(driver: Optional[Driver] = None) -> None:
     """Create Neo4j indexes and constraints for Mind nodes.
 
-    Args:
-        driver: Neo4j driver instance. If None, will get from neontology.
+        Args:
+            driver: Neo4j driver instance. If None, will get from neontology.
 
-    Creates:
-    - Index on Mind.uuid for fast lookups (NOT unique to support version history)
+        Creates:
+        - Index on Mind.uuid for fast lookups (NOT unique to support version history)
     - Index on Mind.status for filtering
-    - Index on Mind.creator for filtering
-    - Index on Mind.updated_at for sorting and range queries
-    
-    Note: UUID is not unique because version history requires multiple nodes
-    with the same UUID (different versions). Each node has a unique Neo4j internal ID.
+         - Index on Mind.creator for filtering
+         - Index on Mind.updated_at for sorting and range queries
+
+         Note: UUID is not unique because version history requires multiple nodes
+        with the same UUID (different versions). Each node has a unique Neo4j internal ID.
     """
     if driver is None:
         from neontology import Neo4jConfig, init_neontology

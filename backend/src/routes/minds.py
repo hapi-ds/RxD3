@@ -5,7 +5,7 @@ This module defines all REST API endpoints for Mind node operations including
 CRUD operations, version history, relationships, bulk operations, and queries.
 It also implements global error handlers for consistent error responses.
 
-**Validates: Requirements 3.1, 3.7, 4.1-4.5, 5.1-5.8, 6.1-6.6, 7.1-7.6, 
+**Validates: Requirements 3.1, 3.7, 4.1-4.5, 5.1-5.8, 6.1-6.6, 7.1-7.6,
 8.1-8.6, 10.1-10.5, 11.1-11.7, 12.1-12.6**
 """
 
@@ -24,6 +24,7 @@ from ..exceptions import (
     MindValidationError,
     RateLimitError,
 )
+from ..models.enums import StatusEnum
 from ..schemas.minds import (
     ErrorResponse,
     MindBulkUpdate,
@@ -61,36 +62,48 @@ def create_error_response(
     )
 
 
-
 # Exception Handlers
 async def mind_not_found_handler(request: Request, exc: MindNotFoundError) -> JSONResponse:
     """Handle MindNotFoundError exceptions (HTTP 404)."""
     request_id = generate_request_id()
     error_response = create_error_response(
-        request_id=request_id, error_type="NotFoundError", message=str(exc), details={"uuid": exc.uuid}
+        request_id=request_id,
+        error_type="NotFoundError",
+        message=str(exc),
+        details={"uuid": exc.uuid},
     )
-    return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content=error_response.model_dump(mode="json"))
+    return JSONResponse(
+        status_code=status.HTTP_404_NOT_FOUND, content=error_response.model_dump(mode="json")
+    )
 
 
 async def mind_validation_handler(request: Request, exc: MindValidationError) -> JSONResponse:
     """Handle MindValidationError exceptions (HTTP 400)."""
     request_id = generate_request_id()
     error_response = create_error_response(
-        request_id=request_id, error_type="ValidationError", message=str(exc), details={"error": str(exc)}
+        request_id=request_id,
+        error_type="ValidationError",
+        message=str(exc),
+        details={"error": str(exc)},
     )
-    return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=error_response.model_dump(mode="json"))
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST, content=error_response.model_dump(mode="json")
+    )
 
 
 async def mind_database_handler(request: Request, exc: MindDatabaseError) -> JSONResponse:
     """Handle MindDatabaseError exceptions (HTTP 503)."""
     request_id = generate_request_id()
     error_response = create_error_response(
-        request_id=request_id, error_type="DatabaseError", message="Database operation failed",
-        details={"retry_after": 30, "error": str(exc)}
+        request_id=request_id,
+        error_type="DatabaseError",
+        message="Database operation failed",
+        details={"retry_after": 30, "error": str(exc)},
     )
     return JSONResponse(
-        status_code=status.HTTP_503_SERVICE_UNAVAILABLE, content=error_response.model_dump(mode="json"),
-        headers={"Retry-After": "30"}
+        status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+        content=error_response.model_dump(mode="json"),
+        headers={"Retry-After": "30"},
     )
 
 
@@ -98,28 +111,44 @@ async def mind_error_handler(request: Request, exc: MindError) -> JSONResponse:
     """Handle generic MindError exceptions (HTTP 500)."""
     request_id = generate_request_id()
     error_response = create_error_response(
-        request_id=request_id, error_type="InternalError", message="An unexpected error occurred",
-        details={"error": str(exc)}
+        request_id=request_id,
+        error_type="InternalError",
+        message="An unexpected error occurred",
+        details={"error": str(exc)},
     )
-    return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=error_response.model_dump(mode="json"))
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content=error_response.model_dump(mode="json"),
+    )
 
 
 async def value_error_handler(request: Request, exc: ValueError) -> JSONResponse:
     """Handle ValueError exceptions (HTTP 400)."""
     request_id = generate_request_id()
     error_response = create_error_response(
-        request_id=request_id, error_type="ValidationError", message="Invalid input data", details={"error": str(exc)}
+        request_id=request_id,
+        error_type="ValidationError",
+        message="Invalid input data",
+        details={"error": str(exc)},
     )
-    return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=error_response.model_dump(mode="json"))
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST, content=error_response.model_dump(mode="json")
+    )
 
 
 async def generic_exception_handler(request: Request, exc: Exception) -> JSONResponse:
     """Handle all other exceptions (HTTP 500)."""
     request_id = generate_request_id()
     error_response = create_error_response(
-        request_id=request_id, error_type="InternalError", message="An unexpected error occurred", details={}
+        request_id=request_id,
+        error_type="InternalError",
+        message="An unexpected error occurred",
+        details={},
     )
-    return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=error_response.model_dump(mode="json"))
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content=error_response.model_dump(mode="json"),
+    )
 
 
 async def rate_limit_handler(request: Request, exc: RateLimitError) -> JSONResponse:
@@ -140,6 +169,7 @@ async def rate_limit_handler(request: Request, exc: RateLimitError) -> JSONRespo
 
 # API Endpoints - IMPORTANT: Specific paths (/bulk) must come BEFORE parameterized paths (/{uuid})
 
+
 @router.post("", status_code=status.HTTP_201_CREATED, response_model=MindResponse)
 async def create_mind(mind_data: MindCreate) -> MindResponse:
     """Create a new Mind node. Validates: Requirements 3.1, 3.7"""
@@ -148,15 +178,28 @@ async def create_mind(mind_data: MindCreate) -> MindResponse:
 
 @router.get("", response_model=QueryResult)
 async def query_minds(
-    mind_type: Optional[str] = Query(None), status_filter: Optional[str] = Query(None, alias="status"),
-    creator: Optional[str] = Query(None), updated_after: Optional[datetime] = Query(None),
-    updated_before: Optional[datetime] = Query(None), sort_by: str = Query("updated_at"),
-    sort_order: str = Query("desc"), page: int = Query(1, ge=1), page_size: int = Query(20, ge=1, le=100)
+    mind_type: Optional[str] = Query(None),
+    status_filter: Optional[str] = Query(None, alias="status"),
+    creator: Optional[str] = Query(None),
+    updated_after: Optional[datetime] = Query(None),
+    updated_before: Optional[datetime] = Query(None),
+    sort_by: str = Query("updated_at"),
+    sort_order: str = Query("desc"),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
 ) -> QueryResult:
     """Query and filter Mind nodes. Validates: Requirements 4.4, 4.5, 11.1-11.7"""
+    status: Optional[StatusEnum] = StatusEnum(status_filter) if status_filter else None
     filters = MindQueryFilters(
-        mind_type=mind_type, status=status_filter, creator=creator, updated_after=updated_after,
-        updated_before=updated_before, sort_by=sort_by, sort_order=sort_order, page=page, page_size=page_size
+        mind_type=mind_type,
+        status=status,
+        creator=creator,
+        updated_after=updated_after,
+        updated_before=updated_before,
+        sort_by=sort_by,
+        sort_order=sort_order,
+        page=page,
+        page_size=page_size,
     )
     return await mind_service.query_minds(filters)
 
@@ -204,7 +247,11 @@ async def get_version_history(
     return await mind_service.get_version_history(uuid, page=page, page_size=page_size)
 
 
-@router.post("/{uuid}/relationships", status_code=status.HTTP_201_CREATED, response_model=RelationshipResponse)
+@router.post(
+    "/{uuid}/relationships",
+    status_code=status.HTTP_201_CREATED,
+    response_model=RelationshipResponse,
+)
 async def create_relationship(
     uuid: UUID, target_uuid: UUID = Query(...), relationship_type: str = Query(...)
 ) -> RelationshipResponse:
@@ -214,7 +261,9 @@ async def create_relationship(
 
 @router.get("/{uuid}/relationships", response_model=list[RelationshipResponse])
 async def get_relationships(
-    uuid: UUID, relationship_type: Optional[str] = Query(None), direction: Optional[str] = Query("both")
+    uuid: UUID,
+    relationship_type: Optional[str] = Query(None),
+    direction: Optional[str] = Query("both"),
 ) -> list[RelationshipResponse]:
     """Get relationships for a Mind node. Validates: Requirements 8.5"""
     return await mind_service.get_relationships(uuid, relationship_type, direction)
