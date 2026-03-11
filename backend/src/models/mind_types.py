@@ -187,51 +187,6 @@ class Department(BaseMind):
     )
 
 
-class Employee(BaseMind):
-    """
-    Employee Mind type representing a person in an organization.
-
-    Extends BaseMind with employee-specific attributes including email,
-    role, hire date, and optional department association.
-
-    Attributes:
-        email: Employee email address
-        role: Job role or title
-        hire_date: Date of employment start
-        department_id: Optional department identifier
-
-    **Validates: Requirements 2.1, 2.2, 2.3, 9.3**
-    """
-
-    __primarylabel__: str = "Employee"
-
-    email: EmailStr = Field(
-        ...,
-        description="Employee email address"
-    )
-    role: str = Field(
-        ...,
-        min_length=1,
-        description="Job role or title"
-    )
-    hire_date: date = Field(
-        ...,
-        description="Date of employment start"
-    )
-    department_id: Optional[str] = Field(
-        default=None,
-        description="Optional department identifier"
-    )
-
-    @field_validator("hire_date")
-    @classmethod
-    def validate_hire_date(cls, v: date) -> date:
-        """Validate that hire_date is not in the future."""
-        if v > date.today():
-            raise ValueError("hire_date cannot be in the future")
-        return v
-
-
 class Email(BaseMind):
     """
     Email Mind type representing an email message.
@@ -303,140 +258,6 @@ class Knowledge(BaseMind):
         description="Knowledge article content"
     )
 
-
-
-class DesignInput(BaseMind):
-    """
-    DesignInput Mind type representing input to a design process.
-
-    Extends BaseMind with design input-specific attributes including source,
-    input type, and content.
-
-    Attributes:
-        source: Source of the design input
-        input_type: Type or category of the input
-        content: Design input content
-
-    **Validates: Requirements 2.1, 2.2, 2.3**
-    """
-
-    __primarylabel__: str = "DesignInput"
-
-    source: str = Field(
-        ...,
-        min_length=1,
-        description="Source of the design input"
-    )
-    input_type: str = Field(
-        ...,
-        min_length=1,
-        description="Type or category of the input"
-    )
-    content: str = Field(
-        ...,
-        min_length=1,
-        description="Design input content"
-    )
-
-
-class DesignOutput(BaseMind):
-    """
-    DesignOutput Mind type representing output from a design process.
-
-    Extends BaseMind with design output-specific attributes including output
-    type, verification status, and content.
-
-    Attributes:
-        output_type: Type or category of the output
-        verification_status: Verification or approval status
-        content: Design output content
-
-    **Validates: Requirements 2.1, 2.2, 2.3**
-    """
-
-    __primarylabel__: str = "DesignOutput"
-
-    output_type: str = Field(
-        ...,
-        min_length=1,
-        description="Type or category of the output"
-    )
-    verification_status: str = Field(
-        ...,
-        min_length=1,
-        description="Verification or approval status"
-    )
-    content: str = Field(
-        ...,
-        min_length=1,
-        description="Design output content"
-    )
-
-
-class ProcessRequirement(BaseMind):
-    """
-    ProcessRequirement Mind type representing a process-level requirement.
-
-    Extends BaseMind with process requirement-specific attributes including
-    process name, requirement text, and optional compliance standard.
-
-    Attributes:
-        process_name: Name of the process
-        requirement_text: Detailed requirement description
-        compliance_standard: Optional compliance standard reference
-
-    **Validates: Requirements 2.1, 2.2, 2.3**
-    """
-
-    __primarylabel__: str = "ProcessRequirement"
-
-    process_name: str = Field(
-        ...,
-        min_length=1,
-        description="Name of the process"
-    )
-    requirement_text: str = Field(
-        ...,
-        min_length=1,
-        description="Detailed requirement description"
-    )
-    compliance_standard: Optional[str] = Field(
-        default=None,
-        description="Optional compliance standard reference"
-    )
-
-
-class WorkInstructionRequirement(BaseMind):
-    """
-    WorkInstructionRequirement Mind type representing a work instruction.
-
-    Extends BaseMind with work instruction-specific attributes including
-    instruction ID, procedure, and safety criticality flag.
-
-    Attributes:
-        instruction_id: Unique instruction identifier
-        procedure: Detailed procedure or instruction text
-        safety_critical: Flag indicating if instruction is safety-critical
-
-    **Validates: Requirements 2.1, 2.2, 2.3**
-    """
-
-    __primarylabel__: str = "WorkInstructionRequirement"
-
-    instruction_id: str = Field(
-        ...,
-        min_length=1,
-        description="Unique instruction identifier"
-    )
-    procedure: str = Field(
-        ...,
-        min_length=1,
-        description="Detailed procedure or instruction text"
-    )
-    safety_critical: bool = Field(
-        ...,
-        description="Flag indicating if instruction is safety-critical"
-    )
 
 
 class AcceptanceCriteria(BaseMind):
@@ -542,10 +363,6 @@ class Failure(BaseMind):
         description="Optional method for detecting the failure"
     )
 
-
-# ============================================================================
-# TASKJUGGLER ENHANCED TYPES - INPUT LAYER
-# ============================================================================
 
 
 class Requirement(BaseMind):
