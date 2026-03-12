@@ -8,7 +8,7 @@ They provide generic interfaces for working with any Mind type via the API.
 from datetime import datetime
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from ..models.enums import StatusEnum
 
@@ -58,18 +58,26 @@ class MindQueryFilters(BaseModel):
     """Schema for querying Minds with filters."""
     mind_type: str | None = None
     creator: str | None = None
-    status: StatusEnum | None = None
+    statuses: list[str] | None = None
     tags: list[str] | None = None
-    limit: int = 50
-    offset: int = 0
+    updated_after: datetime | None = None
+    updated_before: datetime | None = None
+    created_after: datetime | None = None
+    created_before: datetime | None = None
+    title_search: str | None = None
+    sort_by: str = Field(default="updated_at", pattern="^(updated_at|created_at|version|title)$")
+    sort_order: str = Field(default="desc", pattern="^(asc|desc)$")
+    page: int = Field(default=1, ge=1)
+    page_size: int = Field(default=20, ge=1, le=100)
 
 
 class QueryResult(BaseModel):
     """Schema for query results with pagination."""
     items: list[MindResponse]
     total: int
-    limit: int
-    offset: int
+    page: int
+    page_size: int
+    total_pages: int
 
 
 class RelationshipResponse(BaseModel):

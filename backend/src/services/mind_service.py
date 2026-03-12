@@ -111,6 +111,8 @@ class MindService:
             "updated_at": updated_at,
             "creator": mind_data.creator,  # Requirement 3.5
             "description": mind_data.description,
+            "status": mind_data.status,
+            "tags": mind_data.tags,
         }
 
         # Add type-specific attributes
@@ -838,10 +840,11 @@ class MindService:
         Query Mind nodes with filtering, sorting, and pagination.
 
         This method builds a dynamic Cypher query based on the provided filters,
-        supporting filtering by mind_type, status, creator, and date ranges.
-        Multiple filters are combined with AND logic. Results are sorted by the
-        specified field and paginated. Only the latest version of each Mind node
-        is returned (highest version number per UUID).
+        supporting filtering by mind_type, statuses, creator, tags, date ranges,
+        and title search. Multiple filters are combined with AND logic. Multiple
+        statuses use OR logic. Multiple tags use AND logic (Mind must have ALL tags).
+        Results are sorted by the specified field and paginated. Only the latest
+        version of each Mind node is returned (highest version number per UUID).
 
         Args:
             filters: MindQueryFilters schema containing query parameters
@@ -849,7 +852,7 @@ class MindService:
         Returns:
             QueryResult: Paginated results with items, total count, and page metadata
 
-        **Validates: Requirements 4.4, 4.5, 11.1-11.7**
+        **Validates: Requirements 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 2.11, 2.12**
         """
         from neontology import GraphConnection
 
@@ -871,17 +874,21 @@ class MindService:
             label = model_class.__name__
             where_clauses.append(f"'{label}' IN labels(n)")
 
-        # Filter by status (Requirements 4.5, 11.2)
-        if filters.status is not None:
-            where_clauses.append("n.status = $status")
-            params["status"] = filters.status.value
+        # Filter by statuses with OR logic (Requirements 2.11)
+        if filters.statuses is not None and len(filters.statuses) > 0:
+            status_conditions = []
+            for idx, status in enumerate(filters.statuses):
+                param_name = f"status_{idx}"
+                status_conditions.append(f"n.status = ${param_name}")
+                params[param_name] = status
+            where_clauses.append(f"({' OR '.join(status_conditions)})")
 
         # Filter by creator (Requirement 11.3)
         if filters.creator is not None:
             where_clauses.append("n.creator = $creator")
             params["creator"] = filters.creator
 
-        # Filter by date range (Requirement 11.4)
+        # Filter by updated_at date range (Requirement 11.4)
         if filters.updated_after is not None:
             where_clauses.append("n.updated_at >= $updated_after")
             params["updated_after"] = filters.updated_after
@@ -889,6 +896,27 @@ class MindService:
         if filters.updated_before is not None:
             where_clauses.append("n.updated_at <= $updated_before")
             params["updated_before"] = filters.updated_before
+
+        # Filter by created_at date range (Requirements 2.8, 2.9)
+        if filters.created_after is not None:
+            where_clauses.append("n.created_at >= $created_after")
+            params["created_after"] = filters.created_after
+
+        if filters.created_before is not None:
+            where_clauses.append("n.created_at <= $created_before")
+            params["created_before"] = filters.created_before
+
+        # Filter by title search with case-insensitive partial matching (Requirement 2.7)
+        if filters.title_search is not None:
+            where_clauses.append("toLower(n.title) CONTAINS toLower($title_search)")
+            params["title_search"] = filters.title_search
+
+        # Filter by multiple tags with AND logic (Requirement 2.10)
+        if filters.tags is not None and len(filters.tags) > 0:
+            for idx, tag in enumerate(filters.tags):
+                param_name = f"tag_{idx}"
+                where_clauses.append(f"${param_name} IN n.tags")
+                params[param_name] = tag
 
         # Build WHERE clause (Requirement 11.5 - AND logic)
         where_clause = ""
@@ -898,6 +926,7 @@ class MindService:
         # Build ORDER BY clause (Requirement 11.6)
         sort_field_map = {
             "updated_at": "n.updated_at",
+            "created_at": "n.created_at",
             "version": "n.version",
             "title": "n.title",
         }

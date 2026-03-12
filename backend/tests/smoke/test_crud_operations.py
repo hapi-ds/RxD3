@@ -72,7 +72,7 @@ def test_crud_task_lifecycle(client):
     assert deleted_data["status"] == "deleted"
 
 
-@pytest.mark.skip(reason="Query endpoint has schema mismatch - deferred to later")
+@pytest.mark.skip(reason="Query endpoint has schema mismatch - deferred to later -> old, new tests are good")
 def test_query_minds(client):
     """Test querying Mind nodes with filters."""
     # Create multiple tasks

@@ -179,23 +179,43 @@ async def create_mind(mind_data: MindCreate) -> MindResponse:
 @router.get("", response_model=QueryResult)
 async def query_minds(
     mind_type: Optional[str] = Query(None),
-    status_filter: Optional[str] = Query(None, alias="status"),
+    status: Optional[str] = Query(None),  # Backward compatibility - single status
+    statuses: Optional[str] = Query(None),  # New parameter - multiple statuses
     creator: Optional[str] = Query(None),
+    tags: Optional[str] = Query(None),
     updated_after: Optional[datetime] = Query(None),
     updated_before: Optional[datetime] = Query(None),
+    created_after: Optional[datetime] = Query(None),
+    created_before: Optional[datetime] = Query(None),
+    title_search: Optional[str] = Query(None),
     sort_by: str = Query("updated_at"),
     sort_order: str = Query("desc"),
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
 ) -> QueryResult:
     """Query and filter Mind nodes. Validates: Requirements 4.4, 4.5, 11.1-11.7"""
-    status: Optional[StatusEnum] = StatusEnum(status_filter) if status_filter else None
+    # Handle backward compatibility: if status (singular) is provided, use it
+    # Otherwise, use statuses (plural) if provided
+    status_param = status if status else statuses
+    
+    # Parse comma-separated strings into lists
+    statuses_list: Optional[list[str]] = (
+        [s.strip() for s in status_param.split(",") if s.strip()] if status_param else None
+    )
+    tags_list: Optional[list[str]] = (
+        [t.strip() for t in tags.split(",") if t.strip()] if tags else None
+    )
+    
     filters = MindQueryFilters(
         mind_type=mind_type,
-        status=status,
+        statuses=statuses_list,
         creator=creator,
+        tags=tags_list,
         updated_after=updated_after,
         updated_before=updated_before,
+        created_after=created_after,
+        created_before=created_before,
+        title_search=title_search,
         sort_by=sort_by,
         sort_order=sort_order,
         page=page,
