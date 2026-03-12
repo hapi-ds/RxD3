@@ -147,6 +147,43 @@ Once all services are running, access them at:
 
 ## Development
 
+### Schema Generation Workflow
+
+The backend uses a data model-first approach where Pydantic schemas are automatically generated from the Mind data model definitions.
+
+**Data Model Files** (source of truth):
+- `backend/src/models/mind.py` - Base Mind class
+- `backend/src/models/mind_types.py` - Specialized Mind types
+- `backend/src/models/enums.py` - Enum definitions
+
+**Generated Schemas**:
+- `backend/src/schemas/minds.py` - Auto-generated Pydantic schemas
+
+**Workflow**:
+
+1. Make changes to the data model files (mind.py, mind_types.py, or enums.py)
+
+2. Run the schema generator:
+```bash
+cd backend
+uv run python scripts/generate_schemas.py
+```
+
+3. Verify the generated schemas are correct:
+```bash
+# Review the changes
+git diff src/schemas/minds.py
+```
+
+4. Run smoke tests to verify the system still works:
+```bash
+uv run pytest tests/smoke/ -q
+```
+
+5. Commit both the model changes and generated schemas together
+
+**Important**: Never manually edit `src/schemas/minds.py` - always regenerate it using the script when the data model changes.
+
 ### Running Tests
 
 Run all tests across services:
