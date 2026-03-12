@@ -75,12 +75,15 @@ class Task(BaseMind):
     Task Mind type representing a work item with priority and assignment.
 
     Extends BaseMind with task-specific attributes including priority level,
-    assignee, and optional due date.
+    assignee, optional due date, and effort estimation.
 
     Attributes:
         priority: Task priority level (low, medium, high, critical)
         assignee: User identifier of the person assigned to the task
         due_date: Optional due date for task completion
+        effort: Optional work effort in hours
+        duration: Optional work duration in days
+        length: Optional calendar length in days
 
     **Validates: Requirements 2.1, 2.2, 2.3, 9.2**
     """
@@ -99,6 +102,15 @@ class Task(BaseMind):
     due_date: Optional[date] = Field(
         default=None,
         description="Optional due date for task completion"
+    )
+    effort: Optional[float] = Field(
+        default=None, ge=0.0, description="Work effort in hours"
+    )
+    duration: Optional[float] = Field(
+        default=None, ge=0.0, description="Work duration in days"
+    )
+    length: Optional[float] = Field(
+        default=None, ge=0.0, description="Calendar length in days"
     )
             
     # Consolidated task types (PHASE, MILESTONE, WORKPACKAGE)

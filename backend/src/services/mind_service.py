@@ -126,12 +126,12 @@ class MindService:
             mind_type=mind_data.mind_type,
             title=mind_node.title,
             version=mind_node.version,
-            created_at=mind_node.updated_at,  # Using updated_at as created_at proxy
+            created_at=mind_node.created_at,
             updated_at=mind_node.updated_at,
             creator=mind_node.creator,
             status=mind_node.status,
             description=mind_node.description,
-            tags=None,  # BaseMind doesn't have tags field
+            tags=mind_node.tags,
             type_specific_attributes=self._extract_type_specific_attributes(
                 mind_node, mind_data.mind_type
             ),
@@ -252,12 +252,12 @@ class MindService:
             mind_type=mind_type,
             title=mind_node.title,
             version=mind_node.version,
-            created_at=mind_node.updated_at,  # Using updated_at as created_at proxy
+            created_at=mind_node.created_at,
             updated_at=mind_node.updated_at,
             creator=mind_node.creator,
             status=mind_node.status,
             description=mind_node.description,
-            tags=None,  # BaseMind doesn't have tags field
+            tags=mind_node.tags,
             type_specific_attributes=self._extract_type_specific_attributes(mind_node, mind_type),
         )
 
@@ -367,12 +367,12 @@ class MindService:
             mind_type=current_response.mind_type,
             title=new_mind_node.title,
             version=new_mind_node.version,
-            created_at=new_mind_node.updated_at,  # Using updated_at as created_at proxy
+            created_at=new_mind_node.created_at,
             updated_at=new_mind_node.updated_at,
             creator=new_mind_node.creator,
             status=new_mind_node.status,
             description=new_mind_node.description,
-            tags=None,  # BaseMind doesn't have tags field
+            tags=new_mind_node.tags,
             type_specific_attributes=self._extract_type_specific_attributes(
                 new_mind_node, current_response.mind_type
             ),
@@ -458,12 +458,12 @@ class MindService:
                         mind_type=latest_response.mind_type,
                         title=mind_node.title,
                         version=mind_node.version,
-                        created_at=mind_node.updated_at,  # Using updated_at as created_at proxy
+                        created_at=mind_node.created_at,
                         updated_at=mind_node.updated_at,
                         creator=mind_node.creator,
                         status=mind_node.status,
                         description=mind_node.description,
-                        tags=None,  # BaseMind doesn't have tags field
+                        tags=mind_node.tags,
                         type_specific_attributes=self._extract_type_specific_attributes(
                             mind_node, latest_response.mind_type
                         ),
@@ -988,12 +988,12 @@ class MindService:
                         mind_type=mind_type,
                         title=mind_node.title,
                         version=mind_node.version,
-                        created_at=mind_node.updated_at,  # Using updated_at as created_at proxy
+                        created_at=mind_node.created_at,
                         updated_at=mind_node.updated_at,
                         creator=mind_node.creator,
                         status=mind_node.status,
                         description=mind_node.description,
-                        tags=None,  # BaseMind doesn't have tags field
+                        tags=mind_node.tags,
                         type_specific_attributes=self._extract_type_specific_attributes(
                             mind_node, mind_type
                         ),

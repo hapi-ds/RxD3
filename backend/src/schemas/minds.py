@@ -29,9 +29,11 @@ class AcceptanceCriteriaCreate(BaseModel):
     """Schema for creating a AcceptanceCriteria."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     criteria_text: str
     verification_method: str
     verification_status: str
@@ -57,9 +59,11 @@ class AcceptanceCriteriaUpdate(BaseModel):
     """Schema for updating a AcceptanceCriteria. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     criteria_text: str | None = None
     verification_method: str | None = None
     verification_status: str | None = None
@@ -87,10 +91,12 @@ class AcceptanceCriteriaResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     criteria_text: str
     verification_method: str
     verification_status: str
@@ -116,9 +122,11 @@ class AccountCreate(BaseModel):
     """Schema for creating a Account."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     account_type: AccountType | None = AccountType.COST
 
     @field_serializer('status')
@@ -157,9 +165,11 @@ class AccountUpdate(BaseModel):
     """Schema for updating a Account. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     account_type: AccountType | None = None
 
     @field_serializer('status')
@@ -200,10 +210,12 @@ class AccountResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     account_type: AccountType | None = None
 
     @field_serializer('status')
@@ -242,9 +254,11 @@ class CompanyCreate(BaseModel):
     """Schema for creating a Company."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     industry: str
     size: int | None = None
     founded_date: date | None = None
@@ -270,9 +284,11 @@ class CompanyUpdate(BaseModel):
     """Schema for updating a Company. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     industry: str | None = None
     size: int | None = None
     founded_date: date | None = None
@@ -300,10 +316,12 @@ class CompanyResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     industry: str
     size: int | None = None
     founded_date: date | None = None
@@ -329,9 +347,11 @@ class DepartmentCreate(BaseModel):
     """Schema for creating a Department."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     department_code: str
     manager: str | None = None
 
@@ -356,9 +376,11 @@ class DepartmentUpdate(BaseModel):
     """Schema for updating a Department. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     department_code: str | None = None
     manager: str | None = None
 
@@ -385,10 +407,12 @@ class DepartmentResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     department_code: str
     manager: str | None = None
 
@@ -413,9 +437,11 @@ class EmailCreate(BaseModel):
     """Schema for creating a Email."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     sender: EmailStr
     recipients: list[EmailStr]
     subject: str
@@ -442,9 +468,11 @@ class EmailUpdate(BaseModel):
     """Schema for updating a Email. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     sender: EmailStr | None = None
     recipients: list[EmailStr] | None = None
     subject: str | None = None
@@ -473,10 +501,12 @@ class EmailResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     sender: EmailStr
     recipients: list[EmailStr]
     subject: str
@@ -503,9 +533,11 @@ class FailureCreate(BaseModel):
     """Schema for creating a Failure."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     failure_mode: str
     effects: str
     causes: str
@@ -532,9 +564,11 @@ class FailureUpdate(BaseModel):
     """Schema for updating a Failure. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     failure_mode: str | None = None
     effects: str | None = None
     causes: str | None = None
@@ -563,10 +597,12 @@ class FailureResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     failure_mode: str
     effects: str
     causes: str
@@ -593,9 +629,11 @@ class KnowledgeCreate(BaseModel):
     """Schema for creating a Knowledge."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     category: str
     tags: list[str]
     content: str
@@ -621,9 +659,11 @@ class KnowledgeUpdate(BaseModel):
     """Schema for updating a Knowledge. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     category: str | None = None
     tags: list[str] | None = None
     content: str | None = None
@@ -651,10 +691,12 @@ class KnowledgeResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     category: str
     tags: list[str]
     content: str
@@ -680,9 +722,11 @@ class ProjectCreate(BaseModel):
     """Schema for creating a Project."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     start_date: date
     end_date: date
     budget: float | None = None
@@ -708,9 +752,11 @@ class ProjectUpdate(BaseModel):
     """Schema for updating a Project. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     start_date: date | None = None
     end_date: date | None = None
     budget: float | None = None
@@ -738,10 +784,12 @@ class ProjectResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     start_date: date
     end_date: date
     budget: float | None = None
@@ -767,9 +815,11 @@ class RequirementCreate(BaseModel):
     """Schema for creating a Requirement."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     requirement_type: RequirementType
     content: str
     source: str | None = None
@@ -809,9 +859,11 @@ class RequirementUpdate(BaseModel):
     """Schema for updating a Requirement. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     requirement_type: RequirementType | None = None
     content: str | None = None
     source: str | None = None
@@ -857,10 +909,12 @@ class RequirementResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     requirement_type: RequirementType
     content: str
     source: str | None = None
@@ -900,9 +954,11 @@ class ResourceCreate(BaseModel):
     """Schema for creating a Resource."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     email: str | None = None
     efficiency: float | None = 1.0
     daily_rate: float | None = 0.0
@@ -944,9 +1000,11 @@ class ResourceUpdate(BaseModel):
     """Schema for updating a Resource. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     email: str | None = None
     efficiency: float | None = None
     daily_rate: float | None = None
@@ -990,10 +1048,12 @@ class ResourceResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     email: str | None = None
     efficiency: float | None = None
     daily_rate: float | None = None
@@ -1035,9 +1095,11 @@ class RiskCreate(BaseModel):
     """Schema for creating a Risk."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     severity: SeverityEnum
     probability: ProbabilityEnum
     mitigation_plan: str | None = None
@@ -1085,9 +1147,11 @@ class RiskUpdate(BaseModel):
     """Schema for updating a Risk. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     severity: SeverityEnum | None = None
     probability: ProbabilityEnum | None = None
     mitigation_plan: str | None = None
@@ -1145,10 +1209,12 @@ class RiskResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     severity: SeverityEnum
     probability: ProbabilityEnum
     mitigation_plan: str | None = None
@@ -1196,9 +1262,11 @@ class ScheduleHistoryCreate(BaseModel):
     """Schema for creating a ScheduleHistory."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     schedule_id: str
     scheduled_at: datetime | None = None
     status: StatusEnum | None = StatusEnum.DONE
@@ -1228,9 +1296,11 @@ class ScheduleHistoryUpdate(BaseModel):
     """Schema for updating a ScheduleHistory. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     schedule_id: str | None = None
     scheduled_at: datetime | None = None
     status: StatusEnum | None = None
@@ -1262,10 +1332,12 @@ class ScheduleHistoryResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     schedule_id: str
     scheduled_at: datetime | None = None
     status: StatusEnum | None = None
@@ -1295,9 +1367,11 @@ class ScheduledTaskCreate(BaseModel):
     """Schema for creating a ScheduledTask."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     source_task_uuid: UUID
     scheduled_start: datetime
     scheduled_end: datetime
@@ -1331,9 +1405,11 @@ class ScheduledTaskUpdate(BaseModel):
     """Schema for updating a ScheduledTask. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     source_task_uuid: UUID | None = None
     scheduled_start: datetime | None = None
     scheduled_end: datetime | None = None
@@ -1369,10 +1445,12 @@ class ScheduledTaskResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     source_task_uuid: UUID
     scheduled_start: datetime
     scheduled_end: datetime
@@ -1406,12 +1484,17 @@ class TaskCreate(BaseModel):
     """Schema for creating a Task."""
 
     title: str
+    created_at: datetime | None = None
     creator: str
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
+    tags: list[str] | None = None
     priority: PriorityEnum
     assignee: str
     due_date: date | None = None
+    effort: float | None = None
+    duration: float | None = None
+    length: float | None = None
     task_type: TaskType | None = 'TASK'
     phase_number: int | None = None
     target_date: date | None = None
@@ -1464,12 +1547,17 @@ class TaskUpdate(BaseModel):
     """Schema for updating a Task. All fields are optional."""
 
     title: str | None = None
+    created_at: datetime | None = None
     creator: str | None = None
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     priority: PriorityEnum | None = None
     assignee: str | None = None
     due_date: date | None = None
+    effort: float | None = None
+    duration: float | None = None
+    length: float | None = None
     task_type: TaskType | None = None
     phase_number: int | None = None
     target_date: date | None = None
@@ -1528,13 +1616,18 @@ class TaskResponse(BaseModel):
     uuid: UUID | None = None
     title: str
     version: int | None = None
+    created_at: datetime | None = None
     updated_at: datetime | None = None
     creator: str
     status: StatusEnum | None = None
     description: str | None = None
+    tags: list[str] | None = None
     priority: PriorityEnum
     assignee: str
     due_date: date | None = None
+    effort: float | None = None
+    duration: float | None = None
+    length: float | None = None
     task_type: TaskType | None = None
     phase_number: int | None = None
     target_date: date | None = None

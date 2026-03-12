@@ -273,8 +273,8 @@ class SchedulerService:
 
             if hasattr(task, "length") and task.length:
                 duration_days = task.length
-            elif hasattr(task, "estimated_hours") and task.estimated_hours:
-                duration_days = task.estimated_hours / 8
+            elif hasattr(task, "effort") and task.effort:
+                duration_days = task.effort / 8  # Convert hours to days
 
             task_data["earliest_start"] = earliest_start
             task_data["earliest_end"] = earliest_start + timedelta(days=duration_days)

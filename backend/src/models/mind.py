@@ -24,17 +24,19 @@ class BaseMind(BaseNode):
 
     This class defines the foundational structure for all Mind nodes in the
     system. It includes universal attributes (UUID, title, version, timestamps,
-    creator, status, description) that are inherited by all 18 specialized
+    creator, status, description, tags) that are inherited by all 18 specialized
     Mind types.
 
     Attributes:
         uuid: Unique identifier that remains constant across all versions
         title: Human-readable name for the Mind node
         version: Auto-incrementing version number (starts at 1)
+        created_at: Timestamp when the node was first created
         updated_at: Timestamp of last modification
         creator: User identifier who created the node
         status: Current lifecycle state (draft, active, archived, deleted)
         description: Optional detailed description
+        tags: Optional list of tags for categorization
 
     **Validates: Requirements 1.1, 1.2, 1.4, 1.5**
     """
@@ -50,14 +52,22 @@ class BaseMind(BaseNode):
         ..., min_length=1, max_length=200, description="Human-readable name for the Mind node"
     )
     version: int = Field(default=1, ge=1, description="Auto-incrementing version number")
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc),
+        description="Timestamp of initial creation",
+    )
     updated_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         description="Timestamp of last modification",
     )
+
     creator: str = Field(..., min_length=1, description="User identifier who created the node")
     status: StatusEnum = Field(default=StatusEnum.DRAFT, description="Current lifecycle state")
     description: str | None = Field(
         default=None, max_length=1000, description="Optional detailed description"
+    )
+    tags: list[str] | None = Field(
+        default=None, description="Optional list of tags for categorization"
     )
 
 
