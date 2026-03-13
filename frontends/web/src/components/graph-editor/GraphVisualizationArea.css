@@ -1,0 +1,39 @@
+/**
+ * GraphVisualizationArea Styles
+ */
+
+.graph-visualization-area {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem;
+}
+
+.graph-visualization-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.graph-visualization-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.graph-visualization-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  border-radius: 4px;
+  border: 2px dashed #d1d5db;
+}
+
+.graph-visualization-placeholder {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+}

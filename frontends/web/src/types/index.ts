@@ -69,3 +69,27 @@ export interface WSMessage {
   email?: string;
   timestamp: string;
 }
+
+/**
+ * Relationship types for Mind Graph connections
+ */
+export type RelationshipType = 
+  | 'PREVIOUS'
+  | 'SCHEDULED'
+  | 'CONTAINS'
+  | 'PREDATES'
+  | 'ASSIGNED_TO'
+  | 'TO'
+  | 'FOR'
+  | 'REFINES';
+
+/**
+ * Relationship entity representing connections between Mind nodes
+ */
+export interface Relationship {
+  id: string;
+  type: RelationshipType;
+  source: string; // UUID of source Mind
+  target: string; // UUID of target Mind
+  properties: Record<string, any>;
+}

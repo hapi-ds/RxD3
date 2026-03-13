@@ -16,7 +16,8 @@ import { Login } from './components/Login';
 import { PostList } from './components/PostList';
 import { PostForm } from './components/PostForm';
 import { WebSocketChat } from './components/WebSocketChat';
-import { useAuth } from './hooks/useAuth';
+import { GraphEditor } from './components/graph-editor/GraphEditor';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import type { Post } from './types';
 import './App.css';
 import { useState } from 'react';
@@ -56,6 +57,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           <Link to="/posts" className="nav-link">Posts</Link>
           <Link to="/create" className="nav-link">Create Post</Link>
           <Link to="/chat" className="nav-link">Chat</Link>
+          <Link to="/graph-editor" className="nav-link">Graph Editor</Link>
           <button onClick={handleLogout} className="logout-button">
             Logout
           </button>
@@ -152,62 +154,81 @@ function ChatPage() {
 }
 
 /**
+ * Graph Editor Page Component
+ */
+function GraphEditorPage() {
+  return <GraphEditor />;
+}
+
+/**
  * Main App Component
  */
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public route */}
-        <Route path="/login" element={<LoginPage />} />
-        
-        {/* Protected routes */}
-        <Route
-          path="/posts"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <PostsPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/create"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <CreatePostPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/edit"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <EditPostPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/chat"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <ChatPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-        
-        {/* Default redirect */}
-        <Route path="/" element={<Navigate to="/posts" replace />} />
-        <Route path="*" element={<Navigate to="/posts" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public route */}
+          <Route path="/login" element={<LoginPage />} />
+          
+          {/* Protected routes */}
+          <Route
+            path="/posts"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <PostsPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <CreatePostPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <EditPostPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <ChatPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/graph-editor"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <GraphEditorPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Default redirect */}
+          <Route path="/" element={<Navigate to="/posts" replace />} />
+          <Route path="*" element={<Navigate to="/posts" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

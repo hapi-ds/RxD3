@@ -1,0 +1,198 @@
+/**
+ * GraphEditorLayout Styles
+ * CSS Grid layout for three-panel structure
+ */
+
+.graph-editor-layout {
+  display: grid;
+  grid-template-columns: 300px 3fr 1fr;
+  grid-template-areas: "version-history graph-area attribute-editor";
+  gap: 1rem;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Version History Panel - Left, Permanent, Fixed Width */
+.version-history-panel-container {
+  grid-area: version-history;
+  min-width: 300px;
+  max-width: 300px;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Graph Visualization Area - Center, Flexible */
+.graph-visualization-area-container {
+  grid-area: graph-area;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Attribute Editor - Right, Flexible */
+.attribute-editor-container {
+  grid-area: attribute-editor;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Layout - Tablet (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .graph-editor-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "graph-area";
+    position: relative;
+  }
+
+  /* Toggle button for version history panel */
+  .version-panel-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #111827;
+    transition: all 0.2s ease;
+  }
+
+  .version-panel-toggle:hover {
+    background-color: #f9fafb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .version-panel-toggle:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  .toggle-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .toggle-label {
+    font-weight: 600;
+  }
+
+  /* Version history panel - collapsible overlay */
+  .version-history-panel-container {
+    position: fixed;
+    left: -320px;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    z-index: 15;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .version-history-panel-container.open {
+    left: 0;
+  }
+
+  .version-history-panel-container.closed {
+    left: -320px;
+  }
+
+  /* Overlay backdrop */
+  .version-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 14;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Graph area takes full width */
+  .graph-visualization-area-container {
+    grid-area: graph-area;
+  }
+
+  /* Attribute editor as overlay at bottom */
+  .attribute-editor-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 40vh;
+    z-index: 5;
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Mobile - Not fully supported, show message */
+@media (max-width: 767px) {
+  .graph-editor-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .version-history-panel-container,
+  .graph-visualization-area-container,
+  .attribute-editor-container,
+  .version-panel-toggle {
+    display: none;
+  }
+
+  .graph-editor-layout::before {
+    content: "Graph Editor requires a minimum screen width of 768px. Please use a tablet or desktop device.";
+    display: block;
+    color: #6b7280;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    max-width: 400px;
+    padding: 2rem;
+    background-color: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+  }
+}
+
+/* Placeholder Panel Styles (temporary, for Phase 1) */
+.placeholder-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 2rem;
+}

@@ -1,0 +1,28 @@
+/**
+ * CustomEdge Component Styles
+ * Additional styling for custom edges
+ * 
+ * **Validates: Requirements 1.2**
+ */
+
+/* Edge hover effects */
+.react-flow__edge-path:hover {
+  stroke-width: 3 !important;
+  cursor: pointer;
+}
+
+/* Selected edge styling */
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke-width: 3 !important;
+}
+
+/* Edge label styling */
+.react-flow__edge-text {
+  font-size: 10px;
+  fill: #374151;
+}
+
+/* Ensure edges are interactive */
+.react-flow__edge {
+  pointer-events: all;
+}

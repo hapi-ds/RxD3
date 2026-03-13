@@ -1,0 +1,24 @@
+/**
+ * ScreenReaderAnnouncer Styles
+ * Hides the live region visually while keeping it accessible to screen readers
+ */
+
+.screen-reader-announcer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+/* Screen reader only class - visually hidden but accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

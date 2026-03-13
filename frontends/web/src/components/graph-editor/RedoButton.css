@@ -1,0 +1,47 @@
+/**
+ * RedoButton Styles
+ */
+
+.redo-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.redo-button:hover:not(:disabled) {
+  background-color: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.redo-button:active:not(:disabled) {
+  background-color: #d1d5db;
+  transform: translateY(1px);
+}
+
+.redo-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.redo-button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.redo-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.redo-label {
+  line-height: 1;
+}

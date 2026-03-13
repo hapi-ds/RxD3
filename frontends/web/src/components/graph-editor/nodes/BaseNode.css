@@ -1,0 +1,109 @@
+/**
+ * BaseNode Styles
+ * Common styling for all custom node types
+ */
+
+.custom-node {
+  min-width: 180px;
+  max-width: 250px;
+  border: 2px solid;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.custom-node:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.custom-node.selected {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  border-width: 3px;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 6px 6px 0 0;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.node-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.node-type {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.node-content {
+  padding: 10px;
+}
+
+.node-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+
+/* Focus mode styling */
+.custom-node.focused {
+  border-width: 4px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3), 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: focusPulse 2s ease-in-out infinite;
+}
+
+/* Keyboard focus styling - distinct from focus mode */
+.custom-node.keyboard-focused {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3), 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* When both keyboard focused and in focus mode */
+.custom-node.keyboard-focused.focused {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3), 0 0 0 7px rgba(245, 158, 11, 0.3), 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes focusPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3), 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.5), 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* React Flow handles */
+.custom-node .react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background: #555;
+  border: 2px solid white;
+}
+
+.custom-node .react-flow__handle:hover {
+  background: #333;
+}

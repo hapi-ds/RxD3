@@ -5,7 +5,8 @@
 
 import axios, { type AxiosInstance } from 'axios';
 import { config } from '../config';
-import type { LoginCredentials, Token, PostCreate, PostUpdate, Post } from '../types';
+import type { LoginCredentials, Token, PostCreate, PostUpdate, Post, Relationship } from '../types';
+import type { Mind } from '../types/generated';
 
 /**
  * Create axios instance with base configuration
@@ -61,11 +62,13 @@ export const authAPI = {
    * @returns Promise with JWT token
    */
   login: async (email: string, password: string): Promise<Token> => {
-    const credentials: LoginCredentials = {
-      username: email, // Backend expects 'username' field
-      password,
-    };
-    const response = await api.post<Token>('/users/login', credentials);
+    // Backend uses OAuth2PasswordRequestForm which expects form-urlencoded data
+    const formData = new URLSearchParams();
+    formData.append('username', email);
+    formData.append('password', password);
+    const response = await api.post<Token>('/users/login', formData, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    });
     return response.data;
   },
 
@@ -122,6 +125,130 @@ export const postsAPI = {
    */
   delete: async (uuid: string): Promise<void> => {
     await api.delete(`/posts/${uuid}`);
+  },
+};
+
+/**
+ * Minds API methods
+ * **Validates: Requirements 1.1, 1.2, 4.1, 5.1, 6.1**
+ */
+export const mindsAPI = {
+  /**
+   * Get all minds
+   * @returns Promise with array of minds
+   */
+  list: async (): Promise<Mind[]> => {
+    const response = await api.get<{ items: Mind[]; total: number }>('/minds');
+    return response.data.items;
+  },
+
+  /**
+   * Get a specific mind by UUID
+   * @param uuid - Mind UUID
+   * @returns Promise with the mind data
+   */
+  get: async (uuid: string): Promise<Mind> => {
+    const response = await api.get<Mind>(`/minds/${uuid}`);
+    return response.data;
+  },
+
+  /**
+   * Get all versions of a mind
+   * @param uuid - Mind UUID
+   * @returns Promise with array of all versions of the mind
+   */
+  getVersions: async (uuid: string): Promise<Mind[]> => {
+    const response = await api.get<Mind[]>(`/minds/${uuid}/history`);
+    return response.data;
+  },
+
+  /**
+   * Create a new mind
+   * @param data - Mind creation data (without uuid, version, timestamps)
+   * @returns Promise with the created mind
+   */
+  create: async (data: Omit<Mind, 'uuid' | 'version' | 'created_at' | 'updated_at'>): Promise<Mind> => {
+    const response = await api.post<Mind>('/minds', data);
+    return response.data;
+  },
+
+  /**
+   * Update an existing mind (creates a new version)
+   * @param uuid - Mind UUID
+   * @param data - Mind update data (partial updates allowed)
+   * @returns Promise with the updated mind (new version)
+   */
+  update: async (uuid: string, data: Partial<Omit<Mind, 'uuid' | 'version' | 'created_at' | 'updated_at'>>): Promise<Mind> => {
+    const response = await api.put<Mind>(`/minds/${uuid}`, data);
+    return response.data;
+  },
+
+  /**
+   * Delete a mind
+   * @param uuid - Mind UUID
+   * @returns Promise that resolves when deletion is complete
+   */
+  delete: async (uuid: string): Promise<void> => {
+    await api.delete(`/minds/${uuid}`);
+  },
+};
+
+/**
+ * Relationships API methods
+ * **Validates: Requirements 1.2, 5.2, 6.2**
+ */
+export const relationshipsAPI = {
+  /**
+   * Get all relationships
+   * @returns Promise with array of relationships
+   */
+  list: async (): Promise<Relationship[]> => {
+    const response = await api.get<Array<{
+      source_uuid: string;
+      target_uuid: string;
+      relationship_type: string;
+      created_at: string;
+      properties?: Record<string, any>;
+    }>>('/relationships');
+    
+    // Transform backend format to frontend format
+    return response.data.map(rel => ({
+      id: `${rel.source_uuid}-${rel.target_uuid}-${rel.relationship_type}`,
+      type: rel.relationship_type.toUpperCase() as RelationshipType,
+      source: rel.source_uuid,
+      target: rel.target_uuid,
+      properties: rel.properties || {},
+    }));
+  },
+
+  /**
+   * Create a new relationship
+   * @param data - Relationship creation data
+   * @returns Promise with the created relationship
+   */
+  create: async (data: Omit<Relationship, 'id'>): Promise<Relationship> => {
+    const response = await api.post<Relationship>('/relationships', data);
+    return response.data;
+  },
+
+  /**
+   * Update an existing relationship
+   * @param id - Relationship ID
+   * @param data - Relationship update data (partial updates allowed)
+   * @returns Promise with the updated relationship
+   */
+  update: async (id: string, data: Partial<Omit<Relationship, 'id'>>): Promise<Relationship> => {
+    const response = await api.put<Relationship>(`/relationships/${id}`, data);
+    return response.data;
+  },
+
+  /**
+   * Delete a relationship
+   * @param id - Relationship ID
+   * @returns Promise that resolves when deletion is complete
+   */
+  delete: async (id: string): Promise<void> => {
+    await api.delete(`/relationships/${id}`);
   },
 };
 

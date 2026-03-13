@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
@@ -23,6 +23,10 @@ export default defineConfig({
         '**/*.config.js',
         '**/dist/',
       ],
+    },
+    env: {
+      VITE_API_URL: 'http://localhost:8000',
+      VITE_WS_URL: 'ws://localhost:8000/ws',
     },
   },
 })

@@ -63,6 +63,12 @@
   margin: 0 auto;
 }
 
+/* Full width for graph editor */
+.app-content:has(.graph-editor) {
+  max-width: 100%;
+  padding: 0;
+}
+
 .logout-button {
   padding: 0.5rem 1.5rem;
   background-color: #646cff;
