@@ -115,8 +115,9 @@ class MindService:
             "tags": mind_data.tags,
         }
 
-        # Add type-specific attributes
-        node_data.update(mind_data.type_specific_attributes)
+        # Add type-specific attributes if provided
+        if mind_data.type_specific_attributes:
+            node_data.update(mind_data.type_specific_attributes)
 
         # Create and save the Mind node using neontology
         mind_node = model_class(**node_data)
@@ -126,6 +127,7 @@ class MindService:
         return MindResponse(
             uuid=mind_node.uuid,
             mind_type=mind_data.mind_type,
+            __primarylabel__=mind_data.mind_type.capitalize(),  # Capitalize for frontend compatibility
             title=mind_node.title,
             version=mind_node.version,
             created_at=mind_node.created_at,
@@ -252,6 +254,7 @@ class MindService:
         return MindResponse(
             uuid=mind_node.uuid,
             mind_type=mind_type,
+            __primarylabel__=mind_type.capitalize(),  # Capitalize for frontend compatibility
             title=mind_node.title,
             version=mind_node.version,
             created_at=mind_node.created_at,
@@ -367,6 +370,7 @@ class MindService:
         return MindResponse(
             uuid=new_mind_node.uuid,
             mind_type=current_response.mind_type,
+            __primarylabel__=current_response.mind_type.capitalize(),  # Capitalize for frontend compatibility
             title=new_mind_node.title,
             version=new_mind_node.version,
             created_at=new_mind_node.created_at,
@@ -458,6 +462,7 @@ class MindService:
                     MindResponse(
                         uuid=mind_node.uuid,
                         mind_type=latest_response.mind_type,
+                        __primarylabel__=latest_response.mind_type,  # Add __primarylabel__ for frontend compatibility
                         title=mind_node.title,
                         version=mind_node.version,
                         created_at=mind_node.created_at,
@@ -835,6 +840,67 @@ class MindService:
 
         return relationships
 
+    async def list_all_relationships(self) -> list:
+        """
+        List all relationships across all Mind nodes.
+
+        This method retrieves all relationships in the database, returning
+        relationship data including type, source, target, created_at, and properties.
+
+        Returns:
+            list[RelationshipResponse]: List of all relationships
+
+        **Validates: Requirements 1.2, 8.5**
+        """
+        from ..schemas.mind_generic import RelationshipResponse
+        from neontology import GraphConnection
+
+        gc = GraphConnection()
+
+        # Query all relationships of the supported types
+        cypher = """
+        MATCH (source)-[r]->(target)
+        WHERE type(r) IN ['CONTAINS', 'DEPENDS_ON', 'ASSIGNED_TO', 'RELATES_TO', 'IMPLEMENTS', 'MITIGATES']
+        AND source.uuid IS NOT NULL AND target.uuid IS NOT NULL
+        RETURN type(r) as rel_type, source.uuid as source_uuid,
+               target.uuid as target_uuid, r.created_at as created_at,
+               properties(r) as props
+        ORDER BY r.created_at DESC
+        """
+
+        # Execute query
+        result = gc.engine.evaluate_query(cypher, {})
+
+        # Convert results to RelationshipResponse objects
+        relationships = []
+        if result and result.records_raw:
+            for record in result.records_raw:
+                # Convert Neo4j relationship type to lowercase with underscores
+                rel_type_neo4j = record["rel_type"]
+                rel_type_normalized = rel_type_neo4j.lower()
+
+                # Convert Neo4j DateTime to Python datetime
+                created_at = record["created_at"]
+                if hasattr(created_at, "to_native"):
+                    created_at = created_at.to_native()
+
+                # Extract properties (excluding created_at which is already a field)
+                props = record.get("props", {})
+                # Remove created_at from properties dict if present
+                properties = {k: v for k, v in props.items() if k != "created_at"}
+
+                relationships.append(
+                    RelationshipResponse(
+                        relationship_type=rel_type_normalized,
+                        source_uuid=UUID(record["source_uuid"]),
+                        target_uuid=UUID(record["target_uuid"]),
+                        created_at=created_at,
+                        properties=properties,
+                    )
+                )
+
+        return relationships
+
     async def query_minds(self, filters: "MindQueryFilters") -> "QueryResult":
         """
         Query Mind nodes with filtering, sorting, and pagination.
@@ -1015,6 +1081,7 @@ class MindService:
                     MindResponse(
                         uuid=mind_node.uuid,
                         mind_type=mind_type,
+                        __primarylabel__=mind_type,  # Add __primarylabel__ for frontend compatibility
                         title=mind_node.title,
                         version=mind_node.version,
                         created_at=mind_node.created_at,

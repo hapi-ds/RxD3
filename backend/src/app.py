@@ -24,6 +24,7 @@ from src.routes.minds import (
 from src.routes.minds import (
     router as minds_router,
 )
+from src.routes.relationships import router as relationships_router
 from src.routes.posts import PostRouter
 from src.routes.users import UserRouter
 from src.websocket.routes import router as websocket_router
@@ -88,7 +89,18 @@ Tokens expire after 40 minutes. You'll need to login again to get a fresh token.
 )
 
 # CORS middleware for multiple frontends
-app.add_middleware(CORSMiddleware)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://web:3000",
+        "http://xr:3001",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 FORMAT = "%(levelname)s: %(asctime)-15s: %(filename)s: %(funcName)s: %(module)s: %(message)s"
@@ -102,7 +114,8 @@ async def read_root():
 
 app.include_router(UserRouter, tags=["Administrator"], prefix="/users")
 app.include_router(PostRouter, tags=["Posts"], prefix="/posts")
-app.include_router(minds_router, tags=["Minds"])
+app.include_router(minds_router, tags=["Minds"], prefix="/minds")
+app.include_router(relationships_router, tags=["Relationships"], prefix="/relationships")
 app.include_router(websocket_router, tags=["WebSocket"])
 
 # Register exception handlers for Mind system

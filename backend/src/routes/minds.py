@@ -37,8 +37,8 @@ from ..schemas.mind_generic import (
 )
 from ..services.mind_service import MindService
 
-# Create router with prefix
-router = APIRouter(prefix="/api/v1/minds")
+# Create router without prefix (app.py handles the prefix)
+router = APIRouter()
 
 # Initialize service
 mind_service = MindService()

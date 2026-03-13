@@ -37,6 +37,7 @@ class MindResponse(BaseModel):
     """Generic schema for Mind responses."""
     uuid: UUID
     mind_type: str
+    __primarylabel__: str  # Add this field for frontend compatibility
     title: str
     description: str | None
     creator: str
