@@ -244,10 +244,17 @@ class KnowledgeStore:
             return cached
 
         gc = GraphConnection()
+        # Nodes don't have a mind_type property — the type is the Neo4j label.
+        # Filter to nodes that have uuid + title (all Mind-derived nodes).
+        # Exclude system labels like User, Poste, etc. by requiring version property.
+        # Get only the latest version per uuid.
         cypher = (
-            "MATCH (m:Mind) "
-            "RETURN m.uuid AS uuid, m.title AS title, m.mind_type AS mind_type "
-            "ORDER BY m.title LIMIT 200"
+            "MATCH (m) "
+            "WHERE m.uuid IS NOT NULL AND m.title IS NOT NULL AND m.version IS NOT NULL "
+            "WITH m.uuid AS uuid, m ORDER BY m.version DESC "
+            "WITH uuid, collect(m)[0] AS latest "
+            "RETURN uuid, latest.title AS title, labels(latest)[0] AS mind_type "
+            "ORDER BY title LIMIT 200"
         )
 
         try:

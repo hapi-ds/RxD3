@@ -171,13 +171,25 @@ function NodeAttributeView({ node }: { node: Mind }) {
       dispatch({ type: 'UPDATE_MIND', payload: formData });
       
       // Prepare update data (exclude readonly fields)
-      const updateData: Partial<Omit<Mind, 'uuid' | 'version' | 'created_at' | 'updated_at'>> = {};
+      // Base fields go at top level, type-specific fields go into type_specific_attributes
+      const BASE_FIELDS = new Set(['title', 'description', 'status', 'tags', 'creator']);
+      const updateData: Record<string, unknown> = {};
+      const typeSpecificData: Record<string, unknown> = {};
+      
       config.attributes
         .filter(attr => !attr.readonly)
         .forEach(attr => {
           const value = (formData as unknown as Record<string, unknown>)[attr.name];
-          (updateData as Record<string, unknown>)[attr.name] = value;
+          if (BASE_FIELDS.has(attr.name)) {
+            updateData[attr.name] = value;
+          } else {
+            typeSpecificData[attr.name] = value;
+          }
         });
+      
+      if (Object.keys(typeSpecificData).length > 0) {
+        updateData.type_specific_attributes = typeSpecificData;
+      }
       
       // Call API to update mind (creates new version)
       const updatedMind = await mindsAPI.update(node.uuid!, updateData);

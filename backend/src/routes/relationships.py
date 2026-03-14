@@ -8,6 +8,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, status
 from fastapi.responses import Response
+from pydantic import BaseModel
 
 from ..schemas.mind_generic import RelationshipResponse
 from ..services.mind_service import MindService
@@ -19,6 +20,13 @@ router = APIRouter()
 mind_service = MindService()
 
 
+class CreateRelationshipRequest(BaseModel):
+    """Request body for creating a relationship."""
+    from_uuid: UUID
+    to_uuid: UUID
+    relationship_type: str
+
+
 @router.get("", response_model=list[RelationshipResponse])
 async def list_relationships() -> list[RelationshipResponse]:
     """Get all relationships across all minds."""
@@ -26,18 +34,12 @@ async def list_relationships() -> list[RelationshipResponse]:
 
 
 @router.post("", status_code=status.HTTP_201_CREATED, response_model=RelationshipResponse)
-async def create_relationship(
-    from_uuid: UUID,
-    to_uuid: UUID,
-    relationship_type: str,
-    properties: dict | None = None
-) -> RelationshipResponse:
+async def create_relationship(body: CreateRelationshipRequest) -> RelationshipResponse:
     """Create a new relationship between two minds."""
     result = await mind_service.create_relationship(
-        from_uuid=from_uuid,
-        to_uuid=to_uuid,
-        relationship_type=relationship_type,
-        properties=properties or {}
+        source_uuid=body.from_uuid,
+        target_uuid=body.to_uuid,
+        relationship_type=body.relationship_type.lower(),
     )
     return result
 

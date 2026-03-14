@@ -130,6 +130,19 @@ export const postsAPI = {
 };
 
 /**
+ * Flatten type_specific_attributes from backend MindResponse into top-level Mind fields.
+ * The backend returns type-specific fields (e.g., department_code) nested inside
+ * type_specific_attributes, but the frontend Mind types expect them as flat fields.
+ */
+function flattenMind(raw: Record<string, unknown>): Mind {
+  const { type_specific_attributes, ...rest } = raw;
+  if (type_specific_attributes && typeof type_specific_attributes === 'object') {
+    return { ...rest, ...(type_specific_attributes as Record<string, unknown>) } as unknown as Mind;
+  }
+  return raw as unknown as Mind;
+}
+
+/**
  * Minds API methods
  * **Validates: Requirements 1.1, 1.2, 4.1, 5.1, 6.1**
  */
@@ -139,8 +152,8 @@ export const mindsAPI = {
    * @returns Promise with array of minds
    */
   list: async (): Promise<Mind[]> => {
-    const response = await api.get<{ items: Mind[]; total: number }>('/api/v1/minds');
-    return response.data.items;
+    const response = await api.get<{ items: Record<string, unknown>[]; total: number }>('/api/v1/minds');
+    return response.data.items.map(flattenMind);
   },
 
   /**
@@ -149,8 +162,8 @@ export const mindsAPI = {
    * @returns Promise with the mind data
    */
   get: async (uuid: string): Promise<Mind> => {
-    const response = await api.get<Mind>(`/api/v1/minds/${uuid}`);
-    return response.data;
+    const response = await api.get<Record<string, unknown>>(`/api/v1/minds/${uuid}`);
+    return flattenMind(response.data);
   },
 
   /**
@@ -159,8 +172,8 @@ export const mindsAPI = {
    * @returns Promise with array of all versions of the mind
    */
   getVersions: async (uuid: string): Promise<Mind[]> => {
-    const response = await api.get<Mind[]>(`/api/v1/minds/${uuid}/history`);
-    return response.data;
+    const response = await api.get<Record<string, unknown>[]>(`/api/v1/minds/${uuid}/history`);
+    return response.data.map(flattenMind);
   },
 
   /**
@@ -169,8 +182,8 @@ export const mindsAPI = {
    * @returns Promise with the created mind
    */
   create: async (data: Omit<Mind, 'uuid' | 'version' | 'created_at' | 'updated_at'>): Promise<Mind> => {
-    const response = await api.post<Mind>('/api/v1/minds', data);
-    return response.data;
+    const response = await api.post<Record<string, unknown>>('/api/v1/minds', data);
+    return flattenMind(response.data);
   },
 
   /**
@@ -180,8 +193,8 @@ export const mindsAPI = {
    * @returns Promise with the updated mind (new version)
    */
   update: async (uuid: string, data: Partial<Omit<Mind, 'uuid' | 'version' | 'created_at' | 'updated_at'>>): Promise<Mind> => {
-    const response = await api.put<Mind>(`/api/v1/minds/${uuid}`, data);
-    return response.data;
+    const response = await api.put<Record<string, unknown>>(`/api/v1/minds/${uuid}`, data);
+    return flattenMind(response.data);
   },
 
   /**
@@ -233,12 +246,10 @@ export const relationshipsAPI = {
       target_uuid: string;
       relationship_type: string;
       created_at: string;
-    }>('/api/v1/relationships', null, {
-      params: {
-        from_uuid: data.source,
-        to_uuid: data.target,
-        relationship_type: data.type,
-      },
+    }>('/api/v1/relationships', {
+      from_uuid: data.source,
+      to_uuid: data.target,
+      relationship_type: data.type,
     });
     const rel = response.data;
     return {
