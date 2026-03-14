@@ -1,0 +1,186 @@
+/**
+ * ConfirmToolCallDialog Styles
+ * Confirmation dialog for AI-suggested tool calls
+ */
+
+.confirm-tool-call-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.confirm-tool-call-content {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.confirm-tool-call-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.confirm-tool-call-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.confirm-tool-call-body {
+  padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.confirm-tool-call-description {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.tool-call-details {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.tool-call-name {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.tool-call-name strong {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.tool-call-arguments {
+  font-size: 0.875rem;
+  color: #111827;
+}
+
+.tool-call-arguments > strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.arguments-list {
+  margin: 0;
+  padding: 0;
+}
+
+.argument-item {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+.argument-item:last-child {
+  margin-bottom: 0;
+}
+
+.argument-key {
+  flex-shrink: 0;
+  font-weight: 500;
+  color: #374151;
+  min-width: 120px;
+}
+
+.argument-value {
+  margin: 0;
+  color: #111827;
+  word-break: break-word;
+  white-space: pre-wrap;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+.confirm-tool-call-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.confirm-tool-call-footer .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.confirm-tool-call-footer .btn-secondary {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.confirm-tool-call-footer .btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+.confirm-tool-call-footer .btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.confirm-tool-call-footer .btn-primary:hover {
+  background-color: #2563eb;
+}
+
+.confirm-tool-call-footer .btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.confirm-tool-call-footer .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,6 +1,6 @@
-from typing import List
+from typing import List, Optional
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -40,6 +40,15 @@ class Settings(BaseSettings):
     log_level: str = Field(default="INFO", description="Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)")
     log_file: str = Field(default="app.log", description="Log file path")
 
+    # AI Provider Configuration
+    ai_provider: str = Field(default="none", description="AI provider type (none, openai, anthropic, lm-studio, custom)")
+    ai_api_endpoint: Optional[str] = Field(default=None, description="AI provider API endpoint URL")
+    ai_api_key: Optional[str] = Field(default=None, description="AI provider API key (optional for local providers)")
+    ai_model_name: Optional[str] = Field(default=None, description="AI model name")
+    ai_request_timeout: int = Field(default=60, description="AI provider request timeout in seconds")
+    ai_max_context_tokens: int = Field(default=8000, description="Maximum context tokens for AI prompts")
+    ai_max_history_messages: int = Field(default=20, description="Maximum conversation history messages sent to AI")
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
@@ -64,6 +73,50 @@ class Settings(BaseSettings):
         if v <= 0:
             raise ValueError("jwt_expiration_minutes must be positive")
         return v
+
+    @field_validator("ai_provider")
+    @classmethod
+    def validate_ai_provider(cls, v: str) -> str:
+        """Validate AI provider is a supported type."""
+        valid_providers = ["none", "openai", "anthropic", "lm-studio", "custom"]
+        v_lower = v.lower()
+        if v_lower not in valid_providers:
+            raise ValueError(f"ai_provider must be one of {valid_providers}, got {v}")
+        return v_lower
+
+    @field_validator("ai_request_timeout")
+    @classmethod
+    def validate_ai_request_timeout(cls, v: int) -> int:
+        """Validate AI request timeout is positive."""
+        if v <= 0:
+            raise ValueError("ai_request_timeout must be positive")
+        return v
+
+    @field_validator("ai_max_context_tokens")
+    @classmethod
+    def validate_ai_max_context_tokens(cls, v: int) -> int:
+        """Validate AI max context tokens is positive."""
+        if v <= 0:
+            raise ValueError("ai_max_context_tokens must be positive")
+        return v
+
+    @model_validator(mode="after")
+    def validate_ai_config(self) -> "Settings":
+        """Validate cross-field AI configuration requirements."""
+        if self.ai_provider != "none":
+            if not self.ai_api_endpoint:
+                raise ValueError(
+                    f"ai_api_endpoint is required when ai_provider is '{self.ai_provider}'"
+                )
+            if not self.ai_model_name:
+                raise ValueError(
+                    f"ai_model_name is required when ai_provider is '{self.ai_provider}'"
+                )
+            if self.ai_provider in ("openai", "anthropic") and not self.ai_api_key:
+                raise ValueError(
+                    f"ai_api_key is required when ai_provider is '{self.ai_provider}'"
+                )
+        return self
 
     def __init__(self, **kwargs):
         """Initialize settings and sync legacy fields with new JWT fields."""

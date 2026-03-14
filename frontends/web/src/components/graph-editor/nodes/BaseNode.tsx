@@ -6,7 +6,8 @@
  */
 
 import { memo } from 'react';
-import { Handle, Position, type NodeProps } from 'reactflow';
+import { Handle, Position } from 'reactflow';
+import type { NodeProps } from '@reactflow/core';
 import type { Mind } from '../GraphEditorContext';
 import './BaseNode.css';
 

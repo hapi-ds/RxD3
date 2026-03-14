@@ -5,7 +5,7 @@
  */
 
 import { memo } from 'react';
-import { type NodeProps } from 'reactflow';
+import type { NodeProps } from '@reactflow/core';
 import { BaseNode, type BaseNodeData } from './BaseNode';
 
 const RESOURCE_COLOR = '#65a30d'; // Darker Lime (WCAG AA compliant: 3.45:1 contrast with white)

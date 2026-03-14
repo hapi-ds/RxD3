@@ -6,7 +6,8 @@
  */
 
 import { memo } from 'react';
-import { Handle, Position, NodeProps } from 'reactflow';
+import { Handle, Position } from 'reactflow';
+import type { NodeProps } from '@reactflow/core';
 import type { Sprint } from '../../../types/generated';
 import './BaseNode.css';
 

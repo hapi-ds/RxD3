@@ -5,7 +5,7 @@
  */
 
 import { memo } from 'react';
-import { type NodeProps } from 'reactflow';
+import type { NodeProps } from '@reactflow/core';
 import { BaseNode, type BaseNodeData } from './BaseNode';
 
 const EMAIL_COLOR = '#d97706'; // Darker Amber (WCAG AA compliant: 3.12:1 contrast with white)

@@ -19,11 +19,12 @@
  * Requirements: 1.3, 4.2, 9.3, 18.1, 18.2, 18.3, 18.4
  */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { GraphCanvasWithProvider } from './GraphCanvas';
 import { AttributeEditor } from './AttributeEditor';
 import { VersionHistoryPanel } from './VersionHistoryPanel';
 import { KeyboardShortcutsHelp } from './KeyboardShortcutsHelp';
+import { ChatPanel } from '../Chat/ChatPanel';
 import { useGraphEditor } from './GraphEditorContext';
 import { useScreenReaderAnnouncer } from './ScreenReaderAnnouncer';
 import { mindsAPI, relationshipsAPI } from '../../services/api';
@@ -53,7 +54,7 @@ function useIsTablet(): boolean {
 /**
  * GraphEditorLayout Component
  * Provides the main three-panel layout structure for the graph editor
- * with keyboard shortcut support
+ * with keyboard shortcut support and collapsible chat panel
  */
 export function GraphEditorLayout() {
   const { state, dispatch } = useGraphEditor();
@@ -61,7 +62,65 @@ export function GraphEditorLayout() {
   const { announceSelectionChange, announceCRUDOperation } = useScreenReaderAnnouncer();
   const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
   const [isVersionPanelOpen, setIsVersionPanelOpen] = useState(false);
+  const [isChatPanelOpen, setIsChatPanelOpen] = useState(false);
+  const [chatPanelHeight, setChatPanelHeight] = useState(300);
   const isTablet = useIsTablet();
+  const resizeHandleRef = useRef<HTMLDivElement>(null);
+  const isResizingRef = useRef(false);
+
+  // Listen for graph-refresh events dispatched by ChatPanel after node/relationship creation
+  useEffect(() => {
+    const handleGraphRefresh = (): void => {
+      const fetchData = async (): Promise<void> => {
+        try {
+          const [minds, relationships] = await Promise.all([
+            mindsAPI.list(),
+            relationshipsAPI.list(),
+          ]);
+          dispatch({ type: 'SET_MINDS', payload: minds });
+          dispatch({ type: 'SET_RELATIONSHIPS', payload: relationships });
+        } catch (error) {
+          console.error('Error refreshing graph data:', error);
+        }
+      };
+      fetchData();
+    };
+
+    window.addEventListener('graph-refresh', handleGraphRefresh);
+    return () => window.removeEventListener('graph-refresh', handleGraphRefresh);
+  }, [dispatch]);
+
+  // Chat panel resize handle logic
+  const handleResizeMouseDown = useCallback((e: React.MouseEvent): void => {
+    e.preventDefault();
+    isResizingRef.current = true;
+    const startY = e.clientY;
+    const startHeight = chatPanelHeight;
+
+    const handleMouseMove = (moveEvent: MouseEvent): void => {
+      if (!isResizingRef.current) return;
+      const delta = startY - moveEvent.clientY;
+      const newHeight = Math.min(Math.max(startHeight + delta, 150), window.innerHeight * 0.6);
+      setChatPanelHeight(newHeight);
+    };
+
+    const handleMouseUp = (): void => {
+      isResizingRef.current = false;
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+
+    document.body.style.cursor = 'row-resize';
+    document.body.style.userSelect = 'none';
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  }, [chatPanelHeight]);
+
+  const toggleChatPanel = useCallback((): void => {
+    setIsChatPanelOpen(prev => !prev);
+  }, []);
 
   // Announce selection changes
   useEffect(() => {
@@ -220,52 +279,82 @@ export function GraphEditorLayout() {
   }, [state, dispatch, showToast]);
 
   return (
-    <div className="graph-editor-layout">
-      {/* Toggle button for tablet mode */}
-      {isTablet && (
-        <button
-          className="version-panel-toggle"
-          onClick={() => setIsVersionPanelOpen(!isVersionPanelOpen)}
-          aria-label={isVersionPanelOpen ? 'Close version history panel' : 'Open version history panel'}
-          aria-expanded={isVersionPanelOpen}
+    <div className="graph-editor-layout-wrapper">
+      <div className="graph-editor-layout">
+        {/* Toggle button for tablet mode */}
+        {isTablet && (
+          <button
+            className="version-panel-toggle"
+            onClick={() => setIsVersionPanelOpen(!isVersionPanelOpen)}
+            aria-label={isVersionPanelOpen ? 'Close version history panel' : 'Open version history panel'}
+            aria-expanded={isVersionPanelOpen}
+          >
+            <span className="toggle-icon">{isVersionPanelOpen ? '✕' : '☰'}</span>
+            <span className="toggle-label">Version History</span>
+          </button>
+        )}
+        
+        <aside 
+          className={`version-history-panel-container ${isTablet && isVersionPanelOpen ? 'open' : ''} ${isTablet && !isVersionPanelOpen ? 'closed' : ''}`}
+          role="complementary" 
+          aria-label="Version History"
+          aria-hidden={isTablet && !isVersionPanelOpen}
         >
-          <span className="toggle-icon">{isVersionPanelOpen ? '✕' : '☰'}</span>
-          <span className="toggle-label">Version History</span>
-        </button>
+          <VersionHistoryPanel />
+        </aside>
+        
+        {/* Overlay for tablet mode when panel is open */}
+        {isTablet && isVersionPanelOpen && (
+          <div 
+            className="version-panel-overlay"
+            onClick={() => setIsVersionPanelOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+        
+        <main 
+          className="graph-visualization-area-container" 
+          role="main" 
+          aria-label="Graph Visualization"
+        >
+          <GraphCanvasWithProvider />
+        </main>
+        <aside 
+          className="attribute-editor-container" 
+          role="complementary" 
+          aria-label="Attribute Editor"
+        >
+          <AttributeEditor />
+        </aside>
+      </div>
+
+      {/* Chat panel toggle button */}
+      <button
+        className="chat-panel-toggle"
+        onClick={toggleChatPanel}
+        aria-label={isChatPanelOpen ? 'Close chat panel' : 'Open chat panel'}
+        aria-expanded={isChatPanelOpen}
+      >
+        <span className="chat-toggle-icon">{isChatPanelOpen ? '▼' : '▲'}</span>
+        <span className="chat-toggle-label">AI Chat</span>
+      </button>
+
+      {/* Collapsible bottom chat panel */}
+      {isChatPanelOpen && (
+        <div className="chat-panel-container" style={{ height: chatPanelHeight }}>
+          <div
+            className="chat-panel-resize-handle"
+            ref={resizeHandleRef}
+            onMouseDown={handleResizeMouseDown}
+            role="separator"
+            aria-orientation="horizontal"
+            aria-label="Resize chat panel"
+            aria-valuenow={chatPanelHeight}
+            tabIndex={0}
+          />
+          <ChatPanel />
+        </div>
       )}
-      
-      <aside 
-        className={`version-history-panel-container ${isTablet && isVersionPanelOpen ? 'open' : ''} ${isTablet && !isVersionPanelOpen ? 'closed' : ''}`}
-        role="complementary" 
-        aria-label="Version History"
-        aria-hidden={isTablet && !isVersionPanelOpen}
-      >
-        <VersionHistoryPanel />
-      </aside>
-      
-      {/* Overlay for tablet mode when panel is open */}
-      {isTablet && isVersionPanelOpen && (
-        <div 
-          className="version-panel-overlay"
-          onClick={() => setIsVersionPanelOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-      
-      <main 
-        className="graph-visualization-area-container" 
-        role="main" 
-        aria-label="Graph Visualization"
-      >
-        <GraphCanvasWithProvider />
-      </main>
-      <aside 
-        className="attribute-editor-container" 
-        role="complementary" 
-        aria-label="Attribute Editor"
-      >
-        <AttributeEditor />
-      </aside>
       
       {/* Keyboard shortcuts help modal */}
       <KeyboardShortcutsHelp

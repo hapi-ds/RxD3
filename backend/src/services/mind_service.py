@@ -16,19 +16,22 @@ from ..exceptions import MindNotFoundError
 from ..models.mind import BaseMind
 from ..models.mind_types import (
     AcceptanceCriteria,
+    Account,
+    Booking,
     Company,
     Department,
     Email,
     Failure,
+    Journalentry,
     Knowledge,
     Project,
-    Risk,
-    Task,
     Resource,
-    Account,
+    Requirement,
+    Risk,
     ScheduleHistory,
     ScheduledTask,
-    Requirement,
+    Sprint,
+    Task,
 )
 from ..schemas.mind_generic import (
     MindBulkUpdate,

@@ -5,7 +5,7 @@
  */
 
 import { memo } from 'react';
-import { type NodeProps } from 'reactflow';
+import type { NodeProps } from '@reactflow/core';
 import { BaseNode, type BaseNodeData } from './BaseNode';
 
 const DEPARTMENT_COLOR = '#06b6d4'; // Cyan

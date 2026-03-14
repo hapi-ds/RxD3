@@ -5,7 +5,7 @@
  */
 
 import { memo } from 'react';
-import { type NodeProps } from 'reactflow';
+import type { NodeProps } from '@reactflow/core';
 import { BaseNode, type BaseNodeData } from './BaseNode';
 
 const PROJECT_COLOR = '#3b82f6'; // Blue

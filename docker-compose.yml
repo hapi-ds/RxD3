@@ -32,6 +32,13 @@ services:
       - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
       - JWT_ALGORITHM=${JWT_ALGORITHM:-HS256}
       - JWT_EXPIRATION_MINUTES=${JWT_EXPIRATION_MINUTES:-60}
+      - AI_PROVIDER=${AI_PROVIDER:-none}
+      - AI_API_ENDPOINT=${AI_API_ENDPOINT:-}
+      - AI_API_KEY=${AI_API_KEY:-}
+      - AI_MODEL_NAME=${AI_MODEL_NAME:-}
+      - AI_REQUEST_TIMEOUT=${AI_REQUEST_TIMEOUT:-60}
+      - AI_MAX_CONTEXT_TOKENS=${AI_MAX_CONTEXT_TOKENS:-8000}
+      - AI_MAX_HISTORY_MESSAGES=${AI_MAX_HISTORY_MESSAGES:-20}
     volumes:
       - ./backend/src:/app/src:ro
       - backend_venv:/app/.venv
@@ -40,6 +47,8 @@ services:
     depends_on:
       neo4j:
         condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     command: uv run uvicorn src.app:app --host 0.0.0.0 --port 8080 --reload
 
   web:

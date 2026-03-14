@@ -5,8 +5,9 @@
 
 import axios, { type AxiosInstance } from 'axios';
 import { config } from '../config';
-import type { LoginCredentials, Token, PostCreate, PostUpdate, Post, Relationship } from '../types';
+import type { LoginCredentials, Token, PostCreate, PostUpdate, Post, Relationship, RelationshipType } from '../types';
 import type { Mind } from '../types/generated';
+import type { ChatMessage, ChatStreamEvent, ChatConfig } from '../types/chat';
 
 /**
  * Create axios instance with base configuration
@@ -249,6 +250,109 @@ export const relationshipsAPI = {
    */
   delete: async (id: string): Promise<void> => {
     await api.delete(`/api/v1/relationships/${id}`);
+  },
+};
+
+/**
+ * Chat API methods
+ * **Validates: Requirements 4.1, 4.2, 8.2**
+ */
+export const chatAPI = {
+  /**
+   * Send a chat message and receive streaming response
+   * @param content - User message content
+   * @param conversationHistory - Previous messages in the conversation
+   * @returns Promise with ReadableStream of ChatStreamEvent objects
+   */
+  sendMessage: async (
+    content: string,
+    conversationHistory: ChatMessage[]
+  ): Promise<ReadableStream<ChatStreamEvent>> => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    const response = await fetch(`${config.apiUrl}/api/v1/chat/messages`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content,
+        conversation_history: conversationHistory,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorMessage = errorJson.detail || errorMessage;
+      } catch {
+        // If not JSON, use the text as-is
+        errorMessage = errorText || errorMessage;
+      }
+      throw new Error(errorMessage);
+    }
+
+    if (!response.body) {
+      throw new Error('Response body is null');
+    }
+
+    // Transform the ReadableStream to parse SSE format
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    return new ReadableStream<ChatStreamEvent>({
+      async start(controller) {
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            
+            if (done) {
+              controller.close();
+              break;
+            }
+
+            // Decode the chunk and add to buffer
+            buffer += decoder.decode(value, { stream: true });
+
+            // Process complete SSE messages (format: "data: {json}\n\n")
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || ''; // Keep incomplete line in buffer
+
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                const jsonStr = line.slice(6); // Remove "data: " prefix
+                if (jsonStr.trim()) {
+                  try {
+                    const event = JSON.parse(jsonStr) as ChatStreamEvent;
+                    controller.enqueue(event);
+                  } catch (parseError) {
+                    console.error('Failed to parse SSE event:', parseError, jsonStr);
+                  }
+                }
+              }
+            }
+          }
+        } catch (error) {
+          controller.error(error);
+        }
+      },
+    });
+  },
+
+  /**
+   * Get chat configuration from backend
+   * @returns Promise with chat configuration
+   */
+  getConfig: async (): Promise<ChatConfig> => {
+    const response = await api.get<ChatConfig>('/api/v1/chat/config');
+    return response.data;
   },
 };
 

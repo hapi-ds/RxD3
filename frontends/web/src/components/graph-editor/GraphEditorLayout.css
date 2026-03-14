@@ -1,14 +1,24 @@
 /**
  * GraphEditorLayout Styles
- * CSS Grid layout for three-panel structure
+ * CSS Grid layout for three-panel structure with collapsible bottom chat panel
  */
+
+/* Wrapper that stacks the three-panel grid and the bottom chat panel */
+.graph-editor-layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
 
 .graph-editor-layout {
   display: grid;
   grid-template-columns: 300px 3fr 1fr;
   grid-template-areas: "version-history graph-area attribute-editor";
   gap: 1rem;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   width: 100%;
   overflow: hidden;
 }
@@ -150,6 +160,11 @@
     border-radius: 1rem 1rem 0 0;
     box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
   }
+
+  /* Chat panel adjustments for tablet */
+  .chat-panel-container {
+    max-height: 35vh;
+  }
 }
 
 /* Mobile - Not fully supported, show message */
@@ -166,7 +181,9 @@
   .version-history-panel-container,
   .graph-visualization-area-container,
   .attribute-editor-container,
-  .version-panel-toggle {
+  .version-panel-toggle,
+  .chat-panel-toggle,
+  .chat-panel-container {
     display: none;
   }
 
@@ -182,6 +199,88 @@
     border: 2px solid #e5e7eb;
     border-radius: 0.75rem;
   }
+}
+
+/* Chat Panel Toggle Button */
+.chat-panel-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.375rem 1rem;
+  background-color: #f9fafb;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #374151;
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.chat-panel-toggle:hover {
+  background-color: #f3f4f6;
+}
+
+.chat-panel-toggle:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+}
+
+.chat-toggle-icon {
+  font-size: 0.625rem;
+  line-height: 1;
+}
+
+.chat-toggle-label {
+  font-weight: 600;
+}
+
+/* Chat Panel Container - collapsible bottom panel */
+.chat-panel-container {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Resize Handle */
+.chat-panel-resize-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  cursor: row-resize;
+  background-color: transparent;
+  z-index: 10;
+  transition: background-color 0.15s ease;
+}
+
+.chat-panel-resize-handle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background-color: #d1d5db;
+  border-radius: 2px;
+  transition: background-color 0.15s ease;
+}
+
+.chat-panel-resize-handle:hover,
+.chat-panel-resize-handle:active {
+  background-color: rgba(59, 130, 246, 0.08);
+}
+
+.chat-panel-resize-handle:hover::after,
+.chat-panel-resize-handle:active::after {
+  background-color: #3b82f6;
 }
 
 /* Placeholder Panel Styles (temporary, for Phase 1) */

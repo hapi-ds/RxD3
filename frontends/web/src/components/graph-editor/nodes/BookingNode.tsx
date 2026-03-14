@@ -5,7 +5,7 @@
  */
 
 import { memo } from 'react';
-import { type NodeProps } from 'reactflow';
+import type { NodeProps } from '@reactflow/core';
 import { BaseNode, type BaseNodeData } from './BaseNode';
 
 const BOOKING_COLOR = '#ea580c'; // Darker Orange (WCAG AA compliant: 3.21:1 contrast with white)

@@ -1,0 +1,57 @@
+/**
+ * TypeScript type definitions for AI Chat Integration
+ * These types match the backend Pydantic models in backend/src/schemas/chat.py
+ */
+
+/**
+ * Message role in a conversation
+ */
+export type MessageRole = 'user' | 'assistant' | 'system';
+
+/**
+ * Individual message in a chat conversation
+ */
+export interface ChatMessage {
+  role: MessageRole;
+  content: string;
+  timestamp: string;
+}
+
+/**
+ * Server-sent event for streaming chat responses
+ */
+export interface ChatStreamEvent {
+  type: 'message_chunk' | 'function_call' | 'error' | 'done';
+  content?: string;
+  tool_name?: string;
+  arguments?: Record<string, unknown>;
+  error_message?: string;
+}
+
+/**
+ * Chat configuration response from backend
+ */
+export interface ChatConfig {
+  provider: string;
+  model_name: string | null;
+  is_configured: boolean;
+  supports_streaming: boolean;
+  supports_function_calling: boolean;
+}
+
+/**
+ * Tool call proposal from AI assistant
+ */
+export interface ToolCall {
+  tool_name: string;
+  arguments: Record<string, unknown>;
+}
+
+/**
+ * Log entry for AI suggestions (confirmed or rejected)
+ */
+export interface SuggestionLogEntry {
+  timestamp: string;
+  tool_call: ToolCall;
+  action: 'confirmed' | 'rejected';
+}
