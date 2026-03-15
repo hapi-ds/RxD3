@@ -25,6 +25,7 @@ from .mind_types import (
     ScheduledTask,
     Requirement,
 )
+from .skill import SkillNode
 
 __all__ = [
     "PriorityEnum",
@@ -49,4 +50,5 @@ __all__ = [
     "Account",
     "ScheduleHistory",
     "ScheduledTask",
+    "SkillNode",
 ]

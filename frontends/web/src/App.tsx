@@ -17,6 +17,8 @@ import { PostList } from './components/PostList';
 import { PostForm } from './components/PostForm';
 import { WebSocketChat } from './components/WebSocketChat';
 import { GraphEditor } from './components/graph-editor/GraphEditor';
+import { Dashboard } from './components/Dashboard';
+import { Skills } from './components/Skills';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import type { Post } from './types';
 import './App.css';
@@ -54,6 +56,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       <header className="app-header">
         <h1>FastAPI Neo4j Multi-Frontend System</h1>
         <nav className="app-nav">
+          <Link to="/dashboard" className="nav-link">Dashboard</Link>
           <Link to="/posts" className="nav-link">Posts</Link>
           <Link to="/create" className="nav-link">Create Post</Link>
           <Link to="/chat" className="nav-link">Chat</Link>
@@ -135,12 +138,12 @@ function LoginPage() {
   const { isAuthenticated } = useAuth();
 
   const handleLoginSuccess = () => {
-    navigate('/posts');
+    navigate('/dashboard');
   };
 
-  // Redirect to posts if already authenticated
+  // Redirect to dashboard if already authenticated
   if (isAuthenticated) {
-    return <Navigate to="/posts" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Login onLoginSuccess={handleLoginSuccess} />;
@@ -172,6 +175,26 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           
           {/* Protected routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <Dashboard />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/skills"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <Skills />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/posts"
             element={
@@ -224,8 +247,8 @@ function App() {
           />
           
           {/* Default redirect */}
-          <Route path="/" element={<Navigate to="/posts" replace />} />
-          <Route path="*" element={<Navigate to="/posts" replace />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

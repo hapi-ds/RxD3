@@ -93,3 +93,87 @@ export interface Relationship {
   target: string; // UUID of target Mind
   properties: Record<string, any>;
 }
+
+
+/** Skill summary for list views (excludes content) */
+export interface Skill {
+  uuid: string;
+  name: string;
+  description: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+/** Full skill detail including content */
+export interface SkillDetail extends Skill {
+  content: string;
+}
+
+/** Payload for creating a new skill */
+export interface SkillCreate {
+  name: string;
+  description: string;
+  content: string;
+}
+
+/** Payload for updating an existing skill */
+export interface SkillUpdate {
+  name: string;
+  description: string;
+  content: string;
+}
+
+/** Mind node as serialized in save file */
+export interface MindExport {
+  uuid: string;
+  mind_type: string;
+  title: string;
+  version: number;
+  created_at: string;
+  updated_at: string;
+  creator: string;
+  status: string;
+  description: string | null;
+  tags: string[] | null;
+  type_specific_attributes: Record<string, unknown>;
+}
+
+/** Relationship as serialized in save file */
+export interface RelationshipExport {
+  source_uuid: string;
+  target_uuid: string;
+  relationship_type: string;
+  properties: Record<string, unknown>;
+}
+
+/** Post node as serialized in save file */
+export interface PostExport {
+  id: string;
+  title: string;
+  content: string;
+  tags: string[];
+  date_created: string;
+  date_updated: string;
+}
+
+/** Structure of the save file JSON */
+export interface SaveFileData {
+  minds: MindExport[];
+  relationships: RelationshipExport[];
+  posts: PostExport[];
+}
+
+/** Response from the read endpoint */
+export interface ReadResponse {
+  minds_count: number;
+  relationships_count: number;
+  posts_count: number;
+}
+
+/** Response from the clear endpoint */
+export interface ClearResponse {
+  minds_deleted: number;
+  relationships_deleted: number;
+  posts_deleted: number;
+}

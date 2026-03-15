@@ -323,6 +323,58 @@ class KnowledgeStore:
 
         return "\n".join(formatted_lines)
 
+    async def get_enabled_skills(self) -> list[dict[str, str]]:
+        """Query all enabled Skill nodes from Neo4j.
+
+        Skills are NOT cached — queried fresh each request so that
+        toggling a skill takes effect on the next chat message.
+
+        Returns:
+            List of dicts with keys: name, content
+
+        **Validates: Requirements 17.1, 17.2, 17.3, 17.4**
+        """
+        gc = GraphConnection()
+        cypher = (
+            "MATCH (s:Skill) WHERE s.enabled = true "
+            "RETURN s.name AS name, s.content AS content "
+            "ORDER BY s.name"
+        )
+        try:
+            results = gc.engine.evaluate_query(cypher, {})
+            skills: list[dict[str, str]] = []
+            if results and results.records_raw:
+                for record in results.records_raw:
+                    skills.append({
+                        "name": record["name"],
+                        "content": record["content"],
+                    })
+            return skills
+        except Exception:
+            return []
+
+    def format_skills(self, skills: list[dict[str, str]]) -> str:
+        """Format enabled skills as structured text for prompt inclusion.
+
+        Args:
+            skills: List of skill dicts with name and content keys.
+
+        Returns:
+            Formatted string with '## AI Skills' heading and each skill's
+            name as a sub-heading followed by its content. Returns empty
+            string if no skills are provided.
+
+        **Validates: Requirements 17.1, 17.2, 17.3, 17.4**
+        """
+        if not skills:
+            return ""
+        lines = ["## AI Skills", ""]
+        for skill in skills:
+            lines.append(f"### {skill['name']}")
+            lines.append(skill["content"])
+            lines.append("")
+        return "\n".join(lines)
+
     def _estimate_token_count(self, text: str) -> int:
         """
         Estimate token count using word-based approximation (1 token ≈ 0.75 words).
@@ -363,12 +415,14 @@ class KnowledgeStore:
         node_types = await self.get_mind_node_types()
         risks = await self.get_risk_analyses()
         mind_nodes = await self.get_mind_nodes()
+        skills = await self.get_enabled_skills()
 
         # Format each section
         relationships_text = self.format_relationships(relationship_types)
         node_types_text = f"Available Mind node types: {', '.join(node_types)}" if node_types else "Available Mind node types: None"
         risks_text = self.format_risks(risks)
         mind_nodes_text = self.format_mind_nodes(mind_nodes)
+        skills_text = self.format_skills(skills)
 
         # Combine into structured prompt
         sections = [
@@ -390,6 +444,11 @@ class KnowledgeStore:
             "",
             "## " + risks_text,
         ]
+
+        # Append AI Skills section if any skills are enabled
+        if skills_text:
+            sections.append("")
+            sections.append(skills_text)
 
         full_prompt = "\n".join(sections)
 

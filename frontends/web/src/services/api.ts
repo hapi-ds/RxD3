@@ -5,7 +5,7 @@
 
 import axios, { type AxiosInstance } from 'axios';
 import { config } from '../config';
-import type { LoginCredentials, Token, PostCreate, PostUpdate, Post, Relationship, RelationshipType } from '../types';
+import type { LoginCredentials, Token, PostCreate, PostUpdate, Post, Relationship, RelationshipType, SaveFileData, ReadResponse, ClearResponse, Skill, SkillDetail, SkillCreate, SkillUpdate } from '../types';
 import type { Mind } from '../types/generated';
 import type { ChatMessage, ChatStreamEvent, ChatConfig } from '../types/chat';
 
@@ -382,6 +382,69 @@ export const chatAPI = {
   getConfig: async (): Promise<ChatConfig> => {
     const response = await api.get<ChatConfig>('/api/v1/chat/config');
     return response.data;
+  },
+};
+
+/**
+ * Data API methods (Save/Read/Clear Generated_Data)
+ */
+export const dataAPI = {
+  /** Save all Generated_Data as JSON */
+  save: async (): Promise<SaveFileData> => {
+    const response = await api.get<SaveFileData>('/api/v1/save');
+    return response.data;
+  },
+
+  /** Read Generated_Data from a save file */
+  read: async (data: SaveFileData): Promise<ReadResponse> => {
+    const response = await api.post<ReadResponse>('/api/v1/read', data);
+    return response.data;
+  },
+
+  /** Clear all Generated_Data from the database */
+  clear: async (): Promise<ClearResponse> => {
+    const response = await api.delete<ClearResponse>('/api/v1/clear');
+    return response.data;
+  },
+};
+
+/**
+ * Skills API methods (CRUD + toggle)
+ */
+export const skillsAPI = {
+  /** List all skills (without content) */
+  list: async (): Promise<Skill[]> => {
+    const response = await api.get<Skill[]>('/api/v1/skills');
+    return response.data;
+  },
+
+  /** Get a single skill with full content */
+  get: async (uuid: string): Promise<SkillDetail> => {
+    const response = await api.get<SkillDetail>(`/api/v1/skills/${uuid}`);
+    return response.data;
+  },
+
+  /** Create a new skill */
+  create: async (data: SkillCreate): Promise<SkillDetail> => {
+    const response = await api.post<SkillDetail>('/api/v1/skills', data);
+    return response.data;
+  },
+
+  /** Update an existing skill */
+  update: async (uuid: string, data: SkillUpdate): Promise<SkillDetail> => {
+    const response = await api.put<SkillDetail>(`/api/v1/skills/${uuid}`, data);
+    return response.data;
+  },
+
+  /** Toggle skill enabled/disabled status */
+  toggle: async (uuid: string): Promise<{ enabled: boolean }> => {
+    const response = await api.patch<{ enabled: boolean }>(`/api/v1/skills/${uuid}/toggle`);
+    return response.data;
+  },
+
+  /** Delete a skill */
+  delete: async (uuid: string): Promise<void> => {
+    await api.delete(`/api/v1/skills/${uuid}`);
   },
 };
 
