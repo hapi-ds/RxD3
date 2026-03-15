@@ -10,10 +10,13 @@ User nodes and Skill nodes are never affected by these operations.
 """
 
 import logging
+from datetime import datetime, timezone
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from neontology import GraphConnection
+
+import neo4j.time
 
 from src.auth.deps import get_current_user
 from src.models.user import UserNode
@@ -29,6 +32,42 @@ from src.schemas.data import (
 logger = logging.getLogger(__name__)
 
 data_router = APIRouter()
+
+
+def _to_python_datetime(value: Any) -> datetime | None:
+    """Convert a neo4j.time.DateTime to Python datetime, or return as-is.
+
+    Args:
+        value: A datetime-like value from Neo4j or Python.
+
+    Returns:
+        A Python datetime, or None if the value is falsy.
+    """
+    if value is None:
+        return None
+    if isinstance(value, (neo4j.time.DateTime, neo4j.time.Date)):
+        return value.to_native()
+    return value
+
+
+def _sanitize_neo4j_value(value: Any) -> Any:
+    """Convert any neo4j-specific types to Python-native equivalents.
+
+    Args:
+        value: Any value that may be a neo4j type.
+
+    Returns:
+        Python-native equivalent.
+    """
+    if isinstance(value, (neo4j.time.DateTime, neo4j.time.Date)):
+        return value.to_native()
+    if isinstance(value, neo4j.time.Duration):
+        return str(value)
+    if isinstance(value, dict):
+        return {k: _sanitize_neo4j_value(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_sanitize_neo4j_value(v) for v in value]
+    return value
 
 
 def _execute_cypher(cypher: str, params: dict[str, Any] | None = None) -> list[dict[str, Any]]:
@@ -113,25 +152,38 @@ def save_data(
             # neo4j Node object — access via dict()
             props = dict(node)
 
+        # Skip nodes missing a valid uuid
+        node_uuid = props.get("uuid")
+        if not node_uuid:
+            logger.warning("Skipping node without uuid: %s", props.get("title"))
+            continue
+
         base_keys = {
             "uuid", "title", "version", "created_at", "updated_at",
             "creator", "status", "description", "tags",
         }
-        type_specific = {k: v for k, v in props.items() if k not in base_keys}
+        type_specific = {
+            k: _sanitize_neo4j_value(v)
+            for k, v in props.items() if k not in base_keys
+        }
 
-        minds.append(MindExport(
-            uuid=props.get("uuid", ""),
-            mind_type=mind_type,
-            title=props.get("title", ""),
-            version=props.get("version", 1),
-            created_at=props.get("created_at"),
-            updated_at=props.get("updated_at"),
-            creator=props.get("creator", ""),
-            status=props.get("status", "draft"),
-            description=props.get("description"),
-            tags=props.get("tags"),
-            type_specific_attributes=type_specific,
-        ))
+        now = datetime.now(timezone.utc)
+        try:
+            minds.append(MindExport(
+                uuid=node_uuid,
+                mind_type=mind_type,
+                title=props.get("title", ""),
+                version=props.get("version", 1),
+                created_at=_to_python_datetime(props.get("created_at")) or now,
+                updated_at=_to_python_datetime(props.get("updated_at")) or now,
+                creator=props.get("creator", ""),
+                status=props.get("status", "draft"),
+                description=props.get("description"),
+                tags=props.get("tags"),
+                type_specific_attributes=type_specific,
+            ))
+        except (ValueError, TypeError) as e:
+            logger.warning("Skipping invalid mind node %s: %s", node_uuid, e)
 
     # Query relationships between Mind nodes
     rel_cypher = (
@@ -152,7 +204,7 @@ def save_data(
             source_uuid=record["source_uuid"],
             target_uuid=record["target_uuid"],
             relationship_type=record["rel_type"],
-            properties=record.get("props") or {},
+            properties=_sanitize_neo4j_value(record.get("props") or {}),
         ))
 
     # Query Post nodes
@@ -163,14 +215,22 @@ def save_data(
     for record in post_records:
         node = record["p"]
         props = dict(node)
-        posts.append(PostExport(
-            id=props.get("id", ""),
-            title=props.get("title", ""),
-            content=props.get("content", ""),
-            tags=props.get("tags", []),
-            date_created=props.get("date_created"),
-            date_updated=props.get("date_updated"),
-        ))
+        post_id = props.get("id")
+        if not post_id:
+            logger.warning("Skipping post without id: %s", props.get("title"))
+            continue
+        now = datetime.now(timezone.utc)
+        try:
+            posts.append(PostExport(
+                id=post_id,
+                title=props.get("title", ""),
+                content=props.get("content", ""),
+                tags=props.get("tags", []),
+                date_created=_to_python_datetime(props.get("date_created")) or now,
+                date_updated=_to_python_datetime(props.get("date_updated")) or now,
+            ))
+        except (ValueError, TypeError) as e:
+            logger.warning("Skipping invalid post %s: %s", post_id, e)
 
     return SaveFileData(minds=minds, relationships=relationships, posts=posts)
 
