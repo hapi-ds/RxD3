@@ -49,6 +49,7 @@ Downloadable from the Classic View. Generated server-side using ReportLab. The r
 - Journal entries ordered by date (severity, title, description)
 
 
+![PDF Report](pictures/Screenshot%20From%202026-03-16%2022-02-05.png)
 
 
 ## Scheduling API

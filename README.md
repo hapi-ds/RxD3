@@ -80,15 +80,20 @@ See [`docs/`](docs/) for detailed docs:
 - [AI Features](docs/AI.md) — skill system, AI chat, provider configuration
 - [PM Features](docs/PM.md) — Task scheduling, Gantt, Burn-Down, PDF Project Report, Bookings, Sprints
 
-## Next/Planned
+## Next Tasks
 
 - Requirment Managment: Output of URS, Trace-Matrix, ...
 - Risk Management: Output of a p/dFMEA in XLSX format
-- Adapted skills to be (more) usefull
+- Adapted skills to be (more) usefull --> ongoing
 
-### Enhancements
+### Enhancements (next next tasks)
 
-- Project Managment: Booking app for phone, easy create relations (better sprint planning)
+- Project Managment: 
+    - New Frontend: Booking app for phone
+    - Graph Page: easy create relations (better sprint planning-select relation and then just drop target not on source node)
+    - PDF Report: Add all scheduled gantt
+    - PDF Report: Add a milestone planning matrix over all scheduled project plannes
+
 
 ## Tech Stack
 

@@ -93,7 +93,7 @@ export const ClassicProjectView: React.FC = () => {
   const handleDownloadPDF = useCallback(async () => {
     if (!projectUuid) return;
     try {
-      const blob = await reportsAPI.downloadPDF(projectUuid, selectedVersion || undefined);
+      const blob = await reportsAPI.downloadPDF(projectUuid, selectedVersion || undefined, timeScale);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -104,7 +104,7 @@ export const ClassicProjectView: React.FC = () => {
       const msg = err instanceof Error ? err.message : 'PDF download failed';
       setError(msg);
     }
-  }, [projectUuid, selectedVersion]);
+  }, [projectUuid, selectedVersion, timeScale]);
 
   if (loading) {
     return <div className="classic-view-loading">Loading schedule data...</div>;

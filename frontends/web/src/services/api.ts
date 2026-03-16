@@ -497,8 +497,10 @@ export const schedulesAPI = {
  */
 export const reportsAPI = {
   /** Download PDF project report as Blob */
-  downloadPDF: async (projectUuid: string, version?: number): Promise<Blob> => {
-    const params = version !== undefined ? { version } : {};
+  downloadPDF: async (projectUuid: string, version?: number, timeScale?: string): Promise<Blob> => {
+    const params: Record<string, string | number> = {};
+    if (version !== undefined) params.version = version;
+    if (timeScale) params.time_scale = timeScale;
     const response = await api.get(
       `/api/v1/reports/project/${projectUuid}/pdf`,
       { params, responseType: 'blob' }
