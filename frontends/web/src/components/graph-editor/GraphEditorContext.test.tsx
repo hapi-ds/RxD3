@@ -36,7 +36,6 @@ const mockMind2: Mind = {
   version: 1,
   creator: 'test-user',
   priority: 'high',
-  assignee: 'test-user',
 };
 
 const mockMind1v2: Mind = {
@@ -672,7 +671,6 @@ describe('GraphEditorContext', () => {
                 version: 1,
                 creator: 'test-user',
                 priority: 'medium',
-                assignee: 'test-user',
               },
             });
           }
@@ -1266,7 +1264,6 @@ describe('GraphEditorContext', () => {
       version: 1,
       creator: 'test-user',
       priority: 'high',
-      assignee: 'test-user',
     };
 
     const node3: Mind = {
@@ -1276,7 +1273,6 @@ describe('GraphEditorContext', () => {
       version: 1,
       creator: 'test-user',
       priority: 'medium',
-      assignee: 'test-user',
     };
 
     const node4: Mind = {
@@ -1286,7 +1282,6 @@ describe('GraphEditorContext', () => {
       version: 1,
       creator: 'test-user',
       priority: 'low',
-      assignee: 'test-user',
     };
 
     const edge1to2: Relationship = {

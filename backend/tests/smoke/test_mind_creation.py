@@ -28,7 +28,6 @@ def test_create_task(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "medium",
-                "assignee": "test_user",
             },
         },
     )

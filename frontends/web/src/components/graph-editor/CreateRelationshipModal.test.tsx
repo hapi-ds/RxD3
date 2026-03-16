@@ -54,7 +54,6 @@ describe('CreateRelationshipModal', () => {
     tags: null,
     __primarylabel__: 'Task',
     priority: 'medium',
-    assignee: 'test@example.com',
     due_date: null,
     effort: null,
     duration: null,

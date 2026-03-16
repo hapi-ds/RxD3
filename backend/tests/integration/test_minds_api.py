@@ -22,7 +22,6 @@ def sample_task_data():
         "creator": "dev@example.com",
         "type_specific_attributes": {
             "priority": "high",
-            "assignee": "dev@example.com",
             "due_date": "2024-02-01"
         },
     }

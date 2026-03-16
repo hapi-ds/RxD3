@@ -86,7 +86,6 @@ describe('CreateNodeForm', () => {
 
     // Check Task-specific fields
     expect(screen.getByLabelText(/priority/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/assignee/i)).toBeInTheDocument();
   });
 
   it('marks required fields with indicator', () => {

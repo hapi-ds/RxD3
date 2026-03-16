@@ -330,7 +330,6 @@ class TestServiceLayerFiltering:
             "tags": ["tag1", "tag3"],
             "type_specific_attributes": {
                 "priority": "high",
-                "assignee": "user1",
                 "due_date": "2024-03-01",
             },
         }

@@ -72,14 +72,16 @@ class Project(BaseMind):
 
 class Task(BaseMind):
     """
-    Task Mind type representing a work item with priority and assignment.
+    Task Mind type representing a work item with priority and effort.
 
     Extends BaseMind with task-specific attributes including priority level,
-    assignee, optional due date, and effort estimation.
+    optional due date, and effort estimation. Resource assignment is handled
+    exclusively via ASSIGNED_TO relationships (not as a field attribute).
+    Resources assigned to parent nodes (Project, Phase, WorkPackage) are
+    implicitly inherited by child tasks through the CONTAINS hierarchy.
 
     Attributes:
         priority: Task priority level (low, medium, high, critical)
-        assignee: User identifier of the person assigned to the task
         due_date: Optional due date for task completion
         effort: Optional work effort in hours
         duration: Optional work duration in days
@@ -93,11 +95,6 @@ class Task(BaseMind):
     priority: PriorityEnum = Field(
         ...,
         description="Task priority level"
-    )
-    assignee: str = Field(
-        ...,
-        min_length=1,
-        description="User identifier of the person assigned to the task"
     )
     due_date: Optional[date] = Field(
         default=None,
@@ -562,22 +559,69 @@ class Journalentry(BaseMind):
 
 
 class Booking(BaseMind):
-    """Booking Mind type for booking working hours TO task FOR resource."""
+    """Booking Mind type for booking working hours TO task FOR resource.
+
+    Extends BaseMind with booking-specific attributes including hours worked,
+    booking date, hourly rate at time of booking, and computed amount.
+
+    Attributes:
+        hours_worked: Hours worked (must be >= 0)
+        booking_date: Optional date of the booking
+        rate: Optional hourly rate at time of booking
+        amount: Optional computed amount (hours × rate)
+
+    **Validates: Requirements 9.2, 9.5**
+    """
 
     __primarylabel__: str = "Booking"
 
     hours_worked: float = Field(
-        default=1.0, ge=0.0, description="Worked x hours (0.0-1.0)"
+        ..., ge=0.0, description="Hours worked"
+    )
+    booking_date: Optional[date] = Field(
+        default=None, description="Date of the booking"
+    )
+    rate: Optional[float] = Field(
+        default=None, ge=0.0, description="Hourly rate at time of booking"
+    )
+    amount: Optional[float] = Field(
+        default=None, ge=0.0, description="Computed amount (hours × rate)"
     )
 
 class Sprint(BaseMind):
-    """Sprint Mind type just for testing at the moment."""
+    """Sprint Mind type for agile iteration tracking.
+
+    Extends BaseMind with sprint-specific attributes including sprint number,
+    date range, optional goal, and velocity.
+
+    **Validates: Requirements 9.1, 9.3**
+    """
 
     __primarylabel__: str = "Sprint"
 
-    test_item: float = Field(
-        default=1.0, ge=0.0, description="Worked x hours (0.0-1.0)"
+    sprint_number: int = Field(
+        ..., ge=1, description="Sprint number"
     )
+    start_date: date = Field(
+        ..., description="Sprint start date"
+    )
+    end_date: date = Field(
+        ..., description="Sprint end date"
+    )
+    goal: Optional[str] = Field(
+        default=None, max_length=500, description="Sprint goal"
+    )
+    velocity: Optional[float] = Field(
+        default=None, ge=0.0, description="Sprint velocity in story points or hours"
+    )
+
+    @field_validator("end_date")
+    @classmethod
+    def validate_end_date(cls, v: date, info) -> date:
+        """Validate that end_date is after start_date."""
+        if "start_date" in info.data and v <= info.data["start_date"]:
+            raise ValueError("end_date must be after start_date")
+        return v
 
 
 
@@ -674,3 +718,8 @@ class ScheduledTask(BaseMind):
         default=None, ge=0.0, description="Variable cost (resources)"
     )
     total_cost: Optional[float] = Field(default=None, ge=0.0, description="Total cost")
+
+    @field_serializer('source_task_uuid')
+    def serialize_source_task_uuid(self, uuid: UUID, _info) -> str:
+        """Serialize source_task_uuid to string for Neo4j compatibility."""
+        return str(uuid)

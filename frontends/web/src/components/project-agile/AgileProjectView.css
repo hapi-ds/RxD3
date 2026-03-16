@@ -1,0 +1,123 @@
+.agile-project-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 16px;
+}
+
+.agile-project-view h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.agile-view-content {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.burndown-panel {
+  flex: 1;
+  min-width: 300px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 16px;
+  overflow: auto;
+}
+
+.burndown-panel h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.burndown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.burndown-scope-select {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  max-width: 220px;
+}
+
+.sprint-panel {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.agile-view-loading,
+.agile-view-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 12px;
+  text-align: center;
+}
+
+.agile-view-error button {
+  padding: 8px 20px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.agile-view-error button:hover {
+  background: #2980b9;
+}
+
+.agile-view-select-project {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 16px;
+  text-align: center;
+}
+
+.agile-view-select-project h2 {
+  margin: 0 0 12px 0;
+}
+
+.agile-view-select-project .project-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.agile-view-select-project .project-selector label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.agile-view-select-project .project-selector select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  min-width: 250px;
+}
+
+.agile-view-select-project .error-message {
+  color: #e74c3c;
+  margin: 0;
+}

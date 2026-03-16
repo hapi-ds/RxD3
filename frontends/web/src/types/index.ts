@@ -79,9 +79,14 @@ export type RelationshipType =
   | 'CONTAINS'
   | 'PREDATES'
   | 'ASSIGNED_TO'
+  | 'DEPENDS_ON'
+  | 'RELATES_TO'
+  | 'IMPLEMENTS'
+  | 'MITIGATES'
   | 'TO'
   | 'FOR'
-  | 'REFINES';
+  | 'REFINES'
+  | 'HAS_SCHEDULED';
 
 /**
  * Relationship entity representing connections between Mind nodes
@@ -176,4 +181,62 @@ export interface ClearResponse {
   minds_deleted: number;
   relationships_deleted: number;
   posts_deleted: number;
+}
+
+/** Schedule history entry from the API */
+export interface ScheduleHistory {
+  uuid: string;
+  schedule_id: string;
+  scheduled_at: string;
+  total_effort: number | null;
+  total_cost: number | null;
+  global_start: string | null;
+  global_end: string | null;
+  version: number;
+}
+
+/** Enriched scheduled task with original task info */
+export interface ScheduledTaskEnriched {
+  uuid: string;
+  source_task_uuid: string;
+  scheduled_start: string;
+  scheduled_end: string;
+  scheduled_duration: number;
+  is_critical: boolean;
+  slack_start: number | null;
+  slack_end: number | null;
+  base_cost: number | null;
+  variable_cost: number | null;
+  total_cost: number | null;
+  task_title: string;
+  task_type: string;
+  hierarchy_level: number;
+  predecessors: string[];
+  progress: number;
+  booked_hours: number;
+}
+
+/** Response from schedule creation */
+export interface ScheduleCreateResponse {
+  success: boolean;
+  schedule_id: string;
+  version: number;
+  message: string;
+}
+
+/** Gantt chart component props */
+export interface GanttChartProps {
+  tasks: ScheduledTaskEnriched[];
+  timeScale: 'weeks' | 'months' | 'quarters' | 'years';
+  maxDepth: number;
+  globalStart: string;
+  globalEnd: string;
+}
+
+/** Burn-down chart data point */
+export interface BurnDownPoint {
+  sprint_number: number;
+  sprint_label: string;
+  ideal_remaining: number;
+  actual_remaining: number;
 }

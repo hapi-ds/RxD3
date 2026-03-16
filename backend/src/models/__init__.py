@@ -7,17 +7,20 @@ from .enums import (
     AccountType,
     RequirementType,
 )
-from .mind import BaseMind, Previous
+from .mind import BaseMind, HasScheduled, Previous
 
 from .mind_types import (
     AcceptanceCriteria,
+    Booking,
     Company,
     Department,
     Email,
     Failure,
+    Journalentry,
     Knowledge,
     Project,
     Risk,
+    Sprint,
     Task,
     Resource,
     Account,
@@ -35,15 +38,19 @@ __all__ = [
     "AccountType",
     "RequirementType",
     "BaseMind",
+    "HasScheduled",
     "Previous",
     "AcceptanceCriteria",
+    "Booking",
     "Company",
     "Department",
     "Email",
     "Failure",
+    "Journalentry",
     "Knowledge",
     "Project",
     "Risk",
+    "Sprint",
     "Task",
     "Requirement",  # Consolidated: UserStory, UserNeed, DesignInput, DesignOutput, ProcessRequirement, WorkInstructionRequirement
     "Resource",  # Replaces Employee - use resource_type=ResourceType.PERSON

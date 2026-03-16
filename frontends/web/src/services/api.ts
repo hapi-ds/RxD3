@@ -5,7 +5,7 @@
 
 import axios, { type AxiosInstance } from 'axios';
 import { config } from '../config';
-import type { LoginCredentials, Token, PostCreate, PostUpdate, Post, Relationship, RelationshipType, SaveFileData, ReadResponse, ClearResponse, Skill, SkillDetail, SkillCreate, SkillUpdate } from '../types';
+import type { LoginCredentials, Token, PostCreate, PostUpdate, Post, Relationship, RelationshipType, SaveFileData, ReadResponse, ClearResponse, Skill, SkillDetail, SkillCreate, SkillUpdate, ScheduleHistory, ScheduledTaskEnriched, ScheduleCreateResponse } from '../types';
 import type { Mind } from '../types/generated';
 import type { ChatMessage, ChatStreamEvent, ChatConfig } from '../types/chat';
 
@@ -147,12 +147,26 @@ function flattenMind(raw: Record<string, unknown>): Mind {
  */
 export const mindsAPI = {
   /**
-   * Get all minds
-   * @returns Promise with array of minds
+   * Get all minds (fetches all pages)
+   * @returns Promise with array of all minds
    */
   list: async (): Promise<Mind[]> => {
-    const response = await api.get<{ items: Record<string, unknown>[]; total: number }>('/api/v1/minds');
-    return response.data.items.map(flattenMind);
+    const pageSize = 100;
+    const response = await api.get<{ items: Record<string, unknown>[]; total: number; total_pages: number }>('/api/v1/minds', {
+      params: { page_size: pageSize },
+    });
+    const allMinds = response.data.items.map(flattenMind);
+    
+    // Fetch remaining pages if total exceeds first page
+    const totalPages = response.data.total_pages ?? 1;
+    for (let page = 2; page <= totalPages; page++) {
+      const nextResponse = await api.get<{ items: Record<string, unknown>[]; total: number }>('/api/v1/minds', {
+        params: { page_size: pageSize, page },
+      });
+      allMinds.push(...nextResponse.data.items.map(flattenMind));
+    }
+    
+    return allMinds;
   },
 
   /**
@@ -444,6 +458,52 @@ export const skillsAPI = {
   /** Delete a skill */
   delete: async (uuid: string): Promise<void> => {
     await api.delete(`/api/v1/skills/${uuid}`);
+  },
+};
+
+/**
+ * Schedules API methods
+ */
+export const schedulesAPI = {
+  /** Trigger schedule computation for a project */
+  createSchedule: async (projectUuid: string): Promise<ScheduleCreateResponse> => {
+    const response = await api.post<ScheduleCreateResponse>(
+      `/api/v1/schedules/project/${projectUuid}`
+    );
+    return response.data;
+  },
+
+  /** Get schedule history for a project (ordered by version descending) */
+  getHistory: async (projectUuid: string): Promise<ScheduleHistory[]> => {
+    const response = await api.get<ScheduleHistory[]>(
+      `/api/v1/schedules/project/${projectUuid}/history`
+    );
+    return response.data;
+  },
+
+  /** Get enriched scheduled tasks for a project (latest or specified version) */
+  getTasks: async (projectUuid: string, version?: number): Promise<ScheduledTaskEnriched[]> => {
+    const params = version !== undefined ? { version } : {};
+    const response = await api.get<ScheduledTaskEnriched[]>(
+      `/api/v1/schedules/project/${projectUuid}/tasks`,
+      { params }
+    );
+    return response.data;
+  },
+};
+
+/**
+ * Reports API methods
+ */
+export const reportsAPI = {
+  /** Download PDF project report as Blob */
+  downloadPDF: async (projectUuid: string, version?: number): Promise<Blob> => {
+    const params = version !== undefined ? { version } : {};
+    const response = await api.get(
+      `/api/v1/reports/project/${projectUuid}/pdf`,
+      { params, responseType: 'blob' }
+    );
+    return response.data;
   },
 };
 

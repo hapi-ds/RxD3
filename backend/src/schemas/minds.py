@@ -259,7 +259,10 @@ class BookingCreate(BaseModel):
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
     tags: list[str] | None = None
-    hours_worked: float | None = 1.0
+    hours_worked: float
+    booking_date: date | None = None
+    rate: float | None = None
+    amount: float | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -288,6 +291,9 @@ class BookingUpdate(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     hours_worked: float | None = None
+    booking_date: date | None = None
+    rate: float | None = None
+    amount: float | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -318,7 +324,10 @@ class BookingResponse(BaseModel):
     status: StatusEnum | None = None
     description: str | None = None
     tags: list[str] | None = None
-    hours_worked: float | None = None
+    hours_worked: float
+    booking_date: date | None = None
+    rate: float | None = None
+    amount: float | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1706,7 +1715,11 @@ class SprintCreate(BaseModel):
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
     tags: list[str] | None = None
-    test_item: float | None = 1.0
+    sprint_number: int
+    start_date: date
+    end_date: date
+    goal: str | None = None
+    velocity: float | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1734,7 +1747,11 @@ class SprintUpdate(BaseModel):
     status: StatusEnum | None = None
     description: str | None = None
     tags: list[str] | None = None
-    test_item: float | None = None
+    sprint_number: int | None = None
+    start_date: date | None = None
+    end_date: date | None = None
+    goal: str | None = None
+    velocity: float | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1765,7 +1782,11 @@ class SprintResponse(BaseModel):
     status: StatusEnum | None = None
     description: str | None = None
     tags: list[str] | None = None
-    test_item: float | None = None
+    sprint_number: int
+    start_date: date
+    end_date: date
+    goal: str | None = None
+    velocity: float | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1794,7 +1815,6 @@ class TaskCreate(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     priority: PriorityEnum
-    assignee: str
     due_date: date | None = None
     effort: float | None = None
     duration: float | None = None
@@ -1857,7 +1877,6 @@ class TaskUpdate(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     priority: PriorityEnum | None = None
-    assignee: str | None = None
     due_date: date | None = None
     effort: float | None = None
     duration: float | None = None
@@ -1927,7 +1946,6 @@ class TaskResponse(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     priority: PriorityEnum
-    assignee: str
     due_date: date | None = None
     effort: float | None = None
     duration: float | None = None

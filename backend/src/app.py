@@ -30,6 +30,8 @@ from src.routes.users import UserRouter
 from src.routes.chat import router as chat_router
 from src.routes.skills import skills_router
 from src.routes.data import data_router
+from src.routes.schedules import router as schedules_router
+from src.routes.reports import router as reports_router
 from src.websocket.routes import router as websocket_router
 
 
@@ -122,6 +124,8 @@ app.include_router(relationships_router, tags=["Relationships"], prefix="/api/v1
 app.include_router(chat_router, tags=["Chat"], prefix="/api/v1/chat")
 app.include_router(skills_router, tags=["Skills"], prefix="/api/v1/skills")
 app.include_router(data_router, tags=["Data"], prefix="/api/v1")
+app.include_router(schedules_router, tags=["Scheduling"])
+app.include_router(reports_router, tags=["Reports"])
 app.include_router(websocket_router, tags=["WebSocket"])
 
 # Register exception handlers for Mind system

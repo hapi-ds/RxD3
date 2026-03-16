@@ -29,7 +29,6 @@ const createTestNodes = (count: number): Mind[] => {
     description: null,
     tags: null,
     priority: 'medium' as const,
-    assignee: 'test',
     due_date: null,
     effort: null,
     duration: null,

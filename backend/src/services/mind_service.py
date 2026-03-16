@@ -250,7 +250,6 @@ class MindService:
             "sender": "system@example.com",
             "subject": title,
             "schedule_id": "auto-generated",
-            "assignee": "unassigned",
         }
         if field_name in defaults_by_name:
             return defaults_by_name[field_name]
@@ -329,12 +328,21 @@ class MindService:
                     # Convert to dict and instantiate the correct model class
                     node_data = dict(result)
 
-                    # Convert Neo4j datetime/date objects to Python datetime/date
+                    # Convert Neo4j datetime/date objects and ISO strings
                     for key, value in node_data.items():
                         if hasattr(value, "to_native"):  # Neo4j DateTime/Date objects
                             node_data[key] = value.to_native()
+                        elif isinstance(value, str) and key in ("created_at", "updated_at"):
+                            from datetime import datetime as dt
+                            try:
+                                node_data[key] = dt.fromisoformat(value)
+                            except (ValueError, TypeError):
+                                pass
 
-                    mind_node = model_class(**node_data)
+                    try:
+                        mind_node = model_class(**node_data)
+                    except Exception:
+                        continue
                     mind_type = type_name
                     break
 
@@ -675,6 +683,13 @@ class MindService:
             "relates_to",
             "implements",
             "mitigates",
+            "predates",
+            "to",
+            "for",
+            "refines",
+            "has_scheduled",
+            "scheduled",
+            "previous",
         }
         if relationship_type not in valid_types:
             raise ValueError(
@@ -808,6 +823,13 @@ class MindService:
             "relates_to",
             "implements",
             "mitigates",
+            "predates",
+            "to",
+            "for",
+            "refines",
+            "has_scheduled",
+            "scheduled",
+            "previous",
         }
         if relationship_type is not None and relationship_type not in valid_types:
             raise ValueError(
@@ -826,6 +848,13 @@ class MindService:
 
         gc = GraphConnection()
 
+        # All supported relationship types
+        _rel_types = (
+            "['CONTAINS', 'DEPENDS_ON', 'ASSIGNED_TO', 'RELATES_TO', "
+            "'IMPLEMENTS', 'MITIGATES', 'PREDATES', 'TO', 'FOR', "
+            "'REFINES', 'HAS_SCHEDULED', 'SCHEDULED', 'PREVIOUS']"
+        )
+
         # Build Cypher query based on direction and optional type filter
         if direction == "outgoing":
             # Query outgoing relationships (uuid is source)
@@ -839,9 +868,9 @@ class MindService:
                 ORDER BY r.created_at DESC
                 """
             else:
-                cypher = """
-                MATCH (source {uuid: $uuid})-[r]->(target)
-                WHERE type(r) IN ['CONTAINS', 'DEPENDS_ON', 'ASSIGNED_TO', 'RELATES_TO', 'IMPLEMENTS', 'MITIGATES']
+                cypher = f"""
+                MATCH (source {{uuid: $uuid}})-[r]->(target)
+                WHERE type(r) IN {_rel_types}
                 RETURN type(r) as rel_type, source.uuid as source_uuid,
                        target.uuid as target_uuid, r.created_at as created_at,
                        properties(r) as props
@@ -859,9 +888,9 @@ class MindService:
                 ORDER BY r.created_at DESC
                 """
             else:
-                cypher = """
-                MATCH (source)-[r]->(target {uuid: $uuid})
-                WHERE type(r) IN ['CONTAINS', 'DEPENDS_ON', 'ASSIGNED_TO', 'RELATES_TO', 'IMPLEMENTS', 'MITIGATES']
+                cypher = f"""
+                MATCH (source)-[r]->(target {{uuid: $uuid}})
+                WHERE type(r) IN {_rel_types}
                 RETURN type(r) as rel_type, source.uuid as source_uuid,
                        target.uuid as target_uuid, r.created_at as created_at,
                        properties(r) as props
@@ -884,15 +913,15 @@ class MindService:
                 ORDER BY created_at DESC
                 """
             else:
-                cypher = """
-                MATCH (source {uuid: $uuid})-[r]->(target)
-                WHERE type(r) IN ['CONTAINS', 'DEPENDS_ON', 'ASSIGNED_TO', 'RELATES_TO', 'IMPLEMENTS', 'MITIGATES']
+                cypher = f"""
+                MATCH (source {{uuid: $uuid}})-[r]->(target)
+                WHERE type(r) IN {_rel_types}
                 RETURN type(r) as rel_type, source.uuid as source_uuid,
                        target.uuid as target_uuid, r.created_at as created_at,
                        properties(r) as props
                 UNION
-                MATCH (source)-[r]->(target {uuid: $uuid})
-                WHERE type(r) IN ['CONTAINS', 'DEPENDS_ON', 'ASSIGNED_TO', 'RELATES_TO', 'IMPLEMENTS', 'MITIGATES']
+                MATCH (source)-[r]->(target {{uuid: $uuid}})
+                WHERE type(r) IN {_rel_types}
                 RETURN type(r) as rel_type, source.uuid as source_uuid,
                        target.uuid as target_uuid, r.created_at as created_at,
                        properties(r) as props
@@ -914,6 +943,12 @@ class MindService:
                 created_at = record["created_at"]
                 if hasattr(created_at, "to_native"):
                     created_at = created_at.to_native()
+                elif isinstance(created_at, str):
+                    from datetime import datetime as dt
+                    try:
+                        created_at = dt.fromisoformat(created_at)
+                    except (ValueError, TypeError):
+                        created_at = None
 
                 # Extract properties (excluding created_at which is already a field)
                 props = record.get("props", {})
@@ -950,9 +985,14 @@ class MindService:
         gc = GraphConnection()
 
         # Query all relationships of the supported types
+        # Exclude internal scheduling relationships (HAS_SCHEDULED, SCHEDULED)
         cypher = """
         MATCH (source)-[r]->(target)
-        WHERE type(r) IN ['CONTAINS', 'DEPENDS_ON', 'ASSIGNED_TO', 'RELATES_TO', 'IMPLEMENTS', 'MITIGATES']
+        WHERE type(r) IN [
+            'CONTAINS', 'DEPENDS_ON', 'ASSIGNED_TO', 'RELATES_TO',
+            'IMPLEMENTS', 'MITIGATES', 'PREDATES', 'TO', 'FOR',
+            'REFINES', 'PREVIOUS'
+        ]
         AND source.uuid IS NOT NULL AND target.uuid IS NOT NULL
         RETURN type(r) as rel_type, source.uuid as source_uuid,
                target.uuid as target_uuid, r.created_at as created_at,
@@ -975,17 +1015,32 @@ class MindService:
                 created_at = record["created_at"]
                 if hasattr(created_at, "to_native"):
                     created_at = created_at.to_native()
+                elif isinstance(created_at, str):
+                    from datetime import datetime as dt
+                    try:
+                        created_at = dt.fromisoformat(created_at)
+                    except (ValueError, TypeError):
+                        created_at = None
 
                 # Extract properties (excluding created_at which is already a field)
                 props = record.get("props", {})
-                # Remove created_at from properties dict if present
-                properties = {k: v for k, v in props.items() if k != "created_at"}
+                # Remove created_at and convert Neo4j native types
+                properties = {}
+                for k, v in props.items():
+                    if k == "created_at":
+                        continue
+                    if hasattr(v, "to_native"):
+                        properties[k] = str(v.to_native())
+                    elif isinstance(v, (str, int, float, bool)) or v is None:
+                        properties[k] = v
+                    else:
+                        properties[k] = str(v)
 
                 relationships.append(
                     RelationshipResponse(
                         relationship_type=rel_type_normalized,
-                        source_uuid=UUID(record["source_uuid"]),
-                        target_uuid=UUID(record["target_uuid"]),
+                        source_uuid=UUID(str(record["source_uuid"])),
+                        target_uuid=UUID(str(record["target_uuid"])),
                         created_at=created_at,
                         properties=properties,
                     )
@@ -1098,14 +1153,26 @@ class MindService:
         params["limit"] = filters.page_size
 
         # Query for latest versions only - get the highest version per UUID
-        # First, get all matching nodes grouped by UUID with their max version
+        # Filter to only known Mind type labels to exclude non-Mind nodes (User, Skill, Post, etc.)
+        # Also exclude internal scheduling artifacts (ScheduleHistory, ScheduledTask)
+        excluded_labels = {"ScheduleHistory", "ScheduledTask"}
+        mind_labels = [mc.__name__ for mc in self.MIND_TYPE_MAP.values() if mc.__name__ not in excluded_labels]
+        label_filter = " OR ".join(f"'{lbl}' IN labels(n)" for lbl in mind_labels)
+        mind_filter = f"({label_filter})"
+
+        # Prepend the mind label filter to existing where clauses
+        if where_clause:
+            full_where = f"WHERE {mind_filter} AND " + where_clause.replace("WHERE ", "")
+        else:
+            full_where = f"WHERE {mind_filter}"
+
         cypher = f"""
         MATCH (n)
-        {where_clause}
+        {full_where}
         WITH n.uuid as uuid, MAX(n.version) as max_version
         MATCH (n)
-        WHERE n.uuid = uuid AND n.version = max_version
-        {where_clause.replace("WHERE", "AND") if where_clause else ""}
+        WHERE n.uuid = uuid AND n.version = max_version AND {mind_filter}
+        {("AND " + where_clause.replace("WHERE ", "")) if where_clause else ""}
         WITH n
         {order_clause}
         WITH collect(n) as all_nodes, count(n) as total_count
@@ -1127,10 +1194,17 @@ class MindService:
                 # Convert to dict
                 node_data = dict(node_data_raw)
 
-                # Convert Neo4j datetime/date objects to Python datetime/date
+                # Convert Neo4j datetime/date objects and ISO string datetimes
                 for key, value in node_data.items():
                     if hasattr(value, "to_native"):  # Neo4j DateTime/Date objects
                         node_data[key] = value.to_native()
+                    elif isinstance(value, str) and key in ("created_at", "updated_at"):
+                        # Handle ISO string datetimes stored by read_data endpoint
+                        from datetime import datetime as dt
+                        try:
+                            node_data[key] = dt.fromisoformat(value)
+                        except (ValueError, TypeError):
+                            pass
 
                 # Determine mind_type from node labels
                 mind_type = None
@@ -1165,8 +1239,11 @@ class MindService:
                 # Get the model class
                 model_class = self.MIND_TYPE_MAP[mind_type]
 
-                # Instantiate the model
-                mind_node = model_class(**node_data)
+                # Instantiate the model — skip nodes that fail validation
+                try:
+                    mind_node = model_class(**node_data)
+                except Exception:
+                    continue
 
                 # Create MindResponse
                 items.append(

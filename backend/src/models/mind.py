@@ -13,7 +13,7 @@ from typing import Optional
 from uuid import UUID, uuid4
 
 from neontology import BaseNode, BaseRelationship
-from pydantic import Field
+from pydantic import Field, field_serializer
 
 from .enums import StatusEnum
 
@@ -69,6 +69,11 @@ class BaseMind(BaseNode):
     tags: list[str] | None = Field(
         default=None, description="Optional list of tags for categorization"
     )
+
+    @field_serializer('uuid')
+    def serialize_uuid(self, uuid: UUID, _info) -> str:
+        """Serialize UUID to string for Neo4j compatibility."""
+        return str(uuid)
 
 
 class Previous(BaseRelationship):
@@ -208,3 +213,12 @@ class Refines(BaseRelationship):
 
     source: BaseMind
     target: BaseMind
+
+
+class HasScheduled(BaseRelationship):
+    """Relationship linking a Project to its ScheduleHistory nodes."""
+
+    __relationshiptype__: str = "HAS_SCHEDULED"
+
+    source: BaseMind  # Project
+    target: BaseMind  # ScheduleHistory

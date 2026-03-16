@@ -63,7 +63,6 @@ def complex_test_dataset(clean_database):
         "creator": "user1",
         "status": "active",
         "tags": ["python", "testing"],
-        "type_specific_attributes": {"priority": "high", "assignee": "user1", "due_date": "2024-02-01"},
     }).json())
     
     # Task 2: Archived, user2, tags=[frontend, testing], created Jan 15
@@ -74,7 +73,6 @@ def complex_test_dataset(clean_database):
         "creator": "user2",
         "status": "archived",
         "tags": ["frontend", "testing"],
-        "type_specific_attributes": {"priority": "medium", "assignee": "user2", "due_date": "2024-01-20"},
     }).json())
     
     # Task 3: Active, user3, tags=[backend, api], created Jan 20
@@ -85,7 +83,6 @@ def complex_test_dataset(clean_database):
         "creator": "user3",
         "status": "active",
         "tags": ["backend", "api", "documentation"],
-        "type_specific_attributes": {"priority": "low", "assignee": "user3", "due_date": "2024-03-01"},
     }).json())
     
     # Milestone 1: Active, user1, tags=[backend], created Jan 25
@@ -118,7 +115,6 @@ def complex_test_dataset(clean_database):
         "creator": "user1",
         "status": "draft",
         "tags": ["python", "backend", "api"],
-        "type_specific_attributes": {"priority": "high", "assignee": "user1", "due_date": "2024-03-15"},
     }).json())
     
     # Task 5: Active, user2, tags=[react, frontend], created Feb 10
@@ -129,7 +125,6 @@ def complex_test_dataset(clean_database):
         "creator": "user2",
         "status": "active",
         "tags": ["react", "frontend", "components"],
-        "type_specific_attributes": {"priority": "medium", "assignee": "user2", "due_date": "2024-04-01"},
     }).json())
     
     # Milestone 2: Draft, user2, tags=[frontend], created Feb 15
@@ -162,7 +157,6 @@ def complex_test_dataset(clean_database):
         "creator": "user3",
         "status": "archived",
         "tags": ["documentation", "user-guide"],
-        "type_specific_attributes": {"priority": "low", "assignee": "user3", "due_date": "2024-02-28"},
     }).json())
     
     # Project 5: Active, user2, tags=[frontend, react, dashboard], created Mar 1
@@ -184,7 +178,6 @@ def complex_test_dataset(clean_database):
         "creator": "user1",
         "status": "active",
         "tags": ["python", "api", "performance"],
-        "type_specific_attributes": {"priority": "high", "assignee": "user1", "due_date": "2024-04-15"},
     }).json())
     
     # Milestone 3: Active, user3, tags=[backend, frontend], created Mar 10

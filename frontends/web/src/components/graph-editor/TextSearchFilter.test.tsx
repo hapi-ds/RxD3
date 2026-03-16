@@ -40,7 +40,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 
@@ -73,7 +72,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 
@@ -135,7 +133,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
         {
           __primarylabel__: 'Task',
@@ -144,7 +141,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'medium',
-          assignee: 'user1',
         },
       ];
 
@@ -180,7 +176,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
         {
           __primarylabel__: 'Task',
@@ -189,7 +184,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'low',
-          assignee: 'user1',
         },
       ];
 
@@ -229,7 +223,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
         {
           __primarylabel__: 'Task',
@@ -238,7 +231,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'medium',
-          assignee: 'user1',
         },
         {
           __primarylabel__: 'Task',
@@ -247,7 +239,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'low',
-          assignee: 'user1',
         },
       ];
 
@@ -289,7 +280,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 
@@ -328,7 +318,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
         {
           __primarylabel__: 'Task',
@@ -337,7 +326,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
         {
           __primarylabel__: 'Task',
@@ -346,7 +334,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 
@@ -393,7 +380,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 
@@ -431,7 +417,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
         {
           __primarylabel__: 'Task',
@@ -440,7 +425,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 
@@ -486,7 +470,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 
@@ -525,7 +508,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 
@@ -565,7 +547,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 
@@ -628,7 +609,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
         {
           __primarylabel__: 'Project',
@@ -646,7 +626,6 @@ describe('Text Search Filter Logic (Task 19.3)', () => {
           version: 1,
           creator: 'user1',
           priority: 'high',
-          assignee: 'user1',
         },
       ];
 

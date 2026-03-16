@@ -19,6 +19,8 @@ import { WebSocketChat } from './components/WebSocketChat';
 import { GraphEditor } from './components/graph-editor/GraphEditor';
 import { Dashboard } from './components/Dashboard';
 import { Skills } from './components/Skills';
+import { ClassicProjectView } from './components/project-classic/ClassicProjectView';
+import { AgileProjectView } from './components/project-agile/AgileProjectView';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import type { Post } from './types';
 import './App.css';
@@ -45,6 +47,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 function Layout({ children }: { children: React.ReactNode }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const [projectsOpen, setProjectsOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -57,6 +60,19 @@ function Layout({ children }: { children: React.ReactNode }) {
         <h1>FastAPI Neo4j Multi-Frontend System</h1>
         <nav className="app-nav">
           <Link to="/dashboard" className="nav-link">Dashboard</Link>
+          <div
+            className="nav-dropdown"
+            onMouseEnter={() => setProjectsOpen(true)}
+            onMouseLeave={() => setProjectsOpen(false)}
+          >
+            <span className="nav-link nav-dropdown-trigger">Projects ▾</span>
+            {projectsOpen && (
+              <div className="nav-dropdown-menu">
+                <Link to="/project-classic" className="nav-dropdown-item" onClick={() => setProjectsOpen(false)}>Classic View</Link>
+                <Link to="/project-agile" className="nav-dropdown-item" onClick={() => setProjectsOpen(false)}>Agile View</Link>
+              </div>
+            )}
+          </div>
           <Link to="/posts" className="nav-link">Posts</Link>
           <Link to="/create" className="nav-link">Create Post</Link>
           <Link to="/chat" className="nav-link">Chat</Link>
@@ -241,6 +257,46 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <GraphEditorPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/project-classic/:projectUuid"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <ClassicProjectView />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/project-agile/:projectUuid"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <AgileProjectView />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/project-classic"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <ClassicProjectView />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/project-agile"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <AgileProjectView />
                 </Layout>
               </ProtectedRoute>
             }

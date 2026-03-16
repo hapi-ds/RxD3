@@ -123,7 +123,6 @@ export interface Task {
   description?: string | null; // Optional detailed description
   tags?: string[] | null; // Optional list of tags for categorization
   priority: PriorityEnum; // Task priority level
-  assignee: string; // User identifier of the person assigned to the task
   due_date?: string | null; // Optional due date for task completion
   effort?: number | null; // Work effort in hours
   duration?: number | null; // Work duration in days
@@ -309,7 +308,10 @@ export interface Booking {
   status?: StatusEnum; // Current lifecycle state
   description?: string | null; // Optional detailed description
   tags?: string[] | null; // Optional list of tags for categorization
-  hours_worked?: number;
+  hours_worked: number; // Hours worked
+  booking_date?: string | null; // Date of the booking
+  rate?: number | null; // Hourly rate at time of booking
+  amount?: number | null;
 }
 
 export interface Sprint {
@@ -323,7 +325,11 @@ export interface Sprint {
   status?: StatusEnum; // Current lifecycle state
   description?: string | null; // Optional detailed description
   tags?: string[] | null; // Optional list of tags for categorization
-  test_item?: number;
+  sprint_number: number; // Sprint number
+  start_date: string; // Sprint start date
+  end_date: string; // Sprint end date
+  goal?: string | null; // Sprint goal
+  velocity?: number | null; // Sprint velocity in story points or hours
 }
 
 export interface Account {

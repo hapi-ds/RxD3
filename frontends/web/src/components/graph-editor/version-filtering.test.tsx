@@ -86,7 +86,6 @@ describe('Current Version Filtering', () => {
         version: 1,
         creator: 'user1',
         priority: 'high',
-        assignee: 'user1',
       };
 
       const mind2v3: Mind = {

@@ -7,8 +7,9 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { dataAPI, skillsAPI } from '../services/api';
+import { dataAPI, skillsAPI, mindsAPI } from '../services/api';
 import type { SaveFileData } from '../types';
+import type { Mind } from '../types/generated';
 import './Dashboard.css';
 
 export function Dashboard(): JSX.Element {
@@ -25,6 +26,11 @@ export function Dashboard(): JSX.Element {
   const [enabledCount, setEnabledCount] = useState<number | null>(null);
   const [skillsError, setSkillsError] = useState(false);
 
+  // Project cards state
+  const [projects, setProjects] = useState<Mind[]>([]);
+  const [selectedClassicProject, setSelectedClassicProject] = useState('');
+  const [selectedAgileProject, setSelectedAgileProject] = useState('');
+
   const loadSkillCount = useCallback(async (): Promise<void> => {
     try {
       const skills = await skillsAPI.list();
@@ -35,9 +41,29 @@ export function Dashboard(): JSX.Element {
     }
   }, []);
 
+  const loadProjects = useCallback(async (): Promise<void> => {
+    try {
+      const allMinds = await mindsAPI.list();
+      const projectMinds = allMinds.filter(m => {
+        const raw = m as unknown as Record<string, unknown>;
+        const mt = String(raw.mind_type ?? raw.__primarylabel__ ?? '').toLowerCase();
+        return mt === 'project';
+      });
+      setProjects(projectMinds);
+      if (projectMinds.length > 0) {
+        const firstUuid = String(projectMinds[0].uuid);
+        setSelectedClassicProject(firstUuid);
+        setSelectedAgileProject(firstUuid);
+      }
+    } catch {
+      // silently fail — cards will show "no projects"
+    }
+  }, []);
+
   useEffect(() => {
     loadSkillCount();
-  }, [loadSkillCount]);
+    loadProjects();
+  }, [loadSkillCount, loadProjects]);
 
   const handleSave = async (): Promise<void> => {
     setSaveLoading(true);
@@ -157,6 +183,66 @@ export function Dashboard(): JSX.Element {
           <div className="card-actions">
             <button onClick={() => navigate('/graph-editor')} className="btn-primary">
               Open Graph Editor
+            </button>
+          </div>
+        </section>
+
+        {/* Classic Project View card */}
+        <section className="dashboard-card">
+          <h3>Classic Project View</h3>
+          <p>Gantt chart, critical path, and schedule management.</p>
+          {projects.length === 0 ? (
+            <p className="card-info">No projects available</p>
+          ) : (
+            <label>
+              Project:{' '}
+              <select
+                value={selectedClassicProject}
+                onChange={e => setSelectedClassicProject(e.target.value)}
+              >
+                {projects.map(p => (
+                  <option key={String(p.uuid)} value={String(p.uuid)}>{p.title}</option>
+                ))}
+              </select>
+            </label>
+          )}
+          <div className="card-actions">
+            <button
+              onClick={() => navigate(`/project-classic/${selectedClassicProject}`)}
+              disabled={!selectedClassicProject}
+              className="btn-primary"
+            >
+              Open Classic View
+            </button>
+          </div>
+        </section>
+
+        {/* Agile Project View card */}
+        <section className="dashboard-card">
+          <h3>Agile Project View</h3>
+          <p>Sprint board, burn-down chart, and backlog management.</p>
+          {projects.length === 0 ? (
+            <p className="card-info">No projects available</p>
+          ) : (
+            <label>
+              Project:{' '}
+              <select
+                value={selectedAgileProject}
+                onChange={e => setSelectedAgileProject(e.target.value)}
+              >
+                {projects.map(p => (
+                  <option key={String(p.uuid)} value={String(p.uuid)}>{p.title}</option>
+                ))}
+              </select>
+            </label>
+          )}
+          <div className="card-actions">
+            <button
+              onClick={() => navigate(`/project-agile/${selectedAgileProject}`)}
+              disabled={!selectedAgileProject}
+              className="btn-primary"
+            >
+              Open Agile View
             </button>
           </div>
         </section>

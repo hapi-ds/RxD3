@@ -1,0 +1,517 @@
+{
+  "minds": [
+    {
+      "uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "mind_type": "Project",
+      "title": "Medical Device Development - CardioMonitor X1",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Development of CardioMonitor X1 wearable cardiac monitoring device per IEC 62304 / ISO 13485",
+      "tags": ["medical-device", "iec-62304", "iso-13485"],
+      "type_specific_attributes": {
+        "start_date": "2026-04-01",
+        "end_date": "2026-12-31",
+        "budget": 500000.0
+      }
+    },
+    {
+      "uuid": "09312350-0357-4961-8be5-9be0d50e6133",
+      "mind_type": "Company",
+      "title": "MedTech Solutions GmbH",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Medical device manufacturer specializing in cardiac monitoring",
+      "tags": ["medtech", "iso-13485"],
+      "type_specific_attributes": {
+        "industry": "Medical Devices",
+        "size": 120,
+        "founded_date": "2015-03-01"
+      }
+    },
+    {
+      "uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392",
+      "mind_type": "Department",
+      "title": "Engineering Department",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Hardware and software engineering",
+      "type_specific_attributes": { "department_code": "ENG", "manager": "eng-lead@example.com" }
+    },
+    {
+      "uuid": "ca15c224-2fca-4646-b70b-0e1d64f058ac",
+      "mind_type": "Department",
+      "title": "Quality Assurance Department",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Quality assurance and regulatory compliance",
+      "type_specific_attributes": { "department_code": "QA", "manager": "qa-lead@example.com" }
+    },
+    {
+      "uuid": "6185c832-d698-4469-ad05-1657cbd4f55d",
+      "mind_type": "Resource",
+      "title": "Dr. Sarah Chen - Systems Engineer Lead",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Lead systems engineer with 12 years medical device experience",
+      "type_specific_attributes": {
+        "email": "eng-lead@example.com",
+        "workinghours_max_per_week": 40.0,
+        "workinghours_per_year": 1700.0,
+        "efficiency": 1.2,
+        "hourly_rate": 120.0,
+        "resource_type": "PERSON"
+      }
+    },
+    {
+      "uuid": "848289e6-62e9-42de-9968-7c3f4a61a48d",
+      "mind_type": "Resource",
+      "title": "Marcus Weber - Software Dev Lead",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Software development lead, IEC 62304 specialist",
+      "type_specific_attributes": {
+        "email": "dev-lead@example.com",
+        "workinghours_max_per_week": 40.0,
+        "workinghours_per_year": 1700.0,
+        "efficiency": 1.0,
+        "hourly_rate": 110.0,
+        "resource_type": "PERSON"
+      }
+    },
+    {
+      "uuid": "ebb96c71-1883-4786-a98c-4bb534f27012",
+      "mind_type": "Resource",
+      "title": "Firmware Team",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Embedded firmware development group (3 engineers)",
+      "type_specific_attributes": {
+        "workinghours_max_per_week": 120.0,
+        "workinghours_per_year": 5100.0,
+        "efficiency": 1.0,
+        "hourly_rate": 95.0,
+        "resource_type": "GROUP"
+      }
+    },
+    {
+      "uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e",
+      "mind_type": "Resource",
+      "title": "Anna Mueller - QA Lead",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Quality assurance lead, ISO 14971 risk management expert",
+      "type_specific_attributes": {
+        "email": "qa-lead@example.com",
+        "workinghours_max_per_week": 40.0,
+        "workinghours_per_year": 1700.0,
+        "efficiency": 1.1,
+        "hourly_rate": 105.0,
+        "resource_type": "PERSON"
+      }
+    },
+    {
+      "uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "mind_type": "Task",
+      "title": "Design Phase",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Product design and requirements definition",
+      "type_specific_attributes": {
+        "task_type": "PHASE", "phase_number": 1, "priority": "high", "effort": 320.0, "length": 40.0
+      }
+    },
+    {
+      "uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "mind_type": "Task",
+      "title": "Implementation Phase",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Software and hardware implementation",
+      "type_specific_attributes": {
+        "task_type": "PHASE", "phase_number": 2, "priority": "high", "effort": 480.0, "length": 60.0
+      }
+    },
+    {
+      "uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "mind_type": "Task",
+      "title": "Verification & Validation Phase",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "draft",
+      "description": "Design verification and validation activities",
+      "type_specific_attributes": {
+        "task_type": "PHASE", "phase_number": 3, "priority": "high", "effort": 240.0, "length": 30.0
+      }
+    },
+    {
+      "uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "mind_type": "Task",
+      "title": "Requirements Engineering",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Gather and document user needs and design inputs",
+      "type_specific_attributes": {
+        "task_type": "WORKPACKAGE", "priority": "high", "effort": 160.0, "length": 20.0
+      }
+    },
+    {
+      "uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "mind_type": "Task",
+      "title": "Architecture Design",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "System and software architecture definition",
+      "type_specific_attributes": {
+        "task_type": "WORKPACKAGE", "priority": "high", "effort": 120.0, "length": 15.0
+      }
+    },
+    {
+      "uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "mind_type": "Task",
+      "title": "Software Development",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Firmware and application software development",
+      "type_specific_attributes": {
+        "task_type": "WORKPACKAGE", "priority": "high", "effort": 400.0, "length": 50.0
+      }
+    },
+    {
+      "uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "mind_type": "Task",
+      "title": "Capture User Needs",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "active",
+      "description": "Interview stakeholders and document user needs",
+      "type_specific_attributes": { "task_type": "TASK", "priority": "high", "effort": 40.0, "length": 5.0 }
+    },
+    {
+      "uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "mind_type": "Task",
+      "title": "Define Design Inputs",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "active",
+      "description": "Translate user needs into measurable design inputs per ISO 13485",
+      "type_specific_attributes": { "task_type": "TASK", "priority": "high", "effort": 32.0, "length": 4.0 }
+    },
+    {
+      "uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "mind_type": "Task",
+      "title": "Risk Analysis (ISO 14971)",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "active",
+      "description": "Perform preliminary hazard analysis and risk assessment",
+      "type_specific_attributes": { "task_type": "TASK", "priority": "critical", "effort": 48.0, "length": 6.0 }
+    },
+    {
+      "uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "mind_type": "Task",
+      "title": "Software Architecture Document",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "active",
+      "description": "Create IEC 62304 compliant software architecture document",
+      "type_specific_attributes": { "task_type": "TASK", "priority": "high", "effort": 56.0, "length": 7.0 }
+    },
+    {
+      "uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "mind_type": "Task",
+      "title": "Firmware Development",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "active",
+      "description": "Develop embedded firmware for sensor data acquisition",
+      "type_specific_attributes": { "task_type": "TASK", "priority": "high", "effort": 160.0, "length": 20.0 }
+    },
+    {
+      "uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "mind_type": "Task",
+      "title": "Application Software Development",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "active",
+      "description": "Develop mobile companion app for data visualization",
+      "type_specific_attributes": { "task_type": "TASK", "priority": "medium", "effort": 200.0, "length": 25.0 }
+    },
+    {
+      "uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "mind_type": "Task",
+      "title": "Unit Testing",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "draft",
+      "description": "Write and execute unit tests for all software modules",
+      "type_specific_attributes": { "task_type": "TASK", "priority": "high", "effort": 80.0, "length": 10.0 }
+    },
+    {
+      "uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "mind_type": "Task",
+      "title": "Integration Testing",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "qa-lead@example.com",
+      "status": "draft",
+      "description": "System integration testing of firmware + app + hardware",
+      "type_specific_attributes": { "task_type": "TASK", "priority": "high", "effort": 64.0, "length": 8.0 }
+    },
+    {
+      "uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "mind_type": "Task",
+      "title": "Design Review Gate",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "draft",
+      "description": "Formal design review milestone per ISO 13485 clause 7.3.5",
+      "type_specific_attributes": { "task_type": "MILESTONE", "priority": "critical", "target_date": "2026-06-30", "completion_percentage": 0 }
+    },
+    {
+      "uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+      "mind_type": "Task",
+      "title": "Design Validation Complete",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "draft",
+      "description": "Design validation milestone - confirms device meets user needs",
+      "type_specific_attributes": { "task_type": "MILESTONE", "priority": "critical", "target_date": "2026-11-30", "completion_percentage": 0 }
+    },
+    {
+      "uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a",
+      "mind_type": "Sprint",
+      "title": "Sprint 1 - Requirements & Architecture",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "First sprint covering requirements capture and architecture",
+      "type_specific_attributes": {
+        "sprint_number": 1, "start_date": "2026-04-01", "end_date": "2026-04-14",
+        "goal": "Complete user needs capture and initial architecture", "velocity": 40.0
+      }
+    },
+    {
+      "uuid": "90f99050-ccbf-43b2-9642-15027fccf74a",
+      "mind_type": "Booking",
+      "title": "User Needs Interview Day 1",
+      "version": 1,
+      "created_at": "2026-04-01T17:00:00Z",
+      "updated_at": "2026-04-01T17:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Stakeholder interviews - cardiology department",
+      "type_specific_attributes": { "hours_worked": 8.0, "booking_date": "2026-04-01", "rate": 120.0, "amount": 960.0 }
+    },
+    {
+      "uuid": "8095e382-43ed-45ba-a523-1577731ea4f6",
+      "mind_type": "Booking",
+      "title": "User Needs Interview Day 2",
+      "version": 1,
+      "created_at": "2026-04-02T17:00:00Z",
+      "updated_at": "2026-04-02T17:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Stakeholder interviews - nursing staff",
+      "type_specific_attributes": { "hours_worked": 6.5, "booking_date": "2026-04-02", "rate": 120.0, "amount": 780.0 }
+    },
+    {
+      "uuid": "27f34054-a994-499e-bfa5-a9b1bc9029af",
+      "mind_type": "Booking",
+      "title": "Design Input Documentation",
+      "version": 1,
+      "created_at": "2026-04-07T17:00:00Z",
+      "updated_at": "2026-04-07T17:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Documenting design inputs from user needs",
+      "type_specific_attributes": { "hours_worked": 7.0, "booking_date": "2026-04-07", "rate": 120.0, "amount": 840.0 }
+    },
+    {
+      "uuid": "1fa849b7-8ebd-4499-8148-ca0caa785c7d",
+      "mind_type": "Booking",
+      "title": "Risk Analysis Workshop",
+      "version": 1,
+      "created_at": "2026-04-10T17:00:00Z",
+      "updated_at": "2026-04-10T17:00:00Z",
+      "creator": "qa-lead@example.com",
+      "status": "done",
+      "description": "Preliminary hazard analysis workshop",
+      "type_specific_attributes": { "hours_worked": 8.0, "booking_date": "2026-04-10", "rate": 105.0, "amount": 840.0 }
+    },
+    {
+      "uuid": "b5655813-65ad-4bd8-bbb0-ba8a607fa735",
+      "mind_type": "Booking",
+      "title": "Risk Analysis Documentation",
+      "version": 1,
+      "created_at": "2026-04-11T17:00:00Z",
+      "updated_at": "2026-04-11T17:00:00Z",
+      "creator": "qa-lead@example.com",
+      "status": "done",
+      "description": "Documenting risk analysis results",
+      "type_specific_attributes": { "hours_worked": 4.0, "booking_date": "2026-04-11", "rate": 105.0, "amount": 420.0 }
+    },
+    {
+      "uuid": "fdc51a1a-fd05-45ee-b0ff-3ea6d90e95a6",
+      "mind_type": "Booking",
+      "title": "Architecture Review Prep",
+      "version": 1,
+      "created_at": "2026-04-14T17:00:00Z",
+      "updated_at": "2026-04-14T17:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Preparing software architecture document draft",
+      "type_specific_attributes": { "hours_worked": 6.0, "booking_date": "2026-04-14", "rate": 110.0, "amount": 660.0 }
+    },
+    {
+      "uuid": "a13bbaf5-7727-403c-9ca7-909f41c6fadc",
+      "mind_type": "Journalentry",
+      "title": "Project Kickoff Complete",
+      "version": 1,
+      "created_at": "2026-04-01T09:00:00Z",
+      "updated_at": "2026-04-01T09:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Project kickoff meeting held. All stakeholders aligned on scope and timeline. Key risk: sensor supplier lead time may impact schedule.",
+      "type_specific_attributes": { "severity": "medium" }
+    },
+    {
+      "uuid": "91af1cf7-efab-41ea-b84d-fea736f6d8c5",
+      "mind_type": "Journalentry",
+      "title": "Risk Analysis Finding - Battery Safety",
+      "version": 1,
+      "created_at": "2026-04-10T16:00:00Z",
+      "updated_at": "2026-04-10T16:00:00Z",
+      "creator": "qa-lead@example.com",
+      "status": "active",
+      "description": "Preliminary hazard analysis identified battery thermal runaway as high-severity risk. Mitigation: add thermal cutoff circuit. Requires additional design input.",
+      "type_specific_attributes": { "severity": "high" }
+    }
+  ],
+  "relationships": [
+    {"source_uuid": "09312350-0357-4961-8be5-9be0d50e6133", "target_uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+    {"source_uuid": "09312350-0357-4961-8be5-9be0d50e6133", "target_uuid": "ca15c224-2fca-4646-b70b-0e1d64f058ac", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+    {"source_uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392", "target_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d", "relationship_type": "CONTAINS", "properties": {"level": 1}},
+    {"source_uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392", "target_uuid": "848289e6-62e9-42de-9968-7c3f4a61a48d", "relationship_type": "CONTAINS", "properties": {"level": 1}},
+    {"source_uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392", "target_uuid": "ebb96c71-1883-4786-a98c-4bb534f27012", "relationship_type": "CONTAINS", "properties": {"level": 1}},
+    {"source_uuid": "ca15c224-2fca-4646-b70b-0e1d64f058ac", "target_uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e", "relationship_type": "CONTAINS", "properties": {"level": 1}},
+
+    {"source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a", "target_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+    {"source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a", "target_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+    {"source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a", "target_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+    {"source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024", "target_uuid": "479097ce-a335-44d9-8652-f51709f15b55", "relationship_type": "CONTAINS", "properties": {"level": 1}},
+    {"source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024", "target_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2", "relationship_type": "CONTAINS", "properties": {"level": 1}},
+    {"source_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704", "target_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94", "relationship_type": "CONTAINS", "properties": {"level": 1}},
+    {"source_uuid": "479097ce-a335-44d9-8652-f51709f15b55", "target_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814", "relationship_type": "CONTAINS", "properties": {"level": 2}},
+    {"source_uuid": "479097ce-a335-44d9-8652-f51709f15b55", "target_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f", "relationship_type": "CONTAINS", "properties": {"level": 2}},
+    {"source_uuid": "479097ce-a335-44d9-8652-f51709f15b55", "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf", "relationship_type": "CONTAINS", "properties": {"level": 2}},
+    {"source_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2", "target_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083", "relationship_type": "CONTAINS", "properties": {"level": 2}},
+    {"source_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94", "target_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde", "relationship_type": "CONTAINS", "properties": {"level": 2}},
+    {"source_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94", "target_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee", "relationship_type": "CONTAINS", "properties": {"level": 2}},
+    {"source_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5", "target_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd", "relationship_type": "CONTAINS", "properties": {"level": 1}},
+    {"source_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5", "target_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8", "relationship_type": "CONTAINS", "properties": {"level": 1}},
+    {"source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a", "target_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+    {"source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a", "target_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+
+    {"source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024", "target_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704", "relationship_type": "PREDATES", "properties": {}},
+    {"source_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704", "target_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5", "relationship_type": "PREDATES", "properties": {}},
+    {"source_uuid": "479097ce-a335-44d9-8652-f51709f15b55", "target_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2", "relationship_type": "PREDATES", "properties": {}},
+    {"source_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814", "target_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f", "relationship_type": "PREDATES", "properties": {}},
+    {"source_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f", "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf", "relationship_type": "PREDATES", "properties": {}},
+    {"source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083", "target_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde", "relationship_type": "PREDATES", "properties": {}},
+    {"source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083", "target_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee", "relationship_type": "PREDATES", "properties": {}},
+    {"source_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde", "target_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd", "relationship_type": "PREDATES", "properties": {}},
+    {"source_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee", "target_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd", "relationship_type": "PREDATES", "properties": {}},
+    {"source_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd", "target_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8", "relationship_type": "PREDATES", "properties": {}},
+
+    {"source_uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a", "target_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+    {"source_uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a", "target_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+    {"source_uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a", "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+    {"source_uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a", "target_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+
+    {"source_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d", "target_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024", "relationship_type": "ASSIGNED_TO", "properties": {}},
+    {"source_uuid": "848289e6-62e9-42de-9968-7c3f4a61a48d", "target_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94", "relationship_type": "ASSIGNED_TO", "properties": {}},
+    {"source_uuid": "ebb96c71-1883-4786-a98c-4bb534f27012", "target_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94", "relationship_type": "ASSIGNED_TO", "properties": {}},
+    {"source_uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e", "target_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5", "relationship_type": "ASSIGNED_TO", "properties": {}},
+
+    {"source_uuid": "90f99050-ccbf-43b2-9642-15027fccf74a", "target_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814", "relationship_type": "TO", "properties": {}},
+    {"source_uuid": "90f99050-ccbf-43b2-9642-15027fccf74a", "target_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d", "relationship_type": "FOR", "properties": {}},
+    {"source_uuid": "8095e382-43ed-45ba-a523-1577731ea4f6", "target_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814", "relationship_type": "TO", "properties": {}},
+    {"source_uuid": "8095e382-43ed-45ba-a523-1577731ea4f6", "target_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d", "relationship_type": "FOR", "properties": {}},
+    {"source_uuid": "27f34054-a994-499e-bfa5-a9b1bc9029af", "target_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f", "relationship_type": "TO", "properties": {}},
+    {"source_uuid": "27f34054-a994-499e-bfa5-a9b1bc9029af", "target_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d", "relationship_type": "FOR", "properties": {}},
+    {"source_uuid": "1fa849b7-8ebd-4499-8148-ca0caa785c7d", "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf", "relationship_type": "TO", "properties": {}},
+    {"source_uuid": "1fa849b7-8ebd-4499-8148-ca0caa785c7d", "target_uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e", "relationship_type": "FOR", "properties": {}},
+    {"source_uuid": "b5655813-65ad-4bd8-bbb0-ba8a607fa735", "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf", "relationship_type": "TO", "properties": {}},
+    {"source_uuid": "b5655813-65ad-4bd8-bbb0-ba8a607fa735", "target_uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e", "relationship_type": "FOR", "properties": {}},
+    {"source_uuid": "fdc51a1a-fd05-45ee-b0ff-3ea6d90e95a6", "target_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083", "relationship_type": "TO", "properties": {}},
+    {"source_uuid": "fdc51a1a-fd05-45ee-b0ff-3ea6d90e95a6", "target_uuid": "848289e6-62e9-42de-9968-7c3f4a61a48d", "relationship_type": "FOR", "properties": {}},
+
+    {"source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a", "target_uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a", "relationship_type": "CONTAINS", "properties": {"level": 0}},
+
+    {"source_uuid": "a13bbaf5-7727-403c-9ca7-909f41c6fadc", "target_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a", "relationship_type": "TO", "properties": {}},
+    {"source_uuid": "91af1cf7-efab-41ea-b84d-fea736f6d8c5", "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf", "relationship_type": "TO", "properties": {}}
+  ],
+  "posts": []
+}

@@ -86,7 +86,8 @@ class RelationshipResponse(BaseModel):
     source_uuid: UUID
     target_uuid: UUID
     relationship_type: str
-    created_at: datetime
+    created_at: datetime | None = None
+    properties: dict = {}
 
 
 class ErrorResponse(BaseModel):

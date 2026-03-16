@@ -24,7 +24,6 @@ describe('UndoButton', () => {
     tags: null,
     __primarylabel__: 'Task',
     priority: 'medium',
-    assignee: 'test-user',
     due_date: null,
     effort: null,
     duration: null,

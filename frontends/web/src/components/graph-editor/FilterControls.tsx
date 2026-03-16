@@ -24,6 +24,9 @@ import { useScreenReaderAnnouncer } from './ScreenReaderAnnouncer';
 import { mindTypeToNodeType } from '../../utils/mindTypeUtils';
 import './FilterControls.css';
 
+// Internal scheduling artifacts that should not appear in the filter dropdown
+const HIDDEN_NODE_TYPES: NodeType[] = ['ScheduleHistory', 'ScheduledTask'];
+
 /**
  * FilterControls Component
  * Multi-select dropdown for filtering nodes by type and text search
@@ -46,9 +49,11 @@ export const FilterControls = memo(function FilterControls() {
   const nodeTypeCounts = useMemo(() => {
     const counts = new Map<NodeType, number>();
     
-    // Initialize all node types with 0
-    const allNodeTypes = Object.keys(NODE_TYPE_CONFIGS) as NodeType[];
-    allNodeTypes.forEach(type => counts.set(type, 0));
+    // Initialize visible node types with 0 (exclude hidden scheduling types)
+    const visibleNodeTypes = (Object.keys(NODE_TYPE_CONFIGS) as NodeType[]).filter(
+      type => !HIDDEN_NODE_TYPES.includes(type)
+    );
+    visibleNodeTypes.forEach(type => counts.set(type, 0));
     
     // Count current version minds by type
     const currentVersionMinds = Array.from(minds.values());
@@ -94,8 +99,11 @@ export const FilterControls = memo(function FilterControls() {
 
   // Handle select all
   const handleSelectAll = useCallback(() => {
-    const allNodeTypes = Object.keys(NODE_TYPE_CONFIGS) as NodeType[];
-    dispatch({ type: 'SET_NODE_TYPE_FILTER', payload: new Set(allNodeTypes) });
+    // Filter out hidden node types when selecting all
+    const visibleNodeTypes = (Object.keys(NODE_TYPE_CONFIGS) as NodeType[]).filter(
+      type => !HIDDEN_NODE_TYPES.includes(type)
+    );
+    dispatch({ type: 'SET_NODE_TYPE_FILTER', payload: new Set(visibleNodeTypes) });
     
     // Announce filter change
     announceFilterChange('Node type filter', 'all types selected');
@@ -165,7 +173,10 @@ export const FilterControls = memo(function FilterControls() {
     };
   }, []);
 
-  const allNodeTypes = Object.keys(NODE_TYPE_CONFIGS) as NodeType[];
+  // Filter out internal scheduling artifacts from the filter dropdown
+  const allNodeTypes = (Object.keys(NODE_TYPE_CONFIGS) as NodeType[]).filter(
+    type => !HIDDEN_NODE_TYPES.includes(type)
+  );
   const selectedCount = filters.nodeTypes.size;
   const totalCount = allNodeTypes.length;
 

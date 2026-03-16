@@ -64,7 +64,6 @@ def sample_minds():
         "tags": ["tag1"],
         "type_specific_attributes": {
             "priority": "high",
-            "assignee": "user123",
             "due_date": "2024-03-01",
         },
     }
@@ -80,7 +79,6 @@ def sample_minds():
         "tags": ["tag3"],
         "type_specific_attributes": {
             "priority": "low",
-            "assignee": "user456",
             "due_date": "2024-04-01",
         },
     }

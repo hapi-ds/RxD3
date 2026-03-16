@@ -28,7 +28,6 @@ def test_crud_task_lifecycle(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "medium",
-                "assignee": "test_user",
             },
         },
     )
@@ -86,7 +85,6 @@ def test_query_minds(client):
                 "type_specific_attributes": {
                     "task_type": "TASK",
                     "priority": "medium",
-                    "assignee": "test_user",
                 },
             },
         )
@@ -111,7 +109,6 @@ def test_version_history(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "low",
-                "assignee": "test_user",
             },
         },
     )

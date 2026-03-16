@@ -27,7 +27,6 @@ def test_create_task_relationship(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "medium",
-                "assignee": "test_user",
             },
         },
     )
@@ -44,7 +43,6 @@ def test_create_task_relationship(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "medium",
-                "assignee": "test_user",
             },
         },
     )
@@ -76,7 +74,6 @@ def test_get_relationships(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "medium",
-                "assignee": "test_user",
             },
         },
     )
@@ -91,7 +88,6 @@ def test_get_relationships(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "medium",
-                "assignee": "test_user",
             },
         },
     )
@@ -106,7 +102,6 @@ def test_get_relationships(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "medium",
-                "assignee": "test_user",
             },
         },
     )
@@ -155,7 +150,6 @@ def test_project_task_relationship(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "high",
-                "assignee": "test_user",
             },
         },
     )
@@ -197,7 +191,6 @@ def test_requirement_task_relationship(client):
             "type_specific_attributes": {
                 "task_type": "TASK",
                 "priority": "medium",
-                "assignee": "test_user",
             },
         },
     )

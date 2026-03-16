@@ -42,7 +42,6 @@ function generateLargeGraph(nodeCount: number): {
           }
         : {
             priority: 'medium',
-            assignee: 'test-user',
             due_date: '2024-06-01',
             effort: 5,
             duration: null,

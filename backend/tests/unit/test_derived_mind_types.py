@@ -70,12 +70,10 @@ class TestTask:
             title="Test Task",
             creator="test@example.com",
             priority=PriorityEnum.HIGH,
-            assignee="dev@example.com"
         )
 
         assert task.title == "Test Task"
         assert task.priority == PriorityEnum.HIGH
-        assert task.assignee == "dev@example.com"
 
     def test_task_with_due_date(self):
         """Test that Task can be created with due date."""
@@ -83,7 +81,6 @@ class TestTask:
             title="Task With Due Date",
             creator="test@example.com",
             priority=PriorityEnum.CRITICAL,
-            assignee="dev@example.com",
             due_date=date(2024, 6, 30)
         )
 
@@ -95,7 +92,6 @@ class TestTask:
             Task(
                 title="Test Task",
                 creator="test@example.com",
-                assignee="dev@example.com",
                 priority="invalid_priority"  # type: ignore[call-arg]
             )
 
