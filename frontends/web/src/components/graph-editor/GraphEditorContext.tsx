@@ -159,7 +159,7 @@ const initialState: AppState = {
     selectedEdgeId: null,
   },
   layout: {
-    algorithm: 'force-directed',
+    algorithm: 'hierarchical',
     distance: 1.0,
   },
   history: {

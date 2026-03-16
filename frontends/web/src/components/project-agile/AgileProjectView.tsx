@@ -219,6 +219,13 @@ export const AgileProjectView: React.FC = () => {
       sprintInfos.sort((a, b) => a.start_date.localeCompare(b.start_date));
       setSprints(sprintInfos);
 
+      // Default burn-down scope to current sprint (or first sprint if none is current)
+      if (sprintInfos.length > 0) {
+        const today = new Date().toISOString().split('T')[0];
+        const current = sprintInfos.find(s => s.start_date <= today && s.end_date >= today);
+        setBurnDownScope(current ? current.uuid : sprintInfos[0].uuid);
+      }
+
       // Backlog tasks
       const backlog: SprintTask[] = [];
       for (const taskUuid of projectTaskUuids) {
