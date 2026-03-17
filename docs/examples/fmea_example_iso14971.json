@@ -1,0 +1,370 @@
+{
+  "minds_count": 13,
+  "relationships_count": 12,
+  "posts_count": 0,
+  "minds": [
+    {
+      "uuid": "c1b2c3d4-0001-4000-8000-000000000001",
+      "mind_type": "Requirement",
+      "title": "Infusion Pump Accuracy",
+      "version": 1,
+      "created_at": "2024-08-01T08:00:00Z",
+      "updated_at": "2024-08-01T08:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "The infusion pump shall deliver medication within ±5% of the programmed flow rate across the full operating range to prevent patient harm from over- or under-dosing.",
+      "tags": ["iso14971", "infusion-pump", "accuracy"],
+      "type_specific_attributes": {
+        "requirement_type": "DESIGN_INPUT",
+        "content": "Infusion pump shall maintain flow rate accuracy within ±5% of programmed rate for rates between 0.1 mL/hr and 1200 mL/hr across all supported fluid viscosities.",
+        "source": "Product Requirements Specification PRS-IP-2024-001",
+        "acceptance_criteria": "Flow rate accuracy verified within ±5% across full range using gravimetric test method per IEC 60601-2-24.",
+        "compliance_standard": "IEC 60601-2-24, ISO 14971",
+        "safety_critical": true
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0001-4000-8000-000000000002",
+      "mind_type": "Requirement",
+      "title": "Biocompatibility of Patient Contact Materials",
+      "version": 1,
+      "created_at": "2024-08-01T08:00:00Z",
+      "updated_at": "2024-08-01T08:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "All materials in the fluid path that contact the patient or medication shall be biocompatible and shall not leach harmful substances under normal and foreseeable misuse conditions.",
+      "tags": ["iso14971", "biocompatibility", "materials"],
+      "type_specific_attributes": {
+        "requirement_type": "DESIGN_INPUT",
+        "content": "Patient contact materials shall pass ISO 10993-5 cytotoxicity, ISO 10993-10 sensitization, and ISO 10993-11 systemic toxicity testing. Extractables and leachables shall be below established safety thresholds.",
+        "source": "Biocompatibility Evaluation Plan BEP-2024-003",
+        "acceptance_criteria": "All patient contact materials pass ISO 10993 biological evaluation with no adverse findings.",
+        "compliance_standard": "ISO 10993, ISO 14971",
+        "safety_critical": true
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0002-4000-8000-000000000001",
+      "mind_type": "Risk",
+      "title": "Dose Delivery Error",
+      "version": 1,
+      "created_at": "2024-08-01T09:00:00Z",
+      "updated_at": "2024-08-01T09:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Patient receives an incorrect medication dose due to flow rate deviation, potentially causing therapeutic failure or toxic overdose.",
+      "tags": ["iso14971", "dose-error", "patient-safety"],
+      "type_specific_attributes": {
+        "severity": 9,
+        "probability": "possible",
+        "mitigation_plan": "Implement closed-loop flow rate control with upstream and downstream pressure sensors. Add audible and visual alarms for flow rate deviation exceeding ±10%.",
+        "acceptable_limit": "Flow rate deviation shall not exceed ±5% of programmed rate under any single-fault condition"
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0002-4000-8000-000000000002",
+      "mind_type": "Risk",
+      "title": "Software Malfunction Leading to Unsafe Output",
+      "version": 1,
+      "created_at": "2024-08-01T09:00:00Z",
+      "updated_at": "2024-08-01T09:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Software defect or runtime error causes the pump to deliver an unintended flow rate or fail to stop infusion when required.",
+      "tags": ["iso14971", "software", "safety"],
+      "type_specific_attributes": {
+        "severity": 10,
+        "probability": "unlikely",
+        "mitigation_plan": "Develop software per IEC 62304 Class C lifecycle. Implement independent hardware watchdog and redundant flow monitoring. Conduct static analysis and formal code review.",
+        "acceptable_limit": "Zero uncontrolled infusion events during design verification and validation testing"
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0002-4000-8000-000000000003",
+      "mind_type": "Risk",
+      "title": "Allergic Reaction to Patient Contact Material",
+      "version": 1,
+      "created_at": "2024-08-01T09:00:00Z",
+      "updated_at": "2024-08-01T09:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Patient experiences local or systemic allergic reaction due to sensitizing substances released from tubing, connectors, or other fluid-path components.",
+      "tags": ["iso14971", "allergic-reaction", "biocompatibility"],
+      "type_specific_attributes": {
+        "severity": 7,
+        "probability": "unlikely",
+        "mitigation_plan": "Use medical-grade silicone and DEHP-free PVC for all fluid-path components. Conduct ISO 10993-10 sensitization testing on all patient contact materials.",
+        "acceptable_limit": "Sensitization test results shall show no evidence of delayed-type hypersensitivity"
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0002-4000-8000-000000000004",
+      "mind_type": "Risk",
+      "title": "Toxic Substance Leaching into Fluid Path",
+      "version": 1,
+      "created_at": "2024-08-01T09:00:00Z",
+      "updated_at": "2024-08-01T09:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Harmful chemical substances leach from fluid-path materials into the medication, causing systemic toxicity in the patient over prolonged infusion periods.",
+      "tags": ["iso14971", "leaching", "toxicity"],
+      "type_specific_attributes": {
+        "severity": 8,
+        "probability": "rare",
+        "mitigation_plan": "Perform extractables and leachables study per ISO 10993-18. Select materials with established safety profiles for prolonged contact applications.",
+        "acceptable_limit": "All extractable substances shall be below Permitted Daily Exposure limits per ISO 10993-17"
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0003-4000-8000-000000000001",
+      "mind_type": "Failure",
+      "title": "Pump Mechanism Wear",
+      "version": 1,
+      "created_at": "2024-08-01T10:00:00Z",
+      "updated_at": "2024-08-01T10:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Progressive mechanical wear of the peristaltic pump rotor and tubing compression mechanism causes flow rate drift over the device service life.",
+      "tags": ["iso14971", "pump", "wear"],
+      "type_specific_attributes": {
+        "failure_mode": "Pump rotor occlusion force decreases below minimum threshold due to cam follower wear",
+        "effects": "Gradual under-delivery of medication, flow rate accuracy degrades beyond ±5% specification",
+        "causes": "Normal mechanical wear of cam followers and rotor bearings, tubing fatigue from repeated compression cycles",
+        "detection_method": "Periodic flow rate self-test using drop sensor with automatic recalibration prompt",
+        "occurrence": 5,
+        "detectability": null
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0003-4000-8000-000000000002",
+      "mind_type": "Failure",
+      "title": "Flow Sensor Drift",
+      "version": 1,
+      "created_at": "2024-08-01T10:00:00Z",
+      "updated_at": "2024-08-01T10:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Ultrasonic or drop-counting flow sensor measurement drifts from calibration, providing inaccurate flow rate feedback to the control system.",
+      "tags": ["iso14971", "sensor", "drift"],
+      "type_specific_attributes": {
+        "failure_mode": "Flow sensor reading deviates more than 3% from actual flow rate due to calibration drift",
+        "effects": "Control loop compensates based on incorrect feedback, resulting in actual flow rate outside specification",
+        "causes": "Ultrasonic transducer aging, air bubble interference, temperature-induced acoustic velocity change, biofilm accumulation on sensor window",
+        "detection_method": "Redundant flow measurement comparison between primary sensor and drop counter",
+        "occurrence": 4,
+        "detectability": null
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0003-4000-8000-000000000003",
+      "mind_type": "Failure",
+      "title": "Firmware Calculation Error",
+      "version": 1,
+      "created_at": "2024-08-01T10:00:00Z",
+      "updated_at": "2024-08-01T10:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Arithmetic error in the dose calculation firmware module produces an incorrect motor drive signal, causing the pump to deliver the wrong flow rate.",
+      "tags": ["iso14971", "firmware", "calculation"],
+      "type_specific_attributes": {
+        "failure_mode": "Integer overflow or rounding error in flow rate calculation at extreme programmed rates",
+        "effects": "Pump delivers flow rate significantly different from programmed value, potential overdose or underdose",
+        "causes": "Fixed-point arithmetic precision loss, untested boundary conditions in dose calculation algorithm, unit conversion error",
+        "detection_method": "Independent safety processor performs parallel dose calculation and compares results",
+        "occurrence": 2,
+        "detectability": null
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0003-4000-8000-000000000004",
+      "mind_type": "Failure",
+      "title": "Stepper Motor Stall",
+      "version": 1,
+      "created_at": "2024-08-01T10:00:00Z",
+      "updated_at": "2024-08-01T10:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Peristaltic pump stepper motor loses synchronization and stalls, causing intermittent or complete cessation of fluid delivery.",
+      "tags": ["iso14971", "motor", "stall"],
+      "type_specific_attributes": {
+        "failure_mode": "Stepper motor misses steps or stalls under load when tubing resistance increases",
+        "effects": "Intermittent flow interruption or complete pump stoppage, delayed medication delivery",
+        "causes": "Increased tubing resistance from kink or occlusion, motor driver voltage drop, bearing friction increase from wear",
+        "detection_method": "Motor back-EMF monitoring for stall detection with occlusion alarm within 30 seconds",
+        "occurrence": 3,
+        "detectability": null
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0003-4000-8000-000000000005",
+      "mind_type": "Failure",
+      "title": "Silicone Tubing Degradation",
+      "version": 1,
+      "created_at": "2024-08-01T10:00:00Z",
+      "updated_at": "2024-08-01T10:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Medical-grade silicone tubing in the fluid path degrades due to repeated sterilization cycles or chemical interaction with aggressive medications.",
+      "tags": ["iso14971", "tubing", "degradation"],
+      "type_specific_attributes": {
+        "failure_mode": "Tubing inner surface develops micro-cracks or becomes tacky after extended use or aggressive drug exposure",
+        "effects": "Release of silicone particles into fluid path, increased extractables, potential sensitization reaction in patient",
+        "causes": "Repeated autoclave sterilization exceeding validated cycle count, lipid-based drug formulations attacking silicone, UV exposure during storage",
+        "detection_method": "Visual inspection of tubing clarity and flexibility during administration set change, extractables testing per lot",
+        "occurrence": 3,
+        "detectability": null
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0003-4000-8000-000000000006",
+      "mind_type": "Failure",
+      "title": "Plasticizer Leaching from PVC Components",
+      "version": 1,
+      "created_at": "2024-08-01T10:00:00Z",
+      "updated_at": "2024-08-01T10:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "DEHP or other plasticizers leach from PVC connectors or tubing segments into the medication fluid, particularly with lipid-containing solutions.",
+      "tags": ["iso14971", "plasticizer", "leaching"],
+      "type_specific_attributes": {
+        "failure_mode": "DEHP concentration in effluent exceeds 0.1 mg/L during infusion of lipid emulsion at body temperature",
+        "effects": "Patient exposure to endocrine-disrupting plasticizer, potential reproductive toxicity with prolonged infusion",
+        "causes": "Use of DEHP-plasticized PVC in fluid path, elevated temperature accelerating leaching, lipophilic drug formulation extracting plasticizer",
+        "detection_method": "Extractables and leachables testing per ISO 10993-18 with simulated-use conditions",
+        "occurrence": 4,
+        "detectability": null
+      }
+    },
+    {
+      "uuid": "c1b2c3d4-0003-4000-8000-000000000007",
+      "mind_type": "Failure",
+      "title": "Sterilization Residue on Fluid Path Components",
+      "version": 1,
+      "created_at": "2024-08-01T10:00:00Z",
+      "updated_at": "2024-08-01T10:00:00Z",
+      "creator": "fmea-iso14971@example.com",
+      "status": "active",
+      "description": "Ethylene oxide or other sterilization agent residues remain on fluid-path components above acceptable limits after aeration, causing irritation or toxicity.",
+      "tags": ["iso14971", "sterilization", "residue"],
+      "type_specific_attributes": {
+        "failure_mode": "EtO residue on tubing inner surface exceeds 25 mg/device after standard aeration cycle",
+        "effects": "Patient exposure to cytotoxic sterilization residue, local tissue irritation at infusion site, potential hemolysis",
+        "causes": "Insufficient aeration time, material with high EtO absorption, aeration chamber temperature below specification",
+        "detection_method": "EtO residual testing per ISO 10993-7 on each sterilization lot with release criteria",
+        "occurrence": 2,
+        "detectability": null
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source_uuid": "c1b2c3d4-0002-4000-8000-000000000001",
+      "target_uuid": "c1b2c3d4-0001-4000-8000-000000000001",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 20.0,
+        "p2": 85.0
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0002-4000-8000-000000000002",
+      "target_uuid": "c1b2c3d4-0001-4000-8000-000000000001",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 10.0,
+        "p2": 95.0
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0002-4000-8000-000000000003",
+      "target_uuid": "c1b2c3d4-0001-4000-8000-000000000002",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 15.0,
+        "p2": 60.0
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0002-4000-8000-000000000004",
+      "target_uuid": "c1b2c3d4-0001-4000-8000-000000000002",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 8.0,
+        "p2": 75.0
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0003-4000-8000-000000000001",
+      "target_uuid": "c1b2c3d4-0002-4000-8000-000000000001",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 40.0,
+        "detectability_probability": null
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0003-4000-8000-000000000002",
+      "target_uuid": "c1b2c3d4-0002-4000-8000-000000000001",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 35.0,
+        "detectability_probability": null
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0003-4000-8000-000000000002",
+      "target_uuid": "c1b2c3d4-0002-4000-8000-000000000002",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 20.0,
+        "detectability_probability": null
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0003-4000-8000-000000000003",
+      "target_uuid": "c1b2c3d4-0002-4000-8000-000000000002",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 15.0,
+        "detectability_probability": null
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0003-4000-8000-000000000004",
+      "target_uuid": "c1b2c3d4-0003-4000-8000-000000000001",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 25.0,
+        "detectability_probability": null
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0003-4000-8000-000000000005",
+      "target_uuid": "c1b2c3d4-0002-4000-8000-000000000003",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 30.0,
+        "detectability_probability": null
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0003-4000-8000-000000000006",
+      "target_uuid": "c1b2c3d4-0002-4000-8000-000000000004",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 35.0,
+        "detectability_probability": null
+      }
+    },
+    {
+      "source_uuid": "c1b2c3d4-0003-4000-8000-000000000007",
+      "target_uuid": "c1b2c3d4-0003-4000-8000-000000000005",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 20.0,
+        "detectability_probability": null
+      }
+    }
+  ],
+  "posts": []
+}

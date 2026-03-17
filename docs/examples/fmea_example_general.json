@@ -1,0 +1,361 @@
+{
+  "minds_count": 13,
+  "relationships_count": 11,
+  "posts_count": 0,
+  "minds": [
+    {
+      "uuid": "d1b2c3d4-0001-4000-8000-000000000001",
+      "mind_type": "Requirement",
+      "title": "Data Center Power Continuity",
+      "version": 1,
+      "created_at": "2024-09-01T08:00:00Z",
+      "updated_at": "2024-09-01T08:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "The data center shall maintain uninterrupted power supply to all critical infrastructure with 99.999% uptime, tolerating any single point of failure in the power distribution chain.",
+      "tags": ["general-fmea", "power", "continuity"],
+      "type_specific_attributes": {
+        "requirement_type": "DESIGN_INPUT",
+        "content": "Data center power infrastructure shall provide N+1 redundancy at every level from utility feed through UPS to rack PDU, achieving 99.999% availability measured annually.",
+        "source": "Data Center Operations Standard DCS-2024-001",
+        "acceptance_criteria": "Zero unplanned power outages affecting critical load during 12-month measurement period.",
+        "compliance_standard": "Uptime Institute Tier III",
+        "safety_critical": false
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0001-4000-8000-000000000002",
+      "mind_type": "Requirement",
+      "title": "Network Service Availability",
+      "version": 1,
+      "created_at": "2024-09-01T08:00:00Z",
+      "updated_at": "2024-09-01T08:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "All network services shall remain reachable and responsive with latency below 50ms for 99.99% of requests, with automatic failover for any single network component failure.",
+      "tags": ["general-fmea", "network", "availability"],
+      "type_specific_attributes": {
+        "requirement_type": "DESIGN_INPUT",
+        "content": "Network infrastructure shall provide redundant paths with automatic failover completing within 5 seconds, maintaining 99.99% service availability measured monthly.",
+        "source": "Network Architecture Specification NAS-2024-007",
+        "acceptance_criteria": "Service availability >= 99.99% with failover time <= 5 seconds verified during quarterly disaster recovery tests.",
+        "compliance_standard": "ISO 27001, ITIL v4",
+        "safety_critical": false
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0002-4000-8000-000000000001",
+      "mind_type": "Risk",
+      "title": "Power Supply Failure",
+      "version": 1,
+      "created_at": "2024-09-01T09:00:00Z",
+      "updated_at": "2024-09-01T09:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "Complete or partial loss of electrical power to critical IT equipment due to failure in the power distribution chain from utility feed through UPS to rack-level PDU.",
+      "tags": ["general-fmea", "power", "failure"],
+      "type_specific_attributes": {
+        "severity": 9,
+        "probability": "unlikely",
+        "mitigation_plan": "Deploy dual-path power distribution with automatic transfer switches. Maintain UPS battery replacement schedule and monthly generator load-bank testing.",
+        "acceptable_limit": "No single power component failure shall cause loss of power to any critical rack"
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0002-4000-8000-000000000002",
+      "mind_type": "Risk",
+      "title": "Cooling System Failure",
+      "version": 1,
+      "created_at": "2024-09-01T09:00:00Z",
+      "updated_at": "2024-09-01T09:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "Data center ambient temperature rises above safe operating limits due to cooling infrastructure failure, triggering thermal shutdown of servers and storage equipment.",
+      "tags": ["general-fmea", "cooling", "thermal"],
+      "type_specific_attributes": {
+        "severity": 7,
+        "probability": "possible",
+        "mitigation_plan": "Implement N+1 CRAC/CRAH unit redundancy with hot-standby failover. Deploy per-rack temperature sensors with automated alert escalation at 27C, 30C, and 35C thresholds.",
+        "acceptable_limit": "Server inlet temperature shall not exceed 27C under any single cooling unit failure condition"
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0002-4000-8000-000000000003",
+      "mind_type": "Risk",
+      "title": "Network Outage",
+      "version": 1,
+      "created_at": "2024-09-01T09:00:00Z",
+      "updated_at": "2024-09-01T09:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "Loss of network connectivity between data center zones or to external networks, causing service disruption for end users and inter-service communication failures.",
+      "tags": ["general-fmea", "network", "outage"],
+      "type_specific_attributes": {
+        "severity": 8,
+        "probability": "possible",
+        "mitigation_plan": "Deploy redundant core switches in active-active configuration with LACP link aggregation. Maintain diverse fiber paths between buildings.",
+        "acceptable_limit": "Network failover shall complete within 5 seconds with zero packet loss on stateful connections"
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0002-4000-8000-000000000004",
+      "mind_type": "Risk",
+      "title": "DNS Resolution Failure",
+      "version": 1,
+      "created_at": "2024-09-01T09:00:00Z",
+      "updated_at": "2024-09-01T09:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "Domain name resolution service becomes unavailable or returns incorrect results, preventing clients from reaching services by hostname.",
+      "tags": ["general-fmea", "dns", "resolution"],
+      "type_specific_attributes": {
+        "severity": 6,
+        "probability": "unlikely",
+        "mitigation_plan": "Operate geographically distributed recursive resolvers with Anycast addressing. Implement DNSSEC validation and DNS response monitoring.",
+        "acceptable_limit": "DNS query success rate shall remain above 99.99% with response time below 10ms"
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0003-4000-8000-000000000001",
+      "mind_type": "Failure",
+      "title": "UPS Battery Degradation",
+      "version": 1,
+      "created_at": "2024-09-01T10:00:00Z",
+      "updated_at": "2024-09-01T10:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "UPS battery capacity degrades below the minimum runtime threshold required to bridge the gap between utility power loss and generator start-up.",
+      "tags": ["general-fmea", "ups", "battery"],
+      "type_specific_attributes": {
+        "failure_mode": "Battery string capacity falls below 80% of rated Ah within 2 years of installation",
+        "effects": "Insufficient runtime during utility outage, potential unclean server shutdown before generator assumes load",
+        "causes": "Elevated ambient temperature accelerating plate sulfation, manufacturing defect in cell group, excessive discharge cycling",
+        "detection_method": "Quarterly battery impedance testing with trend analysis and automatic capacity alarm at 85% threshold",
+        "occurrence": 5,
+        "detectability": 3
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0003-4000-8000-000000000002",
+      "mind_type": "Failure",
+      "title": "Generator Start Failure",
+      "version": 1,
+      "created_at": "2024-09-01T10:00:00Z",
+      "updated_at": "2024-09-01T10:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "Backup diesel generator fails to start or reach stable operating speed within the required transfer time after utility power loss.",
+      "tags": ["general-fmea", "generator", "start-failure"],
+      "type_specific_attributes": {
+        "failure_mode": "Generator fails to reach rated speed and voltage within 10 seconds of start command",
+        "effects": "UPS batteries depleted without generator backup, complete power loss to critical load after battery exhaustion",
+        "causes": "Starter motor failure, fuel contamination with water or microbial growth, battery charger malfunction, coolant heater failure in cold weather",
+        "detection_method": "Weekly no-load start test with monthly load-bank test, continuous fuel quality monitoring",
+        "occurrence": 3,
+        "detectability": 4
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0003-4000-8000-000000000003",
+      "mind_type": "Failure",
+      "title": "HVAC Compressor Failure",
+      "version": 1,
+      "created_at": "2024-09-01T10:00:00Z",
+      "updated_at": "2024-09-01T10:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "CRAC/CRAH unit compressor fails, reducing cooling capacity below the threshold needed to maintain safe server inlet temperatures.",
+      "tags": ["general-fmea", "hvac", "compressor"],
+      "type_specific_attributes": {
+        "failure_mode": "Compressor motor seizes or refrigerant charge drops below minimum operating pressure",
+        "effects": "Gradual temperature rise in affected cooling zone, thermal throttling of servers within 15 minutes, thermal shutdown within 30 minutes",
+        "causes": "Compressor bearing wear, refrigerant leak at brazed joint, electrical contactor failure, condenser coil fouling reducing heat rejection",
+        "detection_method": "Continuous compressor current monitoring with vibration analysis, refrigerant pressure sensors with low-charge alarm",
+        "occurrence": 4,
+        "detectability": 3
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0003-4000-8000-000000000004",
+      "mind_type": "Failure",
+      "title": "Coolant Leak in Chilled Water Loop",
+      "version": 1,
+      "created_at": "2024-09-01T10:00:00Z",
+      "updated_at": "2024-09-01T10:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "Chilled water piping develops a leak, reducing coolant flow to CRAC/CRAH units and potentially causing water damage to IT equipment below.",
+      "tags": ["general-fmea", "coolant", "leak"],
+      "type_specific_attributes": {
+        "failure_mode": "Chilled water pipe joint or valve develops leak exceeding 1 liter per hour",
+        "effects": "Reduced cooling capacity in affected zone, water pooling under raised floor, potential electrical short in equipment below leak point",
+        "causes": "Pipe joint corrosion, thermal expansion stress on fittings, valve packing wear, water hammer from pump cycling",
+        "detection_method": "Under-floor water leak detection cable with zone identification, chilled water flow rate differential monitoring",
+        "occurrence": 3,
+        "detectability": 4
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0003-4000-8000-000000000005",
+      "mind_type": "Failure",
+      "title": "Switch Port Failure",
+      "version": 1,
+      "created_at": "2024-09-01T10:00:00Z",
+      "updated_at": "2024-09-01T10:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "Network switch port or line card fails, disrupting connectivity for all devices connected through that port or card.",
+      "tags": ["general-fmea", "switch", "port-failure"],
+      "type_specific_attributes": {
+        "failure_mode": "Switch port enters error-disabled state or line card becomes unresponsive",
+        "effects": "Loss of connectivity for connected servers or downstream switches, traffic rerouting through redundant path with potential congestion",
+        "causes": "Transceiver module failure, ASIC defect, firmware bug triggering port flap, electrostatic discharge damage",
+        "detection_method": "SNMP trap monitoring for port state changes, interface error counter threshold alerts, synthetic traffic probes",
+        "occurrence": 4,
+        "detectability": 2
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0003-4000-8000-000000000006",
+      "mind_type": "Failure",
+      "title": "Fiber Optic Cable Damage",
+      "version": 1,
+      "created_at": "2024-09-01T10:00:00Z",
+      "updated_at": "2024-09-01T10:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "Fiber optic cable sustains physical damage causing signal attenuation or complete link loss between network devices.",
+      "tags": ["general-fmea", "fiber", "cable-damage"],
+      "type_specific_attributes": {
+        "failure_mode": "Fiber link optical power drops below receiver sensitivity threshold or link goes down completely",
+        "effects": "Loss of inter-switch trunk link, traffic failover to alternate path, potential bandwidth reduction during failover",
+        "causes": "Accidental cable pull during maintenance, bend radius violation in cable tray, rodent damage in conduit, connector contamination",
+        "detection_method": "Optical power monitoring with OTDR baseline comparison, link-down SNMP traps with automated ticket creation",
+        "occurrence": 3,
+        "detectability": 2
+      }
+    },
+    {
+      "uuid": "d1b2c3d4-0003-4000-8000-000000000007",
+      "mind_type": "Failure",
+      "title": "DNS Cache Poisoning",
+      "version": 1,
+      "created_at": "2024-09-01T10:00:00Z",
+      "updated_at": "2024-09-01T10:00:00Z",
+      "creator": "fmea-general@example.com",
+      "status": "active",
+      "description": "Malicious or corrupted DNS records are injected into the resolver cache, causing clients to be directed to incorrect IP addresses.",
+      "tags": ["general-fmea", "dns", "cache-poisoning"],
+      "type_specific_attributes": {
+        "failure_mode": "Resolver cache contains forged A/AAAA records for critical service domains",
+        "effects": "Clients directed to wrong endpoints, service unavailability or redirection to malicious hosts, data exfiltration risk",
+        "causes": "Spoofed DNS response accepted due to weak transaction ID randomization, compromised upstream resolver, BGP hijack of authoritative nameserver prefix",
+        "detection_method": "DNSSEC validation on all responses, DNS response consistency checking across multiple resolvers, anomaly detection on query patterns",
+        "occurrence": 2,
+        "detectability": 5
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source_uuid": "d1b2c3d4-0002-4000-8000-000000000001",
+      "target_uuid": "d1b2c3d4-0001-4000-8000-000000000001",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 15.0,
+        "p2": 90.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0002-4000-8000-000000000002",
+      "target_uuid": "d1b2c3d4-0001-4000-8000-000000000001",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 25.0,
+        "p2": 65.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0002-4000-8000-000000000003",
+      "target_uuid": "d1b2c3d4-0001-4000-8000-000000000002",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 20.0,
+        "p2": 80.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0002-4000-8000-000000000004",
+      "target_uuid": "d1b2c3d4-0001-4000-8000-000000000002",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 10.0,
+        "p2": 50.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0003-4000-8000-000000000001",
+      "target_uuid": "d1b2c3d4-0002-4000-8000-000000000001",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 45.0,
+        "detectability_probability": 70.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0003-4000-8000-000000000002",
+      "target_uuid": "d1b2c3d4-0002-4000-8000-000000000001",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 20.0,
+        "detectability_probability": 55.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0003-4000-8000-000000000003",
+      "target_uuid": "d1b2c3d4-0002-4000-8000-000000000002",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 35.0,
+        "detectability_probability": 65.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0003-4000-8000-000000000004",
+      "target_uuid": "d1b2c3d4-0003-4000-8000-000000000003",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 25.0,
+        "detectability_probability": 60.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0003-4000-8000-000000000005",
+      "target_uuid": "d1b2c3d4-0002-4000-8000-000000000003",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 40.0,
+        "detectability_probability": 80.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0003-4000-8000-000000000006",
+      "target_uuid": "d1b2c3d4-0002-4000-8000-000000000003",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 30.0,
+        "detectability_probability": 75.0
+      }
+    },
+    {
+      "source_uuid": "d1b2c3d4-0003-4000-8000-000000000007",
+      "target_uuid": "d1b2c3d4-0002-4000-8000-000000000004",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 15.0,
+        "detectability_probability": 40.0
+      }
+    }
+  ],
+  "posts": []
+}

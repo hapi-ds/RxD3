@@ -1,0 +1,367 @@
+{
+  "minds": [
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000001",
+      "mind_type": "Requirement",
+      "title": "Motor Assembly Reliability",
+      "version": 1,
+      "created_at": "2024-06-01T08:00:00Z",
+      "updated_at": "2024-06-01T08:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "The motor assembly shall operate reliably for a minimum of 20,000 hours under rated load without degradation beyond acceptable limits.",
+      "tags": ["design-fmea", "motor", "reliability"],
+      "type_specific_attributes": {
+        "requirement_type": "DESIGN_INPUT",
+        "content": "Motor assembly shall achieve MTBF >= 20,000 hours at rated load and ambient temperature range -20C to +55C.",
+        "source": "Product Requirements Document v2.1",
+        "acceptance_criteria": "No bearing or winding failures during accelerated life testing equivalent to 20,000 hours.",
+        "compliance_standard": "IEC 60034-1",
+        "safety_critical": false
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0001-4000-8000-000000000002",
+      "mind_type": "Requirement",
+      "title": "Control System Safety",
+      "version": 1,
+      "created_at": "2024-06-01T08:00:00Z",
+      "updated_at": "2024-06-01T08:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "The electronic control system shall maintain safe operation under all single-fault conditions and fail to a safe state.",
+      "tags": ["design-fmea", "control-system", "safety"],
+      "type_specific_attributes": {
+        "requirement_type": "DESIGN_INPUT",
+        "content": "Control system shall detect faults within 50ms and transition to safe state within 200ms of fault detection.",
+        "source": "Functional Safety Specification v1.3",
+        "acceptance_criteria": "All single-point faults detected and mitigated during FMEA review and hardware-in-the-loop testing.",
+        "compliance_standard": "IEC 61508 SIL 2",
+        "safety_critical": true
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0002-4000-8000-000000000001",
+      "mind_type": "Risk",
+      "title": "Bearing Wear Exceeds Tolerance",
+      "version": 1,
+      "created_at": "2024-06-01T09:00:00Z",
+      "updated_at": "2024-06-01T09:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Progressive bearing wear leads to increased radial play, vibration, and eventual seizure of the motor shaft.",
+      "tags": ["design-fmea", "bearing", "wear"],
+      "type_specific_attributes": {
+        "severity": 7,
+        "probability": "possible",
+        "mitigation_plan": "Use sealed deep-groove ball bearings with L10 life rating exceeding 30,000 hours. Implement vibration monitoring.",
+        "acceptable_limit": "Radial play shall not exceed 0.05mm after 20,000 hours"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0002-4000-8000-000000000002",
+      "mind_type": "Risk",
+      "title": "Winding Insulation Breakdown",
+      "version": 1,
+      "created_at": "2024-06-01T09:00:00Z",
+      "updated_at": "2024-06-01T09:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Degradation of stator winding insulation due to thermal stress, leading to inter-turn short circuits.",
+      "tags": ["design-fmea", "winding", "insulation"],
+      "type_specific_attributes": {
+        "severity": 8,
+        "probability": "unlikely",
+        "mitigation_plan": "Use Class H insulation rated to 180C. Implement thermal protection via PTC thermistors embedded in windings.",
+        "acceptable_limit": "Insulation resistance shall remain above 100 MOhm after thermal cycling tests"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0002-4000-8000-000000000003",
+      "mind_type": "Risk",
+      "title": "Sensor Signal Loss",
+      "version": 1,
+      "created_at": "2024-06-01T09:00:00Z",
+      "updated_at": "2024-06-01T09:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Loss of feedback signals from position or current sensors causing the control loop to operate without valid input data.",
+      "tags": ["design-fmea", "sensor", "signal-integrity"],
+      "type_specific_attributes": {
+        "severity": 9,
+        "probability": "unlikely",
+        "mitigation_plan": "Implement redundant sensor channels with cross-validation. Add signal plausibility checks in firmware.",
+        "acceptable_limit": "System shall detect sensor loss within 10ms and enter safe state within 50ms"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0002-4000-8000-000000000004",
+      "mind_type": "Risk",
+      "title": "Firmware Fault Causing Uncontrolled Output",
+      "version": 1,
+      "created_at": "2024-06-01T09:00:00Z",
+      "updated_at": "2024-06-01T09:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Software defect or runtime error in the motor controller firmware leading to incorrect PWM output or loss of control.",
+      "tags": ["design-fmea", "firmware", "safety"],
+      "type_specific_attributes": {
+        "severity": 10,
+        "probability": "rare",
+        "mitigation_plan": "Apply MISRA-C coding standards. Implement independent hardware watchdog and safe-torque-off circuit.",
+        "acceptable_limit": "Zero uncontrolled output events during 10,000 hours of field operation"
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0003-4000-8000-000000000001",
+      "mind_type": "Failure",
+      "title": "Excessive Vibration",
+      "version": 1,
+      "created_at": "2024-06-01T10:00:00Z",
+      "updated_at": "2024-06-01T10:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Motor exhibits vibration levels exceeding acceptable thresholds during operation, affecting both bearing life and winding integrity.",
+      "tags": ["design-fmea", "vibration"],
+      "type_specific_attributes": {
+        "failure_mode": "Vibration amplitude exceeds 4.5 mm/s RMS at rated speed",
+        "effects": "Accelerated bearing degradation, winding insulation fretting, structural fatigue in mounting brackets",
+        "causes": "Rotor imbalance, bearing defects, shaft misalignment, loose mounting",
+        "detection_method": "Accelerometer-based vibration monitoring with FFT analysis",
+        "occurrence": 5,
+        "detectability": 3
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0003-4000-8000-000000000002",
+      "mind_type": "Failure",
+      "title": "Shaft Misalignment",
+      "version": 1,
+      "created_at": "2024-06-01T10:00:00Z",
+      "updated_at": "2024-06-01T10:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Angular or parallel misalignment between motor shaft and driven load shaft.",
+      "tags": ["design-fmea", "alignment"],
+      "type_specific_attributes": {
+        "failure_mode": "Shaft angular misalignment exceeds 0.5 degrees",
+        "effects": "Uneven bearing load distribution, coupling wear, increased vibration harmonics at 2x running speed",
+        "causes": "Manufacturing tolerance stack-up, thermal expansion differential, improper assembly",
+        "detection_method": "Laser alignment measurement during assembly and periodic maintenance",
+        "occurrence": 4,
+        "detectability": 4
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0003-4000-8000-000000000003",
+      "mind_type": "Failure",
+      "title": "Lubrication Failure",
+      "version": 1,
+      "created_at": "2024-06-01T10:00:00Z",
+      "updated_at": "2024-06-01T10:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Bearing grease degradation or depletion leading to metal-to-metal contact.",
+      "tags": ["design-fmea", "lubrication"],
+      "type_specific_attributes": {
+        "failure_mode": "Bearing grease loses viscosity below minimum threshold",
+        "effects": "Increased friction, elevated bearing temperature, accelerated wear, eventual bearing seizure",
+        "causes": "Grease oxidation at elevated temperatures, contamination ingress, insufficient initial fill",
+        "detection_method": "Temperature monitoring of bearing housing with trend analysis",
+        "occurrence": 3,
+        "detectability": 5
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0003-4000-8000-000000000004",
+      "mind_type": "Failure",
+      "title": "Thermal Runaway in Stator Windings",
+      "version": 1,
+      "created_at": "2024-06-01T10:00:00Z",
+      "updated_at": "2024-06-01T10:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Localized hot spot in stator winding causes progressive insulation degradation and eventual short circuit.",
+      "tags": ["design-fmea", "thermal"],
+      "type_specific_attributes": {
+        "failure_mode": "Winding temperature exceeds insulation class rating for sustained period",
+        "effects": "Inter-turn short circuit, reduced motor efficiency, smoke generation, potential fire hazard",
+        "causes": "Blocked ventilation, overload condition, ambient temperature exceedance, insulation defect",
+        "detection_method": "PTC thermistor embedded in end-windings with over-temperature trip",
+        "occurrence": 3,
+        "detectability": 2
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0003-4000-8000-000000000005",
+      "mind_type": "Failure",
+      "title": "EMC Interference on Sensor Lines",
+      "version": 1,
+      "created_at": "2024-06-01T10:00:00Z",
+      "updated_at": "2024-06-01T10:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Electromagnetic interference corrupts sensor feedback signals, causing erroneous readings.",
+      "tags": ["design-fmea", "emc", "sensor"],
+      "type_specific_attributes": {
+        "failure_mode": "Sensor output deviates more than 5% from true value due to conducted or radiated EMI",
+        "effects": "Control loop instability, torque ripple, potential overcurrent condition",
+        "causes": "Insufficient shielding on sensor cables, poor PCB layout, switching noise from power stage",
+        "detection_method": "Signal plausibility check comparing redundant sensor channels",
+        "occurrence": 4,
+        "detectability": 3
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0003-4000-8000-000000000006",
+      "mind_type": "Failure",
+      "title": "Memory Corruption in Controller",
+      "version": 1,
+      "created_at": "2024-06-01T10:00:00Z",
+      "updated_at": "2024-06-01T10:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "RAM or flash memory corruption in the motor controller MCU causing unpredictable firmware behavior.",
+      "tags": ["design-fmea", "firmware", "memory"],
+      "type_specific_attributes": {
+        "failure_mode": "Critical control variables corrupted in RAM during operation",
+        "effects": "Incorrect PWM duty cycle output, loss of current limiting, potential uncontrolled motor acceleration",
+        "causes": "Single-event upset from EMI, power supply glitch, stack overflow, firmware bug",
+        "detection_method": "CRC checks on critical data, ECC memory, periodic RAM self-test",
+        "occurrence": 2,
+        "detectability": 6
+      }
+    },
+    {
+      "uuid": "a1b2c3d4-0003-4000-8000-000000000007",
+      "mind_type": "Failure",
+      "title": "Watchdog Timer Failure to Reset",
+      "version": 1,
+      "created_at": "2024-06-01T10:00:00Z",
+      "updated_at": "2024-06-01T10:00:00Z",
+      "creator": "fmea-example@example.com",
+      "status": "active",
+      "description": "Independent watchdog timer fails to trigger system reset when firmware becomes unresponsive.",
+      "tags": ["design-fmea", "watchdog", "safety"],
+      "type_specific_attributes": {
+        "failure_mode": "Watchdog does not reset MCU within specified timeout window",
+        "effects": "Firmware remains in faulted state, safe-torque-off not activated, continued uncontrolled output",
+        "causes": "Watchdog clock source failure, incorrect watchdog configuration, common-cause failure with main MCU",
+        "detection_method": "Independent external watchdog IC with separate clock source and power-on self-test",
+        "occurrence": 1,
+        "detectability": 7
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source_uuid": "a1b2c3d4-0002-4000-8000-000000000001",
+      "target_uuid": "a1b2c3d4-0001-4000-8000-000000000001",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 30.0,
+        "p2": 60.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0002-4000-8000-000000000002",
+      "target_uuid": "a1b2c3d4-0001-4000-8000-000000000001",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 15.0,
+        "p2": 80.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0002-4000-8000-000000000003",
+      "target_uuid": "a1b2c3d4-0001-4000-8000-000000000002",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 20.0,
+        "p2": 90.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0002-4000-8000-000000000004",
+      "target_uuid": "a1b2c3d4-0001-4000-8000-000000000002",
+      "relationship_type": "CAN_OCCUR",
+      "properties": {
+        "p1": 5.0,
+        "p2": 95.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0003-4000-8000-000000000001",
+      "target_uuid": "a1b2c3d4-0002-4000-8000-000000000001",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 45.0,
+        "detectability_probability": 70.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0003-4000-8000-000000000001",
+      "target_uuid": "a1b2c3d4-0002-4000-8000-000000000002",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 20.0,
+        "detectability_probability": 55.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0003-4000-8000-000000000002",
+      "target_uuid": "a1b2c3d4-0003-4000-8000-000000000001",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 35.0,
+        "detectability_probability": 60.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0003-4000-8000-000000000003",
+      "target_uuid": "a1b2c3d4-0003-4000-8000-000000000001",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 25.0,
+        "detectability_probability": 50.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0003-4000-8000-000000000004",
+      "target_uuid": "a1b2c3d4-0002-4000-8000-000000000002",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 30.0,
+        "detectability_probability": 80.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0003-4000-8000-000000000005",
+      "target_uuid": "a1b2c3d4-0002-4000-8000-000000000003",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 40.0,
+        "detectability_probability": 65.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0003-4000-8000-000000000006",
+      "target_uuid": "a1b2c3d4-0002-4000-8000-000000000004",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 15.0,
+        "detectability_probability": 40.0
+      }
+    },
+    {
+      "source_uuid": "a1b2c3d4-0003-4000-8000-000000000007",
+      "target_uuid": "a1b2c3d4-0003-4000-8000-000000000006",
+      "relationship_type": "LEAD_TO",
+      "properties": {
+        "occurrence_probability": 10.0,
+        "detectability_probability": 30.0
+      }
+    }
+  ],
+  "posts": []
+}

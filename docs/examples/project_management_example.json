@@ -1,0 +1,3863 @@
+{
+  "minds": [
+    {
+      "uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "mind_type": "Project",
+      "title": "Medical Device Development - CardioMonitor X1",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Development of CardioMonitor X1 wearable cardiac monitoring device per IEC 62304 / ISO 13485",
+      "tags": [
+        "medical-device",
+        "iec-62304",
+        "iso-13485"
+      ],
+      "type_specific_attributes": {
+        "end_date": "2026-12-31",
+        "budget": 500000,
+        "start_date": "2026-04-01"
+      }
+    },
+    {
+      "uuid": "09312350-0357-4961-8be5-9be0d50e6133",
+      "mind_type": "Company",
+      "title": "MedTech Solutions GmbH",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Medical device manufacturer specializing in cardiac monitoring",
+      "tags": [
+        "medtech",
+        "iso-13485"
+      ],
+      "type_specific_attributes": {
+        "size": 120,
+        "industry": "Medical Devices",
+        "founded_date": "2015-03-01"
+      }
+    },
+    {
+      "uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392",
+      "mind_type": "Department",
+      "title": "Engineering Department",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Hardware and software engineering",
+      "tags": null,
+      "type_specific_attributes": {
+        "department_code": "ENG",
+        "manager": "eng-lead@example.com"
+      }
+    },
+    {
+      "uuid": "ca15c224-2fca-4646-b70b-0e1d64f058ac",
+      "mind_type": "Department",
+      "title": "Quality Assurance Department",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Quality assurance and regulatory compliance",
+      "tags": null,
+      "type_specific_attributes": {
+        "department_code": "QA",
+        "manager": "qa-lead@example.com"
+      }
+    },
+    {
+      "uuid": "6185c832-d698-4469-ad05-1657cbd4f55d",
+      "mind_type": "Resource",
+      "title": "Dr. Sarah Chen - Systems Engineer Lead",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Lead systems engineer with 12 years medical device experience",
+      "tags": null,
+      "type_specific_attributes": {
+        "efficiency": 1.2,
+        "resource_type": "PERSON",
+        "workinghours_per_year": 1700,
+        "hourly_rate": 120,
+        "email": "eng-lead@example.com",
+        "workinghours_max_per_week": 40
+      }
+    },
+    {
+      "uuid": "848289e6-62e9-42de-9968-7c3f4a61a48d",
+      "mind_type": "Resource",
+      "title": "Marcus Weber - Software Dev Lead",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Software development lead, IEC 62304 specialist",
+      "tags": null,
+      "type_specific_attributes": {
+        "efficiency": 1,
+        "resource_type": "PERSON",
+        "workinghours_per_year": 1700,
+        "hourly_rate": 110,
+        "email": "dev-lead@example.com",
+        "workinghours_max_per_week": 40
+      }
+    },
+    {
+      "uuid": "ebb96c71-1883-4786-a98c-4bb534f27012",
+      "mind_type": "Resource",
+      "title": "Firmware Team",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Embedded firmware development group (3 engineers)",
+      "tags": null,
+      "type_specific_attributes": {
+        "efficiency": 1,
+        "resource_type": "GROUP",
+        "workinghours_per_year": 5100,
+        "hourly_rate": 95,
+        "workinghours_max_per_week": 120
+      }
+    },
+    {
+      "uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e",
+      "mind_type": "Resource",
+      "title": "Anna Mueller - QA Lead",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "admin@example.com",
+      "status": "active",
+      "description": "Quality assurance lead, ISO 14971 risk management expert",
+      "tags": null,
+      "type_specific_attributes": {
+        "efficiency": 1.1,
+        "resource_type": "PERSON",
+        "workinghours_per_year": 1700,
+        "hourly_rate": 105,
+        "email": "qa-lead@example.com",
+        "workinghours_max_per_week": 40
+      }
+    },
+    {
+      "uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "mind_type": "Task",
+      "title": "Design Phase",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Product design and requirements definition",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 40,
+        "effort": 320,
+        "priority": "high",
+        "task_type": "PHASE",
+        "phase_number": 1
+      }
+    },
+    {
+      "uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "mind_type": "Task",
+      "title": "Implementation Phase",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Software and hardware implementation",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 60,
+        "effort": 480,
+        "priority": "high",
+        "task_type": "PHASE",
+        "phase_number": 2
+      }
+    },
+    {
+      "uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "mind_type": "Task",
+      "title": "Verification & Validation Phase",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "draft",
+      "description": "Design verification and validation activities",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 30,
+        "effort": 240,
+        "priority": "high",
+        "task_type": "PHASE",
+        "phase_number": 3
+      }
+    },
+    {
+      "uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "mind_type": "Task",
+      "title": "Requirements Engineering",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Gather and document user needs and design inputs",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 20,
+        "effort": 160,
+        "task_type": "WORKPACKAGE",
+        "priority": "high"
+      }
+    },
+    {
+      "uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "mind_type": "Task",
+      "title": "Architecture Design",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "System and software architecture definition",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 15,
+        "effort": 120,
+        "task_type": "WORKPACKAGE",
+        "priority": "high"
+      }
+    },
+    {
+      "uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "mind_type": "Task",
+      "title": "Software Development",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Firmware and application software development",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 50,
+        "effort": 400,
+        "task_type": "WORKPACKAGE",
+        "priority": "high"
+      }
+    },
+    {
+      "uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "mind_type": "Task",
+      "title": "Capture User Needs",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "active",
+      "description": "Interview stakeholders and document user needs",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 5,
+        "effort": 40,
+        "priority": "high",
+        "task_type": "TASK"
+      }
+    },
+    {
+      "uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "mind_type": "Task",
+      "title": "Define Design Inputs",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "active",
+      "description": "Translate user needs into measurable design inputs per ISO 13485",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 4,
+        "effort": 32,
+        "priority": "high",
+        "task_type": "TASK"
+      }
+    },
+    {
+      "uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "mind_type": "Task",
+      "title": "Risk Analysis (ISO 14971)",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "active",
+      "description": "Perform preliminary hazard analysis and risk assessment",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 6,
+        "effort": 48,
+        "task_type": "TASK",
+        "priority": "critical"
+      }
+    },
+    {
+      "uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "mind_type": "Task",
+      "title": "Software Architecture Document",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "active",
+      "description": "Create IEC 62304 compliant software architecture document",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 7,
+        "effort": 56,
+        "priority": "high",
+        "task_type": "TASK"
+      }
+    },
+    {
+      "uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "mind_type": "Task",
+      "title": "Firmware Development",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "active",
+      "description": "Develop embedded firmware for sensor data acquisition",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 20,
+        "effort": 160,
+        "priority": "high",
+        "task_type": "TASK"
+      }
+    },
+    {
+      "uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "mind_type": "Task",
+      "title": "Application Software Development",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "active",
+      "description": "Develop mobile companion app for data visualization",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 25,
+        "effort": 200,
+        "task_type": "TASK",
+        "priority": "medium"
+      }
+    },
+    {
+      "uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "mind_type": "Task",
+      "title": "Unit Testing",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "draft",
+      "description": "Write and execute unit tests for all software modules",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 10,
+        "effort": 80,
+        "priority": "high",
+        "task_type": "TASK"
+      }
+    },
+    {
+      "uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "mind_type": "Task",
+      "title": "Integration Testing",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "qa-lead@example.com",
+      "status": "draft",
+      "description": "System integration testing of firmware + app + hardware",
+      "tags": null,
+      "type_specific_attributes": {
+        "length": 8,
+        "effort": 64,
+        "priority": "high",
+        "task_type": "TASK"
+      }
+    },
+    {
+      "uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "mind_type": "Task",
+      "title": "Design Review Gate",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "draft",
+      "description": "Formal design review milestone per ISO 13485 clause 7.3.5",
+      "tags": null,
+      "type_specific_attributes": {
+        "completion_percentage": 0,
+        "target_date": "2026-06-30",
+        "priority": "critical",
+        "task_type": "MILESTONE"
+      }
+    },
+    {
+      "uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+      "mind_type": "Task",
+      "title": "Design Validation Complete",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "draft",
+      "description": "Design validation milestone - confirms device meets user needs",
+      "tags": null,
+      "type_specific_attributes": {
+        "completion_percentage": 0,
+        "target_date": "2026-11-30",
+        "priority": "critical",
+        "task_type": "MILESTONE"
+      }
+    },
+    {
+      "uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a",
+      "mind_type": "Sprint",
+      "title": "Sprint 1 - Requirements & Architecture",
+      "version": 1,
+      "created_at": "2026-01-15T08:00:00Z",
+      "updated_at": "2026-01-15T08:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "First sprint covering requirements capture and architecture",
+      "tags": null,
+      "type_specific_attributes": {
+        "end_date": "2026-04-14",
+        "goal": "Complete user needs capture and initial architecture",
+        "sprint_number": 1,
+        "velocity": 40,
+        "start_date": "2026-04-01"
+      }
+    },
+    {
+      "uuid": "90f99050-ccbf-43b2-9642-15027fccf74a",
+      "mind_type": "Booking",
+      "title": "User Needs Interview Day 1",
+      "version": 1,
+      "created_at": "2026-04-01T17:00:00Z",
+      "updated_at": "2026-04-01T17:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Stakeholder interviews - cardiology department",
+      "tags": null,
+      "type_specific_attributes": {
+        "amount": 960,
+        "rate": 120,
+        "booking_date": "2026-04-01",
+        "hours_worked": 8
+      }
+    },
+    {
+      "uuid": "8095e382-43ed-45ba-a523-1577731ea4f6",
+      "mind_type": "Booking",
+      "title": "User Needs Interview Day 2",
+      "version": 1,
+      "created_at": "2026-04-02T17:00:00Z",
+      "updated_at": "2026-04-02T17:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Stakeholder interviews - nursing staff",
+      "tags": null,
+      "type_specific_attributes": {
+        "amount": 780,
+        "rate": 120,
+        "booking_date": "2026-04-02",
+        "hours_worked": 6.5
+      }
+    },
+    {
+      "uuid": "27f34054-a994-499e-bfa5-a9b1bc9029af",
+      "mind_type": "Booking",
+      "title": "Design Input Documentation",
+      "version": 1,
+      "created_at": "2026-04-07T17:00:00Z",
+      "updated_at": "2026-04-07T17:00:00Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Documenting design inputs from user needs",
+      "tags": null,
+      "type_specific_attributes": {
+        "amount": 840,
+        "rate": 120,
+        "booking_date": "2026-04-07",
+        "hours_worked": 7
+      }
+    },
+    {
+      "uuid": "1fa849b7-8ebd-4499-8148-ca0caa785c7d",
+      "mind_type": "Booking",
+      "title": "Risk Analysis Workshop",
+      "version": 1,
+      "created_at": "2026-04-10T17:00:00Z",
+      "updated_at": "2026-04-10T17:00:00Z",
+      "creator": "qa-lead@example.com",
+      "status": "done",
+      "description": "Preliminary hazard analysis workshop",
+      "tags": null,
+      "type_specific_attributes": {
+        "amount": 840,
+        "rate": 105,
+        "booking_date": "2026-04-10",
+        "hours_worked": 8
+      }
+    },
+    {
+      "uuid": "b5655813-65ad-4bd8-bbb0-ba8a607fa735",
+      "mind_type": "Booking",
+      "title": "Risk Analysis Documentation",
+      "version": 1,
+      "created_at": "2026-04-11T17:00:00Z",
+      "updated_at": "2026-04-11T17:00:00Z",
+      "creator": "qa-lead@example.com",
+      "status": "done",
+      "description": "Documenting risk analysis results",
+      "tags": null,
+      "type_specific_attributes": {
+        "amount": 420,
+        "rate": 105,
+        "booking_date": "2026-04-11",
+        "hours_worked": 4
+      }
+    },
+    {
+      "uuid": "fdc51a1a-fd05-45ee-b0ff-3ea6d90e95a6",
+      "mind_type": "Booking",
+      "title": "Architecture Review Prep",
+      "version": 1,
+      "created_at": "2026-04-14T17:00:00Z",
+      "updated_at": "2026-04-14T17:00:00Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Preparing software architecture document draft",
+      "tags": null,
+      "type_specific_attributes": {
+        "amount": 660,
+        "rate": 110,
+        "booking_date": "2026-04-14",
+        "hours_worked": 6
+      }
+    },
+    {
+      "uuid": "a13bbaf5-7727-403c-9ca7-909f41c6fadc",
+      "mind_type": "Journalentry",
+      "title": "Project Kickoff Complete",
+      "version": 1,
+      "created_at": "2026-04-01T09:00:00Z",
+      "updated_at": "2026-04-01T09:00:00Z",
+      "creator": "pm@example.com",
+      "status": "active",
+      "description": "Project kickoff meeting held. All stakeholders aligned on scope and timeline. Key risk: sensor supplier lead time may impact schedule.",
+      "tags": null,
+      "type_specific_attributes": {
+        "severity": "medium"
+      }
+    },
+    {
+      "uuid": "91af1cf7-efab-41ea-b84d-fea736f6d8c5",
+      "mind_type": "Journalentry",
+      "title": "Risk Analysis Finding - Battery Safety",
+      "version": 1,
+      "created_at": "2026-04-10T16:00:00Z",
+      "updated_at": "2026-04-10T16:00:00Z",
+      "creator": "qa-lead@example.com",
+      "status": "active",
+      "description": "Preliminary hazard analysis identified battery thermal runaway as high-severity risk. Mitigation: add thermal cutoff circuit. Requires additional design input.",
+      "tags": null,
+      "type_specific_attributes": {
+        "severity": "high"
+      }
+    },
+    {
+      "uuid": "800b0437-df5d-4494-bc9e-0a03082f65d4",
+      "mind_type": "ScheduleHistory",
+      "title": "Schedule 1 for Medical Device Development - CardioMonitor X1",
+      "version": 1,
+      "created_at": "2026-03-16T15:18:06.547354Z",
+      "updated_at": "2026-03-16T15:18:06.547356Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "scheduled_at": "2026-03-16T15:18:06.547302Z",
+        "schedule_id": "61bf587c-d118-4206-bcb6-d2d96497f86a_v1"
+      }
+    },
+    {
+      "uuid": "2e8eba1f-2cbc-451d-9c74-e9353d6c71a1",
+      "mind_type": "ScheduleHistory",
+      "title": "Schedule 1 for Medical Device Development - CardioMonitor X1",
+      "version": 1,
+      "created_at": "2026-03-16T15:19:44.057567Z",
+      "updated_at": "2026-03-16T15:19:44.057569Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "scheduled_at": "2026-03-16T15:19:44.057510Z",
+        "schedule_id": "61bf587c-d118-4206-bcb6-d2d96497f86a_v1"
+      }
+    },
+    {
+      "uuid": "e25228d7-4c65-4678-a952-1201cb07a268",
+      "mind_type": "ScheduleHistory",
+      "title": "Schedule 1 for Medical Device Development - CardioMonitor X1",
+      "version": 1,
+      "created_at": "2026-03-16T15:19:56.804856Z",
+      "updated_at": "2026-03-16T15:19:56.804858Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "scheduled_at": "2026-03-16T15:19:56.804803Z",
+        "schedule_id": "61bf587c-d118-4206-bcb6-d2d96497f86a_v1"
+      }
+    },
+    {
+      "uuid": "90b98c54-cfd9-4786-b2bc-3a65f1e47812",
+      "mind_type": "ScheduleHistory",
+      "title": "Test Schedule",
+      "version": 99,
+      "created_at": "2026-03-16T15:21:35.406693Z",
+      "updated_at": "2026-03-16T15:21:35.406694Z",
+      "creator": "test@test.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "scheduled_at": "2026-03-16T15:21:35.406654Z",
+        "schedule_id": "test_v99"
+      }
+    },
+    {
+      "uuid": "34bc8211-afb5-4a69-add0-eb54511ecf9f",
+      "mind_type": "ScheduleHistory",
+      "title": "Schedule 1 for Medical Device Development - CardioMonitor X1",
+      "version": 1,
+      "created_at": "2026-03-16T15:22:47.933535Z",
+      "updated_at": "2026-03-16T15:22:47.933537Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "scheduled_at": "2026-03-16T15:22:47.933480Z",
+        "schedule_id": "61bf587c-d118-4206-bcb6-d2d96497f86a_v1"
+      }
+    },
+    {
+      "uuid": "16933a8b-d8b8-406d-b3b2-3071ed172836",
+      "mind_type": "ScheduleHistory",
+      "title": "Schedule 2 for Medical Device Development - CardioMonitor X1",
+      "version": 2,
+      "created_at": "2026-03-16T15:23:43.440315Z",
+      "updated_at": "2026-03-16T15:23:43.440319Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "total_cost": 0,
+        "scheduled_at": "2026-03-16T15:23:43.440240Z",
+        "global_end": "2026-08-09T08:00:00Z",
+        "total_effort": 302,
+        "schedule_id": "61bf587c-d118-4206-bcb6-d2d96497f86a_v2",
+        "global_start": "2026-08-23T08:00:00Z"
+      }
+    },
+    {
+      "uuid": "e9cb61c7-ce93-4095-a437-5a7b62cba61d",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Validation Complete",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:43.713153Z",
+      "updated_at": "2026-03-16T15:23:43.713156Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 273,
+        "scheduled_duration": 1,
+        "slack_end": 273,
+        "scheduled_end": "2026-04-02T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "3ce3d4ae-ca23-4e6b-8a3b-578a73e475d1",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Review Gate",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:43.856693Z",
+      "updated_at": "2026-03-16T15:23:43.856697Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 273,
+        "scheduled_duration": 1,
+        "slack_end": 273,
+        "scheduled_end": "2026-04-02T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "990d3d84-3833-4029-9676-075ee8a4b5aa",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:43.928455Z",
+      "updated_at": "2026-03-16T15:23:43.928460Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+        "base_cost": 0,
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "slack_start": 144,
+        "scheduled_duration": 40,
+        "slack_end": 144,
+        "scheduled_end": "2026-05-11T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "d2847461-9850-401c-8911-31cfd22fe8b5",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:43.988659Z",
+      "updated_at": "2026-03-16T15:23:43.988663Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 50,
+        "slack_end": 224,
+        "scheduled_end": "2026-05-21T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "3fb38bde-89f6-4d4a-9c75-eaf528ce6116",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Requirements Engineering",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.049340Z",
+      "updated_at": "2026-03-16T15:23:44.049343Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 239,
+        "scheduled_duration": 20,
+        "slack_end": 239,
+        "scheduled_end": "2026-04-21T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "d6c3a794-86e7-44e8-bbe5-1b9d600c07a7",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Architecture Document",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.093197Z",
+      "updated_at": "2026-03-16T15:23:44.093199Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 7,
+        "slack_end": 224,
+        "scheduled_end": "2026-04-08T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "7d238d3a-4a0f-4ad8-ad76-fabf746e096e",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Capture User Needs",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.146706Z",
+      "updated_at": "2026-03-16T15:23:44.146710Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 5,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-06T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "6db770d8-a7cf-4826-ac67-ca86b3fc5754",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Implementation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.199501Z",
+      "updated_at": "2026-03-16T15:23:44.199504Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+        "scheduled_start": "2026-05-11T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 144,
+        "scheduled_duration": 60,
+        "slack_end": 144,
+        "scheduled_end": "2026-07-10T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "84e784f6-0904-4ffd-b023-852321f4a4b0",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Architecture Design",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.250497Z",
+      "updated_at": "2026-03-16T15:23:44.250500Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+        "scheduled_start": "2026-04-21T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 239,
+        "scheduled_duration": 15,
+        "slack_end": 239,
+        "scheduled_end": "2026-05-06T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "eafc5433-a1bb-4751-941f-19bbc852fc6b",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Application Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.302797Z",
+      "updated_at": "2026-03-16T15:23:44.302800Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 25,
+        "slack_end": 224,
+        "scheduled_end": "2026-05-03T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "93bb3e76-96f7-41c7-b8df-7128321d7c54",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Firmware Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.366725Z",
+      "updated_at": "2026-03-16T15:23:44.366729Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 229,
+        "scheduled_duration": 20,
+        "slack_end": 229,
+        "scheduled_end": "2026-04-28T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "33687b78-e963-43ee-b368-5c74ff65c0f4",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Define Design Inputs",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.437718Z",
+      "updated_at": "2026-03-16T15:23:44.437722Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+        "scheduled_start": "2026-04-06T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 4,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-10T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "dc5cf1d4-0362-4260-b9ee-40e6ef10ad86",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Verification & Validation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.493225Z",
+      "updated_at": "2026-03-16T15:23:44.493228Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+        "scheduled_start": "2026-07-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 144,
+        "scheduled_duration": 30,
+        "slack_end": 144,
+        "scheduled_end": "2026-08-09T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "8994a289-0ade-4ab2-9af6-ff076f7cc6e9",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Unit Testing",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.547181Z",
+      "updated_at": "2026-03-16T15:23:44.547184Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+        "scheduled_start": "2026-05-04T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 223,
+        "scheduled_duration": 10,
+        "slack_end": 223,
+        "scheduled_end": "2026-05-14T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "cd80c9fc-d5a6-44d3-8029-e5fdc537b470",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Risk Analysis (ISO 14971)",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.589922Z",
+      "updated_at": "2026-03-16T15:23:44.589925Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+        "scheduled_start": "2026-04-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 6,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-16T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "3b28ad1e-1249-4f91-87e7-8f99c4d3ecd2",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Integration Testing",
+      "version": 1,
+      "created_at": "2026-03-16T15:23:44.639557Z",
+      "updated_at": "2026-03-16T15:23:44.639560Z",
+      "creator": "qa-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+        "scheduled_start": "2026-05-14T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 223,
+        "scheduled_duration": 8,
+        "slack_end": 223,
+        "scheduled_end": "2026-05-22T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "5f434866-066b-49df-902c-f64dc96d919f",
+      "mind_type": "ScheduleHistory",
+      "title": "Schedule 3 for Medical Device Development - CardioMonitor X1",
+      "version": 3,
+      "created_at": "2026-03-16T15:33:26.612278Z",
+      "updated_at": "2026-03-16T15:33:26.612280Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "total_cost": 0,
+        "scheduled_at": "2026-03-16T15:33:26.612211Z",
+        "global_end": "2026-08-09T08:00:00Z",
+        "total_effort": 302,
+        "schedule_id": "61bf587c-d118-4206-bcb6-d2d96497f86a_v3",
+        "global_start": "2026-08-23T08:00:00Z"
+      }
+    },
+    {
+      "uuid": "aa1cf7c5-94eb-4cb7-8803-4089fe6c8f11",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.210014Z",
+      "updated_at": "2026-03-16T15:33:27.210018Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+        "base_cost": 0,
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "slack_start": 144,
+        "scheduled_duration": 40,
+        "slack_end": 144,
+        "scheduled_end": "2026-05-11T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "be6393f9-450f-4461-80a3-7b95c4e4d39d",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Requirements Engineering",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.372916Z",
+      "updated_at": "2026-03-16T15:33:27.372919Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 239,
+        "scheduled_duration": 20,
+        "slack_end": 239,
+        "scheduled_end": "2026-04-21T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "55e67dd7-d52c-42fc-987b-569195f10e19",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.436173Z",
+      "updated_at": "2026-03-16T15:33:27.436178Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 50,
+        "slack_end": 224,
+        "scheduled_end": "2026-05-21T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "2c8701af-35ae-43b9-9bd5-558ebde98c68",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Capture User Needs",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.505042Z",
+      "updated_at": "2026-03-16T15:33:27.505046Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 5,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-06T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "3072e96c-4106-45a2-b777-1ecf5575369b",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Architecture Document",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.564973Z",
+      "updated_at": "2026-03-16T15:33:27.564976Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 7,
+        "slack_end": 224,
+        "scheduled_end": "2026-04-08T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "46eaf6ce-2bd9-4917-8bf1-9302a5e4e9d4",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Review Gate",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.622759Z",
+      "updated_at": "2026-03-16T15:33:27.622762Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 273,
+        "scheduled_duration": 1,
+        "slack_end": 273,
+        "scheduled_end": "2026-04-02T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "51b230a2-b1f8-4321-a0da-63bd3316b8f0",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Validation Complete",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.678518Z",
+      "updated_at": "2026-03-16T15:33:27.678522Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 273,
+        "scheduled_duration": 1,
+        "slack_end": 273,
+        "scheduled_end": "2026-04-02T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "48886b34-224d-4887-bf7f-698530bbfe28",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Implementation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.736266Z",
+      "updated_at": "2026-03-16T15:33:27.736270Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+        "scheduled_start": "2026-05-11T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 144,
+        "scheduled_duration": 60,
+        "slack_end": 144,
+        "scheduled_end": "2026-07-10T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "4a175fb5-efbd-4afd-9246-a2d5020ccc83",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Architecture Design",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.783128Z",
+      "updated_at": "2026-03-16T15:33:27.783132Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+        "scheduled_start": "2026-04-21T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 239,
+        "scheduled_duration": 15,
+        "slack_end": 239,
+        "scheduled_end": "2026-05-06T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "7f0fa6f3-6458-4e40-a971-7c474f4d2eeb",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Define Design Inputs",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.839478Z",
+      "updated_at": "2026-03-16T15:33:27.839481Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+        "scheduled_start": "2026-04-06T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 4,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-10T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "45cf2473-67c9-463f-8b24-1905686c2c72",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Firmware Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.909532Z",
+      "updated_at": "2026-03-16T15:33:27.909535Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 229,
+        "scheduled_duration": 20,
+        "slack_end": 229,
+        "scheduled_end": "2026-04-28T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "4e461f31-d1f8-41ef-98ed-31f175ab2235",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Application Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:27.979300Z",
+      "updated_at": "2026-03-16T15:33:27.979305Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 25,
+        "slack_end": 224,
+        "scheduled_end": "2026-05-03T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "e333d56f-0e12-4522-a4dc-f3085e5202b6",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Verification & Validation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:28.034913Z",
+      "updated_at": "2026-03-16T15:33:28.034916Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+        "scheduled_start": "2026-07-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 144,
+        "scheduled_duration": 30,
+        "slack_end": 144,
+        "scheduled_end": "2026-08-09T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "f1ebfe1b-a4a7-4a00-8842-c293c604faf2",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Risk Analysis (ISO 14971)",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:28.084954Z",
+      "updated_at": "2026-03-16T15:33:28.084957Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+        "scheduled_start": "2026-04-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 6,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-16T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "22439f75-67a5-4ae6-9af0-6d8abcd0a3d0",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Unit Testing",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:28.139144Z",
+      "updated_at": "2026-03-16T15:33:28.139147Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+        "scheduled_start": "2026-05-04T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 223,
+        "scheduled_duration": 10,
+        "slack_end": 223,
+        "scheduled_end": "2026-05-14T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "b562de02-e755-46a9-aee5-6299f22b848a",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Integration Testing",
+      "version": 1,
+      "created_at": "2026-03-16T15:33:28.187404Z",
+      "updated_at": "2026-03-16T15:33:28.187408Z",
+      "creator": "qa-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+        "scheduled_start": "2026-05-14T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 223,
+        "scheduled_duration": 8,
+        "slack_end": 223,
+        "scheduled_end": "2026-05-22T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "a8dfa77b-f23c-460a-aaf9-7a5ab3b0d3fc",
+      "mind_type": "ScheduleHistory",
+      "title": "Schedule 4 for Medical Device Development - CardioMonitor X1",
+      "version": 4,
+      "created_at": "2026-03-16T15:34:34.035236Z",
+      "updated_at": "2026-03-16T15:34:34.035238Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "total_cost": 0,
+        "scheduled_at": "2026-03-16T15:34:34.035189Z",
+        "global_end": "2026-08-09T08:00:00Z",
+        "total_effort": 300,
+        "schedule_id": "61bf587c-d118-4206-bcb6-d2d96497f86a_v4",
+        "global_start": "2026-08-23T08:00:00Z"
+      }
+    },
+    {
+      "uuid": "8cbbc3c1-3f3a-4e82-85c7-661d55e66ce8",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.093759Z",
+      "updated_at": "2026-03-16T15:34:34.093764Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+        "base_cost": 0,
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "slack_start": 144,
+        "scheduled_duration": 40,
+        "slack_end": 144,
+        "scheduled_end": "2026-05-11T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "bc37a965-18c5-441a-9594-49984f5c5b6c",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Requirements Engineering",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.159592Z",
+      "updated_at": "2026-03-16T15:34:34.159595Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 239,
+        "scheduled_duration": 20,
+        "slack_end": 239,
+        "scheduled_end": "2026-04-21T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "7b4de1cb-f4d6-42bd-8965-dd7fba03dc2d",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.199424Z",
+      "updated_at": "2026-03-16T15:34:34.199427Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 50,
+        "slack_end": 224,
+        "scheduled_end": "2026-05-21T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "fbcae87a-4e19-44f4-883e-cca7751779e6",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Capture User Needs",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.241303Z",
+      "updated_at": "2026-03-16T15:34:34.241306Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 5,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-06T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "378c11d7-7693-4e9e-9fc7-da015e880473",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Architecture Document",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.280549Z",
+      "updated_at": "2026-03-16T15:34:34.280552Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 7,
+        "slack_end": 224,
+        "scheduled_end": "2026-04-08T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "d12dc127-36bc-49c2-b2c4-47f78fa8dceb",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Review Gate",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.326770Z",
+      "updated_at": "2026-03-16T15:34:34.326774Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 274,
+        "scheduled_duration": 0,
+        "slack_end": 274,
+        "scheduled_end": "2026-04-01T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "7c7efbce-0d7b-4099-9e3f-18ff2b8616fa",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Validation Complete",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.375746Z",
+      "updated_at": "2026-03-16T15:34:34.375749Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 274,
+        "scheduled_duration": 0,
+        "slack_end": 274,
+        "scheduled_end": "2026-04-01T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "e968459c-753b-4cf3-bf95-3d0ef4654229",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Implementation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.417497Z",
+      "updated_at": "2026-03-16T15:34:34.417499Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+        "scheduled_start": "2026-05-11T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 144,
+        "scheduled_duration": 60,
+        "slack_end": 144,
+        "scheduled_end": "2026-07-10T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "3af68991-268a-4fca-a31a-e203f5ec4c68",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Architecture Design",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.465483Z",
+      "updated_at": "2026-03-16T15:34:34.465487Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+        "scheduled_start": "2026-04-21T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 239,
+        "scheduled_duration": 15,
+        "slack_end": 239,
+        "scheduled_end": "2026-05-06T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "8e6c9648-8281-4331-9e98-ef2337a51294",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Define Design Inputs",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.516130Z",
+      "updated_at": "2026-03-16T15:34:34.516133Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+        "scheduled_start": "2026-04-06T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 4,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-10T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "97ea0c53-1f3e-46ce-bdef-054692cc09c8",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Firmware Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.557335Z",
+      "updated_at": "2026-03-16T15:34:34.557339Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 229,
+        "scheduled_duration": 20,
+        "slack_end": 229,
+        "scheduled_end": "2026-04-28T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "53e72e1b-b4a3-4e98-8c10-78b09ee83dfb",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Application Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.607706Z",
+      "updated_at": "2026-03-16T15:34:34.607708Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 25,
+        "slack_end": 224,
+        "scheduled_end": "2026-05-03T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "08664645-bd0c-4f87-9e89-9f0f15f7bb69",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Verification & Validation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.652036Z",
+      "updated_at": "2026-03-16T15:34:34.652040Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+        "scheduled_start": "2026-07-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 144,
+        "scheduled_duration": 30,
+        "slack_end": 144,
+        "scheduled_end": "2026-08-09T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "e9e4f313-0218-4225-836c-64268dece4fb",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Risk Analysis (ISO 14971)",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.698883Z",
+      "updated_at": "2026-03-16T15:34:34.698886Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+        "scheduled_start": "2026-04-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 6,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-16T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "eb372be1-8c49-4dbc-ba69-98c99f0d6670",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Unit Testing",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.737779Z",
+      "updated_at": "2026-03-16T15:34:34.737782Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+        "scheduled_start": "2026-05-04T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 223,
+        "scheduled_duration": 10,
+        "slack_end": 223,
+        "scheduled_end": "2026-05-14T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "28300c03-24c8-44c0-9777-40775eecf44e",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Integration Testing",
+      "version": 1,
+      "created_at": "2026-03-16T15:34:34.780395Z",
+      "updated_at": "2026-03-16T15:34:34.780398Z",
+      "creator": "qa-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+        "scheduled_start": "2026-05-14T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 223,
+        "scheduled_duration": 8,
+        "slack_end": 223,
+        "scheduled_end": "2026-05-22T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "f750a22b-68e3-427d-a4df-b63484cd1eee",
+      "mind_type": "ScheduleHistory",
+      "title": "Schedule 5 for Medical Device Development - CardioMonitor X1",
+      "version": 5,
+      "created_at": "2026-03-16T15:37:28.982457Z",
+      "updated_at": "2026-03-16T15:37:28.982459Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "total_cost": 0,
+        "scheduled_at": "2026-03-16T15:37:28.982399Z",
+        "global_end": "2026-08-09T08:00:00Z",
+        "total_effort": 300,
+        "schedule_id": "61bf587c-d118-4206-bcb6-d2d96497f86a_v5",
+        "global_start": "2026-04-01T08:00:00Z"
+      }
+    },
+    {
+      "uuid": "cb6498b5-8f80-4d41-9107-43a81871d796",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.051428Z",
+      "updated_at": "2026-03-16T15:37:29.051433Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+        "base_cost": 0,
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "slack_start": 0,
+        "scheduled_duration": 40,
+        "slack_end": 0,
+        "scheduled_end": "2026-05-11T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "b3666dad-88ed-4013-b786-b0077261972a",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Requirements Engineering",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.103815Z",
+      "updated_at": "2026-03-16T15:37:29.103818Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 20,
+        "slack_end": 0,
+        "scheduled_end": "2026-04-21T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "fc9dc3b0-8d76-42ac-9bf0-6ae8fe2b3b43",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.141554Z",
+      "updated_at": "2026-03-16T15:37:29.141557Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 50,
+        "slack_end": 224,
+        "scheduled_end": "2026-05-21T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "d8f5b1d9-f66a-4386-9160-d50fc332e5c9",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Capture User Needs",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.183066Z",
+      "updated_at": "2026-03-16T15:37:29.183070Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 5,
+        "slack_end": 0,
+        "scheduled_end": "2026-04-06T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "85e69ac0-8db6-4b63-bbef-e7a1f5b4a755",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Architecture Document",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.225839Z",
+      "updated_at": "2026-03-16T15:37:29.225842Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 7,
+        "slack_end": 0,
+        "scheduled_end": "2026-04-08T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "f85e08e1-b7cf-4362-a64d-be86e6f39edd",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Review Gate",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.263627Z",
+      "updated_at": "2026-03-16T15:37:29.263630Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 274,
+        "scheduled_duration": 0,
+        "slack_end": 274,
+        "scheduled_end": "2026-04-01T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "004b0de0-c426-41f8-a95e-fa73562ee1dc",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Validation Complete",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.304684Z",
+      "updated_at": "2026-03-16T15:37:29.304687Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 274,
+        "scheduled_duration": 0,
+        "slack_end": 274,
+        "scheduled_end": "2026-04-01T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "2d5acf3f-ff41-4cc7-9280-d7aeea8a971e",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Implementation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.349851Z",
+      "updated_at": "2026-03-16T15:37:29.349854Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+        "scheduled_start": "2026-05-11T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 60,
+        "slack_end": 0,
+        "scheduled_end": "2026-07-10T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "ba17641c-1bdb-403c-a898-525e9a58fcfe",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Architecture Design",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.389037Z",
+      "updated_at": "2026-03-16T15:37:29.389041Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+        "scheduled_start": "2026-04-21T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 239,
+        "scheduled_duration": 15,
+        "slack_end": 239,
+        "scheduled_end": "2026-05-06T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "bd1fe38c-f93e-4708-afbd-86127ae68960",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Define Design Inputs",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.437201Z",
+      "updated_at": "2026-03-16T15:37:29.437204Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+        "scheduled_start": "2026-04-06T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 4,
+        "slack_end": 0,
+        "scheduled_end": "2026-04-10T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "da59d769-c99c-4421-88af-63d3bb1092e2",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Firmware Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.474659Z",
+      "updated_at": "2026-03-16T15:37:29.474662Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 6,
+        "scheduled_duration": 20,
+        "slack_end": 6,
+        "scheduled_end": "2026-04-28T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "6adbb73b-9ce5-4080-ac3c-d2f9836cc049",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Application Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.511200Z",
+      "updated_at": "2026-03-16T15:37:29.511203Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 1,
+        "scheduled_duration": 25,
+        "slack_end": 1,
+        "scheduled_end": "2026-05-03T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "2d9c4e94-d5bf-4527-90f8-c831a78880ae",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Verification & Validation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.550946Z",
+      "updated_at": "2026-03-16T15:37:29.550949Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+        "scheduled_start": "2026-07-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 144,
+        "scheduled_duration": 30,
+        "slack_end": 144,
+        "scheduled_end": "2026-08-09T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "8bca9cc7-f8ad-4c7d-ac54-60c727c72558",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Risk Analysis (ISO 14971)",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.587460Z",
+      "updated_at": "2026-03-16T15:37:29.587463Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+        "scheduled_start": "2026-04-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 6,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-16T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "17789edd-43b7-4218-8a18-353779e3a5d8",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Unit Testing",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.626252Z",
+      "updated_at": "2026-03-16T15:37:29.626255Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+        "scheduled_start": "2026-05-04T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 10,
+        "slack_end": 0,
+        "scheduled_end": "2026-05-14T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "fba0cab1-0f75-4968-b89e-44ec26b8383e",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Integration Testing",
+      "version": 1,
+      "created_at": "2026-03-16T15:37:29.670145Z",
+      "updated_at": "2026-03-16T15:37:29.670148Z",
+      "creator": "qa-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+        "scheduled_start": "2026-05-14T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 223,
+        "scheduled_duration": 8,
+        "slack_end": 223,
+        "scheduled_end": "2026-05-22T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "9d65bbf4-e3a5-44a2-a881-0677d9b74341",
+      "mind_type": "ScheduleHistory",
+      "title": "Schedule 6 for Medical Device Development - CardioMonitor X1",
+      "version": 6,
+      "created_at": "2026-03-16T16:02:27.059333Z",
+      "updated_at": "2026-03-16T16:02:27.059335Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": null,
+      "tags": null,
+      "type_specific_attributes": {
+        "total_cost": 0,
+        "scheduled_at": "2026-03-16T16:02:27.059278Z",
+        "global_end": "2026-08-09T08:00:00Z",
+        "total_effort": 300,
+        "schedule_id": "61bf587c-d118-4206-bcb6-d2d96497f86a_v6",
+        "global_start": "2026-04-01T08:00:00Z"
+      }
+    },
+    {
+      "uuid": "12aa4d9a-810a-49cb-8eb9-53be1273fe27",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Phase",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.095408Z",
+      "updated_at": "2026-03-16T16:02:27.095412Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+        "base_cost": 0,
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "slack_start": 0,
+        "scheduled_duration": 40,
+        "slack_end": 0,
+        "scheduled_end": "2026-05-11T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "5a12472b-e484-4533-8bbe-173cfa38e59f",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Requirements Engineering",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.193135Z",
+      "updated_at": "2026-03-16T16:02:27.193141Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 20,
+        "slack_end": 0,
+        "scheduled_end": "2026-04-21T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "3a793a94-1733-4902-a1a8-0a7085a320b2",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.236417Z",
+      "updated_at": "2026-03-16T16:02:27.236422Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 224,
+        "scheduled_duration": 50,
+        "slack_end": 224,
+        "scheduled_end": "2026-05-21T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "39aa1a00-36d8-444a-a271-3239554915df",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Capture User Needs",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.284319Z",
+      "updated_at": "2026-03-16T16:02:27.284324Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 5,
+        "slack_end": 0,
+        "scheduled_end": "2026-04-06T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "793a5edf-15d2-497d-97d0-0a732c1da4b3",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Software Architecture Document",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.324316Z",
+      "updated_at": "2026-03-16T16:02:27.324320Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+        "scheduled_start": "2026-04-01T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 7,
+        "slack_end": 0,
+        "scheduled_end": "2026-04-08T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "ec352a92-0710-4245-9a3d-cf59cb94b5d2",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Implementation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.360528Z",
+      "updated_at": "2026-03-16T16:02:27.360533Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+        "scheduled_start": "2026-05-11T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 60,
+        "slack_end": 0,
+        "scheduled_end": "2026-07-10T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "1d2c8e3f-1bfb-49a5-aa37-b5fc90282199",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Architecture Design",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.401116Z",
+      "updated_at": "2026-03-16T16:02:27.401121Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+        "scheduled_start": "2026-04-21T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 239,
+        "scheduled_duration": 15,
+        "slack_end": 239,
+        "scheduled_end": "2026-05-06T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "5a8e65ee-8bf0-4c25-a587-0e9d0b1e729c",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Define Design Inputs",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.439816Z",
+      "updated_at": "2026-03-16T16:02:27.439821Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+        "scheduled_start": "2026-04-06T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 4,
+        "slack_end": 0,
+        "scheduled_end": "2026-04-10T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "1ab05cff-8ac7-44af-91a9-e109a20e7056",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Firmware Development",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.469098Z",
+      "updated_at": "2026-03-16T16:02:27.469102Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 6,
+        "scheduled_duration": 20,
+        "slack_end": 6,
+        "scheduled_end": "2026-04-28T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "40b3d20a-9190-48e2-b6dc-339ec8769202",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Application Software Development",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.499848Z",
+      "updated_at": "2026-03-16T16:02:27.499852Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+        "scheduled_start": "2026-04-08T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 1,
+        "scheduled_duration": 25,
+        "slack_end": 1,
+        "scheduled_end": "2026-05-03T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "a16e5de7-0160-4c14-b493-097fa990b394",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Verification & Validation Phase",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.532331Z",
+      "updated_at": "2026-03-16T16:02:27.532335Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+        "scheduled_start": "2026-07-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 144,
+        "scheduled_duration": 30,
+        "slack_end": 144,
+        "scheduled_end": "2026-08-09T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "5faa4461-bac2-4b70-bc29-af569a069d75",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Risk Analysis (ISO 14971)",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.566505Z",
+      "updated_at": "2026-03-16T16:02:27.566509Z",
+      "creator": "eng-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+        "scheduled_start": "2026-04-10T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 6,
+        "slack_end": 0,
+        "scheduled_end": "2026-04-16T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "83fa7fd4-ef36-42ea-952d-4157880be563",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Unit Testing",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.598541Z",
+      "updated_at": "2026-03-16T16:02:27.598546Z",
+      "creator": "dev-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+        "scheduled_start": "2026-05-04T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 10,
+        "slack_end": 0,
+        "scheduled_end": "2026-05-14T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "ff4c53cb-c56e-45c4-b325-fae051cad2ab",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Review Gate",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.626882Z",
+      "updated_at": "2026-03-16T16:02:27.626887Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+        "scheduled_start": "2026-04-16T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 259,
+        "scheduled_duration": 0,
+        "slack_end": 259,
+        "scheduled_end": "2026-04-16T08:00:00Z",
+        "is_critical": false
+      }
+    },
+    {
+      "uuid": "b186c9fd-534c-4631-a917-8bc8a25f77be",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Integration Testing",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.657657Z",
+      "updated_at": "2026-03-16T16:02:27.657661Z",
+      "creator": "qa-lead@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+        "scheduled_start": "2026-05-14T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 0,
+        "scheduled_duration": 8,
+        "slack_end": 0,
+        "scheduled_end": "2026-05-22T08:00:00Z",
+        "is_critical": true
+      }
+    },
+    {
+      "uuid": "0c37a255-a7c2-4282-817e-ea641b134f7c",
+      "mind_type": "ScheduledTask",
+      "title": "Scheduled: Design Validation Complete",
+      "version": 1,
+      "created_at": "2026-03-16T16:02:27.686479Z",
+      "updated_at": "2026-03-16T16:02:27.686484Z",
+      "creator": "pm@example.com",
+      "status": "done",
+      "description": "Computed schedule state",
+      "tags": null,
+      "type_specific_attributes": {
+        "variable_cost": 0,
+        "total_cost": 0,
+        "source_task_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+        "scheduled_start": "2026-05-22T08:00:00Z",
+        "base_cost": 0,
+        "slack_start": 223,
+        "scheduled_duration": 0,
+        "slack_end": 223,
+        "scheduled_end": "2026-05-22T08:00:00Z",
+        "is_critical": false
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "34bc8211-afb5-4a69-add0-eb54511ecf9f",
+      "relationship_type": "HAS_SCHEDULED",
+      "properties": {}
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "16933a8b-d8b8-406d-b3b2-3071ed172836",
+      "relationship_type": "HAS_SCHEDULED",
+      "properties": {}
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "5f434866-066b-49df-902c-f64dc96d919f",
+      "relationship_type": "HAS_SCHEDULED",
+      "properties": {}
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "a8dfa77b-f23c-460a-aaf9-7a5ab3b0d3fc",
+      "relationship_type": "HAS_SCHEDULED",
+      "properties": {}
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "f750a22b-68e3-427d-a4df-b63484cd1eee",
+      "relationship_type": "HAS_SCHEDULED",
+      "properties": {}
+    },
+    {
+      "source_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "target_uuid": "9d65bbf4-e3a5-44a2-a881-0677d9b74341",
+      "relationship_type": "HAS_SCHEDULED",
+      "properties": {}
+    },
+    {
+      "source_uuid": "09312350-0357-4961-8be5-9be0d50e6133",
+      "target_uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "09312350-0357-4961-8be5-9be0d50e6133",
+      "target_uuid": "ca15c224-2fca-4646-b70b-0e1d64f058ac",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392",
+      "target_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 1
+      }
+    },
+    {
+      "source_uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392",
+      "target_uuid": "848289e6-62e9-42de-9968-7c3f4a61a48d",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 1
+      }
+    },
+    {
+      "source_uuid": "c73e4f0b-1818-46b4-9c7e-12ee0ab06392",
+      "target_uuid": "ebb96c71-1883-4786-a98c-4bb534f27012",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 1
+      }
+    },
+    {
+      "source_uuid": "ca15c224-2fca-4646-b70b-0e1d64f058ac",
+      "target_uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 1
+      }
+    },
+    {
+      "source_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d",
+      "target_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "relationship_type": "ASSIGNED_TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "848289e6-62e9-42de-9968-7c3f4a61a48d",
+      "target_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "relationship_type": "ASSIGNED_TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "ebb96c71-1883-4786-a98c-4bb534f27012",
+      "target_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "relationship_type": "ASSIGNED_TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e",
+      "target_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "relationship_type": "ASSIGNED_TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "target_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 1
+      }
+    },
+    {
+      "source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "target_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 1
+      }
+    },
+    {
+      "source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "target_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "target_uuid": "990d3d84-3833-4029-9676-075ee8a4b5aa",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:43.957539Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "target_uuid": "aa1cf7c5-94eb-4cb7-8803-4089fe6c8f11",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.268089Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "target_uuid": "8cbbc3c1-3f3a-4e82-85c7-661d55e66ce8",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.126813Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "target_uuid": "cb6498b5-8f80-4d41-9107-43a81871d796",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.078082Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "3340d46c-f88a-480c-aa66-b0e8379ad024",
+      "target_uuid": "12aa4d9a-810a-49cb-8eb9-53be1273fe27",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.111446Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "target_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 1
+      }
+    },
+    {
+      "source_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "target_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "target_uuid": "6db770d8-a7cf-4826-ac67-ca86b3fc5754",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.223727Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "target_uuid": "48886b34-224d-4887-bf7f-698530bbfe28",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.756959Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "target_uuid": "e968459c-753b-4cf3-bf95-3d0ef4654229",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.439957Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "target_uuid": "2d5acf3f-ff41-4cc7-9280-d7aeea8a971e",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.367572Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "79eb5987-599a-4fc5-bd36-a7ddbd445704",
+      "target_uuid": "ec352a92-0710-4245-9a3d-cf59cb94b5d2",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.381081Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "target_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 1
+      }
+    },
+    {
+      "source_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "target_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 1
+      }
+    },
+    {
+      "source_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "target_uuid": "dc5cf1d4-0362-4260-b9ee-40e6ef10ad86",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.520132Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "target_uuid": "e333d56f-0e12-4522-a4dc-f3085e5202b6",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:28.061329Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "target_uuid": "08664645-bd0c-4f87-9e89-9f0f15f7bb69",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.679352Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "target_uuid": "2d9c4e94-d5bf-4527-90f8-c831a78880ae",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.568528Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "b860245a-4b4e-40d7-be01-fc6131e676d5",
+      "target_uuid": "a16e5de7-0160-4c14-b493-097fa990b394",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.548816Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "target_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 2
+      }
+    },
+    {
+      "source_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "target_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 2
+      }
+    },
+    {
+      "source_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 2
+      }
+    },
+    {
+      "source_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "target_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "target_uuid": "3fb38bde-89f6-4d4a-9c75-eaf528ce6116",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.069515Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "target_uuid": "be6393f9-450f-4461-80a3-7b95c4e4d39d",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.398436Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "target_uuid": "bc37a965-18c5-441a-9594-49984f5c5b6c",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.178513Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "target_uuid": "b3666dad-88ed-4013-b786-b0077261972a",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.120347Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "479097ce-a335-44d9-8652-f51709f15b55",
+      "target_uuid": "5a12472b-e484-4533-8bbe-173cfa38e59f",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.215624Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "target_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 2
+      }
+    },
+    {
+      "source_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "target_uuid": "84e784f6-0904-4ffd-b023-852321f4a4b0",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.276803Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "target_uuid": "4a175fb5-efbd-4afd-9246-a2d5020ccc83",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.810826Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "target_uuid": "3af68991-268a-4fca-a31a-e203f5ec4c68",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.491458Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "target_uuid": "ba17641c-1bdb-403c-a898-525e9a58fcfe",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.412615Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "6ed46e5d-b367-4a80-bd93-f362fecfa2b2",
+      "target_uuid": "1d2c8e3f-1bfb-49a5-aa37-b5fc90282199",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.418820Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "target_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 2
+      }
+    },
+    {
+      "source_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "target_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 2
+      }
+    },
+    {
+      "source_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "target_uuid": "d2847461-9850-401c-8911-31cfd22fe8b5",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.018748Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "target_uuid": "55e67dd7-d52c-42fc-987b-569195f10e19",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.469847Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "target_uuid": "7b4de1cb-f4d6-42bd-8965-dd7fba03dc2d",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.220579Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "target_uuid": "fc9dc3b0-8d76-42ac-9bf0-6ae8fe2b3b43",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.160093Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "bf713cd8-3fab-405c-9a89-7ed29d8d8f94",
+      "target_uuid": "3a793a94-1733-4902-a1a8-0a7085a320b2",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.262698Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "target_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "target_uuid": "7d238d3a-4a0f-4ad8-ad76-fabf746e096e",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.171531Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "target_uuid": "2c8701af-35ae-43b9-9bd5-558ebde98c68",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.532231Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "target_uuid": "fbcae87a-4e19-44f4-883e-cca7751779e6",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.259919Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "target_uuid": "d8f5b1d9-f66a-4386-9160-d50fc332e5c9",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.204398Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "target_uuid": "39aa1a00-36d8-444a-a271-3239554915df",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.306349Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "target_uuid": "33687b78-e963-43ee-b368-5c74ff65c0f4",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.464951Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "target_uuid": "7f0fa6f3-6458-4e40-a971-7c474f4d2eeb",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.866166Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "target_uuid": "8e6c9648-8281-4331-9e98-ef2337a51294",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.536660Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "target_uuid": "bd1fe38c-f93e-4708-afbd-86127ae68960",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.454767Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "target_uuid": "5a8e65ee-8bf0-4c25-a587-0e9d0b1e729c",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.454489Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "target_uuid": "cd80c9fc-d5a6-44d3-8029-e5fdc537b470",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.613464Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "target_uuid": "f1ebfe1b-a4a7-4a00-8842-c293c604faf2",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:28.112334Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "target_uuid": "e9e4f313-0218-4225-836c-64268dece4fb",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.716264Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "target_uuid": "8bca9cc7-f8ad-4c7d-ac54-60c727c72558",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.607134Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "target_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "relationship_type": "PREDATES",
+      "properties": {
+        "created_at": "2026-03-16T16:02:06.828419Z"
+      }
+    },
+    {
+      "source_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "target_uuid": "5faa4461-bac2-4b70-bc29-af569a069d75",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.583603Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "target_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "target_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "target_uuid": "d6c3a794-86e7-44e8-bbe5-1b9d600c07a7",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.117115Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "target_uuid": "3072e96c-4106-45a2-b777-1ecf5575369b",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.592225Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "target_uuid": "378c11d7-7693-4e9e-9fc7-da015e880473",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.301145Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "target_uuid": "85e69ac0-8db6-4b63-bbef-e7a1f5b4a755",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.245083Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "target_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "relationship_type": "PREDATES",
+      "properties": {
+        "created_at": "2026-03-16T16:02:06.918617Z"
+      }
+    },
+    {
+      "source_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "target_uuid": "793a5edf-15d2-497d-97d0-0a732c1da4b3",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.344070Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "target_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "target_uuid": "93bb3e76-96f7-41c7-b8df-7128321d7c54",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.398920Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "target_uuid": "45cf2473-67c9-463f-8b24-1905686c2c72",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.941135Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "target_uuid": "97ea0c53-1f3e-46ce-bdef-054692cc09c8",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.584415Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "target_uuid": "da59d769-c99c-4421-88af-63d3bb1092e2",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.491713Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "ea179fb8-b57a-41e2-9b45-1aa48d366fde",
+      "target_uuid": "1ab05cff-8ac7-44af-91a9-e109a20e7056",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.483457Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "target_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "target_uuid": "eafc5433-a1bb-4751-941f-19bbc852fc6b",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.327380Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "target_uuid": "4e461f31-d1f8-41ef-98ed-31f175ab2235",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:28.009449Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "target_uuid": "53e72e1b-b4a3-4e98-8c10-78b09ee83dfb",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.625798Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "target_uuid": "6adbb73b-9ce5-4080-ac3c-d2f9836cc049",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.531072Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "087fb367-2e33-4feb-a486-76e2373dc8ee",
+      "target_uuid": "40b3d20a-9190-48e2-b6dc-339ec8769202",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.517902Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "target_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "relationship_type": "PREDATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "target_uuid": "8994a289-0ade-4ab2-9af6-ff076f7cc6e9",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.566496Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "target_uuid": "22439f75-67a5-4ae6-9af0-6d8abcd0a3d0",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:28.159891Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "target_uuid": "eb372be1-8c49-4dbc-ba69-98c99f0d6670",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.758891Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "target_uuid": "17789edd-43b7-4218-8a18-353779e3a5d8",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.647765Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "a6fef58b-b7e3-4f72-991c-378ebe5a6bcd",
+      "target_uuid": "83fa7fd4-ef36-42ea-952d-4157880be563",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.612736Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "target_uuid": "3b28ad1e-1249-4f91-87e7-8f99c4d3ecd2",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:44.664421Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "target_uuid": "b562de02-e755-46a9-aee5-6299f22b848a",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:28.216534Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "target_uuid": "28300c03-24c8-44c0-9777-40775eecf44e",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.805084Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "target_uuid": "fba0cab1-0f75-4968-b89e-44ec26b8383e",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.687205Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "target_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+      "relationship_type": "PREDATES",
+      "properties": {
+        "created_at": "2026-03-16T16:02:06.926728Z"
+      }
+    },
+    {
+      "source_uuid": "f28ce7bf-06dc-409e-8ece-2b0a08ca6dd8",
+      "target_uuid": "b186c9fd-534c-4631-a917-8bc8a25f77be",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.671911Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "target_uuid": "3ce3d4ae-ca23-4e6b-8a3b-578a73e475d1",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:43.886530Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "target_uuid": "46eaf6ce-2bd9-4917-8bf1-9302a5e4e9d4",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.649438Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "target_uuid": "d12dc127-36bc-49c2-b2c4-47f78fa8dceb",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.351273Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "target_uuid": "f85e08e1-b7cf-4362-a64d-be86e6f39edd",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.282612Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "165091cd-4dfc-43f8-84c6-3fbb42885e83",
+      "target_uuid": "ff4c53cb-c56e-45c4-b325-fae051cad2ab",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.641331Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+      "target_uuid": "e9cb61c7-ce93-4095-a437-5a7b62cba61d",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:23:43.766133Z",
+        "version": 2
+      }
+    },
+    {
+      "source_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+      "target_uuid": "51b230a2-b1f8-4321-a0da-63bd3316b8f0",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:33:27.708258Z",
+        "version": 3
+      }
+    },
+    {
+      "source_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+      "target_uuid": "7c7efbce-0d7b-4099-9e3f-18ff2b8616fa",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:34:34.394681Z",
+        "version": 4
+      }
+    },
+    {
+      "source_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+      "target_uuid": "004b0de0-c426-41f8-a95e-fa73562ee1dc",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T15:37:29.328494Z",
+        "version": 5
+      }
+    },
+    {
+      "source_uuid": "e2448a75-a3e4-4af2-85f4-081cbf921677",
+      "target_uuid": "0c37a255-a7c2-4282-817e-ea641b134f7c",
+      "relationship_type": "SCHEDULED",
+      "properties": {
+        "scheduled_at": "2026-03-16T16:02:27.700509Z",
+        "version": 6
+      }
+    },
+    {
+      "source_uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a",
+      "target_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a",
+      "target_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a",
+      "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "b409cd1d-488e-4235-abbb-0a040ebfdf6a",
+      "target_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "relationship_type": "CONTAINS",
+      "properties": {
+        "level": 0
+      }
+    },
+    {
+      "source_uuid": "90f99050-ccbf-43b2-9642-15027fccf74a",
+      "target_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "relationship_type": "TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "90f99050-ccbf-43b2-9642-15027fccf74a",
+      "target_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d",
+      "relationship_type": "FOR",
+      "properties": {}
+    },
+    {
+      "source_uuid": "8095e382-43ed-45ba-a523-1577731ea4f6",
+      "target_uuid": "c3d324af-c522-4401-b0df-b76d04e5c814",
+      "relationship_type": "TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "8095e382-43ed-45ba-a523-1577731ea4f6",
+      "target_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d",
+      "relationship_type": "FOR",
+      "properties": {}
+    },
+    {
+      "source_uuid": "27f34054-a994-499e-bfa5-a9b1bc9029af",
+      "target_uuid": "e269e7d4-1a41-4131-98a1-8f2498a5107f",
+      "relationship_type": "TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "27f34054-a994-499e-bfa5-a9b1bc9029af",
+      "target_uuid": "6185c832-d698-4469-ad05-1657cbd4f55d",
+      "relationship_type": "FOR",
+      "properties": {}
+    },
+    {
+      "source_uuid": "1fa849b7-8ebd-4499-8148-ca0caa785c7d",
+      "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "relationship_type": "TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "1fa849b7-8ebd-4499-8148-ca0caa785c7d",
+      "target_uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e",
+      "relationship_type": "FOR",
+      "properties": {}
+    },
+    {
+      "source_uuid": "b5655813-65ad-4bd8-bbb0-ba8a607fa735",
+      "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "relationship_type": "TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "b5655813-65ad-4bd8-bbb0-ba8a607fa735",
+      "target_uuid": "37ef27ca-c7b5-422f-a589-c19a05ac3f3e",
+      "relationship_type": "FOR",
+      "properties": {}
+    },
+    {
+      "source_uuid": "fdc51a1a-fd05-45ee-b0ff-3ea6d90e95a6",
+      "target_uuid": "c16265aa-c29d-47d1-a37e-f3d437c15083",
+      "relationship_type": "TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "fdc51a1a-fd05-45ee-b0ff-3ea6d90e95a6",
+      "target_uuid": "848289e6-62e9-42de-9968-7c3f4a61a48d",
+      "relationship_type": "FOR",
+      "properties": {}
+    },
+    {
+      "source_uuid": "a13bbaf5-7727-403c-9ca7-909f41c6fadc",
+      "target_uuid": "61bf587c-d118-4206-bcb6-d2d96497f86a",
+      "relationship_type": "TO",
+      "properties": {}
+    },
+    {
+      "source_uuid": "91af1cf7-efab-41ea-b84d-fea736f6d8c5",
+      "target_uuid": "04c36ce1-9376-407b-9cb9-905f528055bf",
+      "relationship_type": "TO",
+      "properties": {}
+    }
+  ],
+  "posts": []
+}
