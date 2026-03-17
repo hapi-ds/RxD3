@@ -10,7 +10,10 @@
 - **3**: The **third iteration**, incorporating the lessons learned from earlier attempts and focusing on operational usability.
 
 ### Core idea: Mindmaps as the single source of truth
+
 RxD3 uses mindmaps as a structured interface to capture intent and relationships early, then progressively refines that structure into controlled engineering deliverables. The objective is to reduce friction between “thinking” and “documenting” by making the mindmap the primary model—while keeping outputs compatible with established quality and compliance workflows.
+
+Second "must have" is a WebXR Interface (coming later) for better "remote" project managment - it should feel like something out of a sci-fi movie.
 
 ### Designed for regulated reality—without enterprise overhead
 RxD3 targets **small companies, startups, and individual engineers** who need disciplined development practices without the cost and complexity of heavy enterprise tooling. It supports a “first step” into digital design control: start simple, stay structured, and still produce artifacts that auditors, customers, and internal stakeholders can accept.
@@ -26,7 +29,7 @@ RxD3 is optimized for generating consistent, traceable documentation sets such a
 ## Highlights
 
 - **Graph Database** — Neo4j for rich relationship modeling (Mind nodes, skills, posts)
-- **Dual Frontends** — React 18 web app (:3000) + WebXR 3D interface (:3001)
+- **Multiple Frontends** — React 18 web app (:3000) + WebXR 3D interface (:3001) + Phone + Mail + ?
 - **AI Skills** — Teachable knowledge units with CRUD API and toggle support
 - **Dashboard** — Central hub for Save/Read/Clear project data, skill management, graph editor access
 - **Real-Time** — WebSocket messaging between all connected clients
@@ -82,8 +85,8 @@ See [`docs/`](docs/) for detailed docs:
 
 ## Next Tasks
 
+- Risk Management: Output of a i/p/d-FMEA in XLSX format
 - Requirment Managment: Output of URS, Trace-Matrix, ...
-- Risk Management: Output of a p/dFMEA in XLSX format
 - Adapted skills to be (more) usefull --> ongoing
 
 ### Enhancements (next next tasks)
@@ -91,8 +94,12 @@ See [`docs/`](docs/) for detailed docs:
 - Project Managment: 
     - New Frontend: Booking app for phone
     - Graph Page: easy create relations (better sprint planning-select relation and then just drop target not on source node)
-    - PDF Report: Add all scheduled gantt
-    - PDF Report: Add a milestone planning matrix over all scheduled project plannes
+    - PDF Report: Add all scheduled gantt (Versions)
+    - PDF Report: Add a milestone control matrix over all scheduled project plannes
+    - UI & PDF: better accounting
+    - New Frontend: Mail-Client to insert to graph db
+    - TODO's: TaskMind-Todo (tickets)
+    - AI: graphRAG functionality
 
 
 ## Tech Stack
