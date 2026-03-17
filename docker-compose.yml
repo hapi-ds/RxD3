@@ -46,6 +46,8 @@ services:
       - LOG_BACKUP_COUNT=${LOG_BACKUP_COUNT:-5}
     volumes:
       - ./backend/src:/app/src:ro
+      - ./backend/templates:/app/templates:ro
+      - ./backend/scripts:/app/scripts:ro
       - backend_venv:/app/.venv
       - ./logs:/app/logs
     networks:

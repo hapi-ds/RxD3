@@ -26,6 +26,12 @@ RUN uv sync --frozen
 # Copy source code
 COPY --chown=appuser:appuser src/ ./src/
 
+# Copy templates (FMEA XLSX templates, etc.)
+COPY --chown=appuser:appuser templates/ ./templates/
+
+# Copy scripts (schema generation, skills backup, etc.)
+COPY --chown=appuser:appuser scripts/ ./scripts/
+
 # Expose port
 EXPOSE 8080
 
@@ -47,6 +53,12 @@ RUN uv sync --frozen --no-dev
 
 # Copy source code
 COPY --chown=appuser:appuser src/ ./src/
+
+# Copy templates (FMEA XLSX templates, etc.)
+COPY --chown=appuser:appuser templates/ ./templates/
+
+# Copy scripts (schema generation, skills backup, etc.)
+COPY --chown=appuser:appuser scripts/ ./scripts/
 
 # Expose port
 EXPOSE 8080
