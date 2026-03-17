@@ -12,7 +12,6 @@ This document describes the complete workflow for adding a new mind type to the 
 2. **Attributes**: List of type-specific attributes with their types and constraints
 3. **Purpose**: Brief description of what this mind type represents
 4. **Relationships** (optional): Any new relationship types needed
-5. **TODO Reference**: Point to relevant items in `TODOHK/List.md`
 
 ### Example Delegation Messages:
 
@@ -23,7 +22,6 @@ Please add a new Mind type called "Epic" with the following attributes:
 - story_points: int (optional, min=0)
 - sprint_duration: int (optional, min=1, max=4, default=2)
 
-This is for the "Project Planning (agile)" section in TODOHK/List.md.
 Follow the checklist in ADDING_NEW_MIND_TYPES.md.
 ```
 
@@ -42,7 +40,6 @@ Relationships:
 - Add "validates" relationship type (TestRun validates Requirement)
 - Add "executes" relationship type (TestRun executes TestPlan)
 
-This is for the "Test-Management" section in TODOHK/List.md.
 Follow the checklist in ADDING_NEW_MIND_TYPES.md and update the TODO list when complete.
 ```
 
@@ -329,7 +326,6 @@ Use this checklist when adding a new mind type:
 - [ ] 10. Test editing attributes
 - [ ] 11. Test filtering by type
 - [ ] 12. Update seed scripts if needed
-- [ ] 13. Update `TODOHK/List.md` to mark item as done or in progress
 
 ## Common Issues
 
