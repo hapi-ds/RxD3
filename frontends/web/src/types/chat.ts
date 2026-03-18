@@ -48,6 +48,18 @@ export interface ToolCall {
 }
 
 /**
+ * Result of executing a confirmed tool call via executeToolCall.
+ * Provides type-safe access to the outcome including any created entity's UUID.
+ */
+export interface ToolExecutionResult {
+  success: boolean;
+  uuid?: string;
+  title?: string;
+  toolName: string;
+  error?: string;
+}
+
+/**
  * Log entry for AI suggestions (confirmed or rejected)
  */
 export interface SuggestionLogEntry {

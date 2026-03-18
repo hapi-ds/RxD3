@@ -13,7 +13,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { chatAPI, mindsAPI, relationshipsAPI } from '../../services/api';
-import type { ChatMessage as ChatMessageType, ChatStreamEvent, ToolCall, SuggestionLogEntry } from '../../types/chat';
+import type { ChatMessage as ChatMessageType, ChatStreamEvent, ToolCall, SuggestionLogEntry, ToolExecutionResult } from '../../types/chat';
 import type { Mind } from '../../types/generated';
 import { ChatMessage } from './ChatMessage';
 import { ConfirmToolCallDialog } from './ConfirmToolCallDialog';
@@ -218,9 +218,10 @@ export function ChatPanel() {
   }, [state.inputValue, state.isLoading, state.messages, logout]);
 
   // Execute a single tool call (used by confirm and confirm-all)
-  const executeToolCall = useCallback(async (toolCall: ToolCall): Promise<boolean> => {
+  const executeToolCall = useCallback(async (toolCall: ToolCall): Promise<ToolExecutionResult> => {
+    const toolName = toolCall.tool_name;
     try {
-      if (toolCall.tool_name === 'create_mind_node') {
+      if (toolName === 'create_mind_node') {
         const { mind_type, title, description, status } = toolCall.arguments;
         
         let creator = 'ai-chat';
@@ -250,21 +251,10 @@ export function ChatPanel() {
         
         const createdMind = await mindsAPI.create(createPayload as Omit<Mind, 'uuid' | 'version' | 'created_at' | 'updated_at'>);
 
-        const successMessage: ChatMessageType = {
-          role: 'user', // We use "user" internally to pass feedback to the AI clearly without breaking context
-          content: `System: Successfully created ${mind_type} node: "${title}" (uuid: ${createdMind.uuid})`,
-          timestamp: new Date().toISOString(),
-        };
-
-        setState(prev => ({
-          ...prev,
-          messages: [...prev.messages, successMessage],
-        }));
-
         window.dispatchEvent(new CustomEvent('graph-refresh'));
-        return true;
+        return { success: true, uuid: createdMind.uuid, title: title as string, toolName };
 
-      } else if (toolCall.tool_name === 'create_relationship') {
+      } else if (toolName === 'create_relationship') {
         const { source_uuid, target_uuid, relationship_type } = toolCall.arguments;
         await relationshipsAPI.create({
           source: source_uuid as string,
@@ -273,21 +263,10 @@ export function ChatPanel() {
           properties: {},
         });
 
-        const successMessage: ChatMessageType = {
-          role: 'user',
-          content: `System: Successfully created ${relationship_type} relationship`,
-          timestamp: new Date().toISOString(),
-        };
-
-        setState(prev => ({
-          ...prev,
-          messages: [...prev.messages, successMessage],
-        }));
-
         window.dispatchEvent(new CustomEvent('graph-refresh'));
-        return true;
+        return { success: true, toolName };
       }
-      return false;
+      return { success: false, toolName };
     } catch (error: any) {
       console.error('Tool call execution error:', error);
 
@@ -301,7 +280,7 @@ export function ChatPanel() {
         ...prev,
         messages: [...prev.messages, errorMessage],
       }));
-      return false;
+      return { success: false, toolName, error: error.message || 'Unknown error' };
     }
   }, []);
 
@@ -327,15 +306,29 @@ export function ChatPanel() {
       isLoading: true,
     }));
 
-    const success = await executeToolCall(toolCall);
+    const result = await executeToolCall(toolCall);
 
     setState(prev => ({
       ...prev,
       isLoading: false,
     }));
 
+    let feedbackMessage: string;
+    if (result.success) {
+      if (result.toolName === 'create_mind_node') {
+        feedbackMessage = `[Tool Result] create_mind_node succeeded. Created node: '${result.title}' (uuid: ${result.uuid})`;
+      } else if (result.toolName === 'create_relationship') {
+        const { relationship_type, source_uuid, target_uuid } = toolCall.arguments;
+        feedbackMessage = `[Tool Result] create_relationship succeeded. Created ${relationship_type} relationship between ${source_uuid} and ${target_uuid}`;
+      } else {
+        feedbackMessage = `[Tool Result] ${result.toolName} succeeded.`;
+      }
+    } else {
+      feedbackMessage = `[Tool Result] ${result.toolName} failed: ${result.error || 'Unknown error'}. Please suggest an alternative.`;
+    }
+
     setTimeout(() => {
-      handleSendMessage(`System Feedback: Tool ${toolCall.tool_name} execution was ${success ? 'successful' : 'failed'}. Please continue.`);
+      handleSendMessage(feedbackMessage);
     }, 100);
   }, [state.pendingToolCalls, executeToolCall, handleSendMessage]);
 
@@ -361,11 +354,11 @@ export function ChatPanel() {
       isLoading: true,
     }));
 
-    // Execute all sequentially
-    let feedbackMsgs: string[] = [];
+    // Execute all sequentially, collecting results with UUIDs
+    const results: { result: ToolExecutionResult; toolCall: ToolCall }[] = [];
     for (const toolCall of allCalls) {
-      const success = await executeToolCall(toolCall);
-      feedbackMsgs.push(`${toolCall.tool_name} ${success ? 'succeeded' : 'failed'}`);
+      const result = await executeToolCall(toolCall);
+      results.push({ result, toolCall });
     }
 
     setState(prev => ({
@@ -373,8 +366,25 @@ export function ChatPanel() {
       isLoading: false,
     }));
 
+    // Build consolidated batch feedback with UUIDs
+    const lines = results.map(({ result, toolCall }, idx) => {
+      const num = idx + 1;
+      if (result.success) {
+        if (result.toolName === 'create_mind_node') {
+          return `${num}. create_mind_node succeeded — Created '${result.title}' (uuid: ${result.uuid})`;
+        } else if (result.toolName === 'create_relationship') {
+          const { relationship_type, source_uuid, target_uuid } = toolCall.arguments;
+          return `${num}. create_relationship succeeded — Created ${relationship_type} relationship between ${source_uuid} and ${target_uuid}`;
+        }
+        return `${num}. ${result.toolName} succeeded`;
+      }
+      return `${num}. ${result.toolName} failed: ${result.error || 'Unknown error'}`;
+    });
+
+    const batchFeedback = `[Tool Result] Batch execution complete:\n${lines.join('\n')}`;
+
     setTimeout(() => {
-      handleSendMessage(`System Feedback for batch execution: ${feedbackMsgs.join(", ")}. Please continue if requested.`);
+      handleSendMessage(batchFeedback);
     }, 100);
   }, [state.pendingToolCalls, executeToolCall, handleSendMessage]);
 
