@@ -17,7 +17,7 @@ import { useGraphEditor } from './GraphEditorContext';
 import { useToast } from './ToastContext';
 import { useScreenReaderAnnouncer } from './ScreenReaderAnnouncer';
 import type { Mind, NodeType } from '../../types/generated';
-import { getNodeTypeConfig } from './nodeTypeConfig';
+import { getNodeTypeConfig, BASE_ATTRIBUTE_NAMES } from './nodeTypeConfig';
 import type { AttributeConfig } from './nodeTypeConfig';
 import { TextInput, NumberInput, DateInput, EnumInput, ArrayInput } from './form-inputs';
 import { mindsAPI } from '../../services/api';
@@ -141,20 +141,35 @@ export function CreateNodeForm({ nodeType, onSuccess, onCancel }: CreateNodeForm
     setIsSubmitting(true);
     
     try {
-      // Prepare create data (exclude readonly fields and null optional fields)
+      // Prepare create data with mind_type and nested type_specific_attributes
       const createData: Record<string, unknown> = {
-        // Don't include __primarylabel__ - backend doesn't expect it in create
+        mind_type: nodeType,
       };
+      const typeSpecificAttributes: Record<string, unknown> = {};
+
+      // Readonly base attribute names to exclude from payload
+      const readonlyBaseNames = new Set(['uuid', 'version', 'created_at', 'updated_at']);
       
       config.attributes
         .filter(attr => !attr.readonly)
         .forEach(attr => {
           const value = formData[attr.name];
-          // Include value if it's required or if it's not null/undefined
+          // Only include if required or has a non-empty value
           if (attr.required || (value !== null && value !== undefined && value !== '')) {
-            createData[attr.name] = value;
+            if (BASE_ATTRIBUTE_NAMES.has(attr.name) && !readonlyBaseNames.has(attr.name)) {
+              // Base field — top level
+              createData[attr.name] = value;
+            } else if (!BASE_ATTRIBUTE_NAMES.has(attr.name)) {
+              // Type-specific field — nested
+              typeSpecificAttributes[attr.name] = value;
+            }
           }
         });
+
+      // Only include type_specific_attributes if there are any
+      if (Object.keys(typeSpecificAttributes).length > 0) {
+        createData.type_specific_attributes = typeSpecificAttributes;
+      }
       
       // Call API to create mind
       const createdMind = await mindsAPI.create(createData as Omit<Mind, 'uuid' | 'version' | 'created_at' | 'updated_at'>);

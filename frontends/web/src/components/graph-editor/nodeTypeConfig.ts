@@ -40,6 +40,12 @@ export interface NodeTypeConfig {
   attributes: AttributeConfig[];
 }
 
+// Base attribute names common to all node types
+export const BASE_ATTRIBUTE_NAMES = new Set([
+  'uuid', 'title', 'version', 'created_at', 'updated_at',
+  'creator', 'status', 'description', 'tags',
+]);
+
 // Base attributes common to all node types
 const baseAttributes: AttributeConfig[] = [
   {

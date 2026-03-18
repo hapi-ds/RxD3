@@ -169,15 +169,17 @@ describe('CreateNodeForm', () => {
     const createButton = screen.getByRole('button', { name: /create/i });
     await user.click(createButton);
 
-    // Wait for API call
+    // Wait for API call — payload should have mind_type and nested type_specific_attributes
     await waitFor(() => {
       expect(mindsAPI.create).toHaveBeenCalledWith(
         expect.objectContaining({
-          __primarylabel__: 'Project',
+          mind_type: 'Project',
           title: 'Test Project',
           creator: 'test-user',
-          start_date: '2024-01-01',
-          end_date: '2024-12-31',
+          type_specific_attributes: expect.objectContaining({
+            start_date: '2024-01-01',
+            end_date: '2024-12-31',
+          }),
         })
       );
     });

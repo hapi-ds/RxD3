@@ -33,6 +33,10 @@ class FieldInfo:
     default_value: str | None
     is_enum: bool = False
     enum_type: str | None = None
+    ge: str | None = None
+    le: str | None = None
+    gt: str | None = None
+    lt: str | None = None
 
 
 @dataclass
@@ -114,6 +118,24 @@ def parse_type_annotation(node: ast.expr) -> tuple[str, bool, bool, str | None]:
     return "Any", is_optional, is_enum, enum_type
 
 
+def extract_field_constraints(call_node: ast.Call) -> dict[str, str]:
+    """
+    Extract ge/le/gt/lt constraint values from a Field(...) AST call node.
+
+    Args:
+        call_node: AST Call node for a Field(...) invocation
+
+    Returns:
+        Dictionary with constraint keys (ge, le, gt, lt) mapped to their repr values.
+    """
+    constraints: dict[str, str] = {}
+    for kw in call_node.keywords:
+        if kw.arg in ("ge", "le", "gt", "lt"):
+            if isinstance(kw.value, ast.Constant):
+                constraints[kw.arg] = repr(kw.value.value)
+    return constraints
+
+
 def parse_base_mind_fields(file_path: Path) -> list[FieldInfo]:
     """
     Parse mind.py and extract BaseMind field definitions.
@@ -170,13 +192,23 @@ def parse_base_mind_fields(file_path: Path) -> list[FieldInfo]:
                         elif isinstance(item.value, ast.Constant):
                             default_value = repr(item.value.value)
                     
+                    # Extract constraints from Field(...) calls
+                    constraints: dict[str, str] = {}
+                    if item.value and isinstance(item.value, ast.Call):
+                        if isinstance(item.value.func, ast.Name) and item.value.func.id == "Field":
+                            constraints = extract_field_constraints(item.value)
+
                     field_info = FieldInfo(
                         name=field_name,
                         type_annotation=type_str,
                         is_optional=is_optional,
                         default_value=default_value,
                         is_enum=is_enum,
-                        enum_type=enum_type
+                        enum_type=enum_type,
+                        ge=constraints.get("ge"),
+                        le=constraints.get("le"),
+                        gt=constraints.get("gt"),
+                        lt=constraints.get("lt"),
                     )
                     base_fields.append(field_info)
             break
@@ -248,13 +280,23 @@ def parse_mind_types(file_path: Path, base_fields: list[FieldInfo]) -> dict[str,
                             elif isinstance(item.value, ast.Constant):
                                 default_value = repr(item.value.value)
                         
+                        # Extract constraints from Field(...) calls
+                        constraints: dict[str, str] = {}
+                        if item.value and isinstance(item.value, ast.Call):
+                            if isinstance(item.value.func, ast.Name) and item.value.func.id == "Field":
+                                constraints = extract_field_constraints(item.value)
+
                         field_info = FieldInfo(
                             name=field_name,
                             type_annotation=type_str,
                             is_optional=is_optional,
                             default_value=default_value,
                             is_enum=is_enum,
-                            enum_type=enum_type
+                            enum_type=enum_type,
+                            ge=constraints.get("ge"),
+                            le=constraints.get("le"),
+                            gt=constraints.get("gt"),
+                            lt=constraints.get("lt"),
                         )
                         mind_type.fields.append(field_info)
                 
@@ -303,6 +345,30 @@ def get_base_fields() -> list[str]:
     return ['uuid', 'version', 'updated_at']
 
 
+def _build_field_expr(default: str, field_info: FieldInfo) -> str | None:
+    """
+    Build a ``Field(default=..., ge=..., le=...)`` expression if the field
+    carries any numeric constraints.  Returns ``None`` when no constraints
+    exist (caller should fall back to a bare annotation).
+
+    Args:
+        default: The default value literal to embed (e.g. ``"None"``).
+        field_info: The parsed field metadata.
+
+    Returns:
+        A ``Field(...)`` source fragment, or ``None``.
+    """
+    parts: list[str] = []
+    for attr in ("ge", "le", "gt", "lt"):
+        val = getattr(field_info, attr)
+        if val is not None:
+            parts.append(f"{attr}={val}")
+    if not parts:
+        return None
+    constraint_str = ", ".join(parts)
+    return f"Field(default={default}, {constraint_str})"
+
+
 def generate_create_schema(mind_type: MindTypeInfo, enums: dict[str, EnumInfo]) -> str:
     """
     Generate MindCreate schema code for a Mind type.
@@ -336,18 +402,34 @@ def generate_create_schema(mind_type: MindTypeInfo, enums: dict[str, EnumInfo]) 
         
         if is_required and not field_info.is_optional:
             # Required field - no default value
-            lines.append(f"    {field_info.name}: {type_str}")
+            field_expr = _build_field_expr("...", field_info)
+            if field_expr:
+                lines.append(f"    {field_info.name}: {type_str} = {field_expr}")
+            else:
+                lines.append(f"    {field_info.name}: {type_str}")
         elif field_info.is_optional or field_info.default_value:
             # Optional field or has default
             if field_info.default_value and field_info.default_value not in ['default_factory', 'Ellipsis']:
                 # Has explicit default value
-                lines.append(f"    {field_info.name}: {type_str} | None = {field_info.default_value}")
+                field_expr = _build_field_expr(field_info.default_value, field_info)
+                if field_expr:
+                    lines.append(f"    {field_info.name}: {type_str} | None = {field_expr}")
+                else:
+                    lines.append(f"    {field_info.name}: {type_str} | None = {field_info.default_value}")
             else:
                 # Optional with None default
-                lines.append(f"    {field_info.name}: {type_str} | None = None")
+                field_expr = _build_field_expr("None", field_info)
+                if field_expr:
+                    lines.append(f"    {field_info.name}: {type_str} | None = {field_expr}")
+                else:
+                    lines.append(f"    {field_info.name}: {type_str} | None = None")
         else:
             # Fallback to required
-            lines.append(f"    {field_info.name}: {type_str}")
+            field_expr = _build_field_expr("...", field_info)
+            if field_expr:
+                lines.append(f"    {field_info.name}: {type_str} = {field_expr}")
+            else:
+                lines.append(f"    {field_info.name}: {type_str}")
     
     # Add enum serializers and validators (track to avoid duplicates)
     enum_fields = [f for f in create_fields if f.is_enum]
@@ -423,7 +505,11 @@ def generate_update_schema(mind_type: MindTypeInfo, enums: dict[str, EnumInfo]) 
     # All fields are optional in update schema
     for field_info in update_fields:
         type_str = field_info.type_annotation
-        lines.append(f"    {field_info.name}: {type_str} | None = None")
+        field_expr = _build_field_expr("None", field_info)
+        if field_expr:
+            lines.append(f"    {field_info.name}: {type_str} | None = {field_expr}")
+        else:
+            lines.append(f"    {field_info.name}: {type_str} | None = None")
     
     # Add enum serializers and validators (track to avoid duplicates)
     enum_fields = [f for f in update_fields if f.is_enum]
@@ -561,7 +647,7 @@ def generate_schemas_file(mind_types: dict[str, MindTypeInfo], enums: dict[str, 
         'from uuid import UUID',
         'from typing import Optional',
         '',
-        'from pydantic import BaseModel, EmailStr, field_serializer, field_validator',
+        'from pydantic import BaseModel, EmailStr, Field, field_serializer, field_validator',
         '',
         'from ..models.enums import (',
         '    StatusEnum,',

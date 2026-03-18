@@ -11,7 +11,7 @@ from datetime import date, datetime
 from uuid import UUID
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, field_serializer, field_validator
+from pydantic import BaseModel, EmailStr, Field, field_serializer, field_validator
 
 from ..models.enums import (
     StatusEnum,
@@ -259,10 +259,10 @@ class BookingCreate(BaseModel):
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
     tags: list[str] | None = None
-    hours_worked: float
+    hours_worked: float = Field(default=..., ge=0.0)
     booking_date: date | None = None
-    rate: float | None = None
-    amount: float | None = None
+    rate: float | None = Field(default=None, ge=0.0)
+    amount: float | None = Field(default=None, ge=0.0)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -290,10 +290,10 @@ class BookingUpdate(BaseModel):
     status: StatusEnum | None = None
     description: str | None = None
     tags: list[str] | None = None
-    hours_worked: float | None = None
+    hours_worked: float | None = Field(default=None, ge=0.0)
     booking_date: date | None = None
-    rate: float | None = None
-    amount: float | None = None
+    rate: float | None = Field(default=None, ge=0.0)
+    amount: float | None = Field(default=None, ge=0.0)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -356,7 +356,7 @@ class CompanyCreate(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     industry: str
-    size: int | None = None
+    size: int | None = Field(default=None, ge=1)
     founded_date: date | None = None
 
     @field_serializer('status')
@@ -386,7 +386,7 @@ class CompanyUpdate(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     industry: str | None = None
-    size: int | None = None
+    size: int | None = Field(default=None, ge=1)
     founded_date: date | None = None
 
     @field_serializer('status')
@@ -634,8 +634,8 @@ class FailureCreate(BaseModel):
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
     tags: list[str] | None = None
-    occurrence: int | None = None
-    detectability: int | None = None
+    occurrence: int | None = Field(default=None, ge=1, le=10)
+    detectability: int | None = Field(default=None, ge=1, le=10)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -663,8 +663,8 @@ class FailureUpdate(BaseModel):
     status: StatusEnum | None = None
     description: str | None = None
     tags: list[str] | None = None
-    occurrence: int | None = None
-    detectability: int | None = None
+    occurrence: int | None = Field(default=None, ge=1, le=10)
+    detectability: int | None = Field(default=None, ge=1, le=10)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1027,7 +1027,7 @@ class ProjectCreate(BaseModel):
     tags: list[str] | None = None
     start_date: date
     end_date: date
-    budget: float | None = None
+    budget: float | None = Field(default=None, ge=0)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1057,7 +1057,7 @@ class ProjectUpdate(BaseModel):
     tags: list[str] | None = None
     start_date: date | None = None
     end_date: date | None = None
-    budget: float | None = None
+    budget: float | None = Field(default=None, ge=0)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1258,10 +1258,10 @@ class ResourceCreate(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     email: str | None = None
-    workinghours_max_per_week: float | None = 40.0
-    workinghours_per_year: float | None = 1700.0
-    efficiency: float | None = 1.0
-    hourly_rate: float | None = 100.0
+    workinghours_max_per_week: float | None = Field(default=40.0, ge=0.0)
+    workinghours_per_year: float | None = Field(default=1700.0, ge=0.0)
+    efficiency: float | None = Field(default=1.0, ge=0.0, le=5.0)
+    hourly_rate: float | None = Field(default=100.0, ge=0.0)
     resource_type: ResourceType | None = ResourceType.PERSON
 
     @field_serializer('status')
@@ -1306,10 +1306,10 @@ class ResourceUpdate(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     email: str | None = None
-    workinghours_max_per_week: float | None = None
-    workinghours_per_year: float | None = None
-    efficiency: float | None = None
-    hourly_rate: float | None = None
+    workinghours_max_per_week: float | None = Field(default=None, ge=0.0)
+    workinghours_per_year: float | None = Field(default=None, ge=0.0)
+    efficiency: float | None = Field(default=None, ge=0.0, le=5.0)
+    hourly_rate: float | None = Field(default=None, ge=0.0)
     resource_type: ResourceType | None = None
 
     @field_serializer('status')
@@ -1404,7 +1404,7 @@ class RiskCreate(BaseModel):
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
     tags: list[str] | None = None
-    severity: int
+    severity: int = Field(default=..., ge=1, le=10)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1432,7 +1432,7 @@ class RiskUpdate(BaseModel):
     status: StatusEnum | None = None
     description: str | None = None
     tags: list[str] | None = None
-    severity: int | None = None
+    severity: int | None = Field(default=None, ge=1, le=10)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1494,8 +1494,8 @@ class ScheduleHistoryCreate(BaseModel):
     schedule_id: str
     scheduled_at: datetime | None = None
     status: StatusEnum | None = StatusEnum.DONE
-    total_effort: float | None = None
-    total_cost: float | None = None
+    total_effort: float | None = Field(default=None, ge=0.0)
+    total_cost: float | None = Field(default=None, ge=0.0)
     global_start: datetime | None = None
     global_end: datetime | None = None
 
@@ -1528,8 +1528,8 @@ class ScheduleHistoryUpdate(BaseModel):
     schedule_id: str | None = None
     scheduled_at: datetime | None = None
     status: StatusEnum | None = None
-    total_effort: float | None = None
-    total_cost: float | None = None
+    total_effort: float | None = Field(default=None, ge=0.0)
+    total_cost: float | None = Field(default=None, ge=0.0)
     global_start: datetime | None = None
     global_end: datetime | None = None
 
@@ -1599,14 +1599,14 @@ class ScheduledTaskCreate(BaseModel):
     source_task_uuid: UUID
     scheduled_start: datetime
     scheduled_end: datetime
-    scheduled_duration: float | None = None
-    scheduled_length: float | None = None
+    scheduled_duration: float | None = Field(default=None, ge=0.0)
+    scheduled_length: float | None = Field(default=None, ge=0.0)
     is_critical: bool | None = False
     slack_start: float | None = None
     slack_end: float | None = None
-    base_cost: float | None = None
-    variable_cost: float | None = None
-    total_cost: float | None = None
+    base_cost: float | None = Field(default=None, ge=0.0)
+    variable_cost: float | None = Field(default=None, ge=0.0)
+    total_cost: float | None = Field(default=None, ge=0.0)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1637,14 +1637,14 @@ class ScheduledTaskUpdate(BaseModel):
     source_task_uuid: UUID | None = None
     scheduled_start: datetime | None = None
     scheduled_end: datetime | None = None
-    scheduled_duration: float | None = None
-    scheduled_length: float | None = None
+    scheduled_duration: float | None = Field(default=None, ge=0.0)
+    scheduled_length: float | None = Field(default=None, ge=0.0)
     is_critical: bool | None = None
     slack_start: float | None = None
     slack_end: float | None = None
-    base_cost: float | None = None
-    variable_cost: float | None = None
-    total_cost: float | None = None
+    base_cost: float | None = Field(default=None, ge=0.0)
+    variable_cost: float | None = Field(default=None, ge=0.0)
+    total_cost: float | None = Field(default=None, ge=0.0)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1713,11 +1713,11 @@ class SprintCreate(BaseModel):
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
     tags: list[str] | None = None
-    sprint_number: int
+    sprint_number: int = Field(default=..., ge=1)
     start_date: date
     end_date: date
     goal: str | None = None
-    velocity: float | None = None
+    velocity: float | None = Field(default=None, ge=0.0)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1745,11 +1745,11 @@ class SprintUpdate(BaseModel):
     status: StatusEnum | None = None
     description: str | None = None
     tags: list[str] | None = None
-    sprint_number: int | None = None
+    sprint_number: int | None = Field(default=None, ge=1)
     start_date: date | None = None
     end_date: date | None = None
     goal: str | None = None
-    velocity: float | None = None
+    velocity: float | None = Field(default=None, ge=0.0)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1814,13 +1814,13 @@ class TaskCreate(BaseModel):
     tags: list[str] | None = None
     priority: PriorityEnum
     due_date: date | None = None
-    effort: float | None = None
-    duration: float | None = None
-    length: float | None = None
+    effort: float | None = Field(default=None, ge=0.0)
+    duration: float | None = Field(default=None, ge=0.0)
+    length: float | None = Field(default=None, ge=0.0)
     task_type: TaskType | None = 'TASK'
-    phase_number: int | None = None
+    phase_number: int | None = Field(default=None, ge=1)
     target_date: date | None = None
-    completion_percentage: float | None = None
+    completion_percentage: float | None = Field(default=None, ge=0, le=100)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1876,13 +1876,13 @@ class TaskUpdate(BaseModel):
     tags: list[str] | None = None
     priority: PriorityEnum | None = None
     due_date: date | None = None
-    effort: float | None = None
-    duration: float | None = None
-    length: float | None = None
+    effort: float | None = Field(default=None, ge=0.0)
+    duration: float | None = Field(default=None, ge=0.0)
+    length: float | None = Field(default=None, ge=0.0)
     task_type: TaskType | None = None
-    phase_number: int | None = None
+    phase_number: int | None = Field(default=None, ge=1)
     target_date: date | None = None
-    completion_percentage: float | None = None
+    completion_percentage: float | None = Field(default=None, ge=0, le=100)
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
