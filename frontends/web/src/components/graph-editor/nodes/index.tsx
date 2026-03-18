@@ -15,6 +15,7 @@ import { KnowledgeNode } from './KnowledgeNode';
 import { AcceptanceCriteriaNode } from './AcceptanceCriteriaNode';
 import { RiskNode } from './RiskNode';
 import { FailureNode } from './FailureNode';
+import { MitigationNode } from './MitigationNode';
 import { RequirementNode } from './RequirementNode';
 import { ResourceNode } from './ResourceNode';
 import { JournalentryNode } from './JournalentryNode';
@@ -38,6 +39,7 @@ export const nodeTypes: NodeTypes = {
   AcceptanceCriteria: AcceptanceCriteriaNode,
   Risk: RiskNode,
   Failure: FailureNode,
+  Mitigation: MitigationNode,
   Requirement: RequirementNode,
   Resource: ResourceNode,
   Journalentry: JournalentryNode,
@@ -62,6 +64,7 @@ export const nodeColors: Record<string, string> = {
   AcceptanceCriteria: '#14b8a6',
   Risk: '#ef4444',
   Failure: '#dc2626',
+  Mitigation: '#f43f5e',
   Requirement: '#6366f1',
   Resource: '#84cc16',
   Journalentry: '#a855f7',
@@ -83,6 +86,7 @@ export {
   AcceptanceCriteriaNode,
   RiskNode,
   FailureNode,
+  MitigationNode,
   RequirementNode,
   ResourceNode,
   JournalentryNode,

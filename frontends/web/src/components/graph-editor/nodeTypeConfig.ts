@@ -10,7 +10,6 @@ import {
   StatusEnum,
   PriorityEnum,
   SeverityEnum,
-  ProbabilityEnum,
   ResourceType,
   AccountType,
   TaskType,
@@ -405,73 +404,15 @@ export const NODE_TYPE_CONFIGS: Record<NodeType, NodeTypeConfig> = {
         label: 'Severity',
         placeholder: 'Enter severity (1-10)',
       },
-      {
-        name: 'probability',
-        type: 'enum',
-        required: true,
-        readonly: false,
-        validation: { enumValues: Object.values(ProbabilityEnum) },
-        label: 'Probability',
-      },
-      {
-        name: 'mitigation_plan',
-        type: 'string',
-        required: false,
-        readonly: false,
-        label: 'Mitigation Plan',
-        placeholder: 'Enter mitigation plan',
-      },
-      {
-        name: 'acceptable_limit',
-        type: 'string',
-        required: false,
-        readonly: false,
-        label: 'Acceptable Limit',
-        placeholder: 'Enter acceptable risk threshold',
-      },
     ],
   },
+
 
   Failure: {
     type: 'Failure',
     label: 'Failure',
     attributes: [
       ...baseAttributes,
-      {
-        name: 'failure_mode',
-        type: 'string',
-        required: true,
-        readonly: false,
-        validation: { minLength: 1 },
-        label: 'Failure Mode',
-        placeholder: 'Enter failure mode',
-      },
-      {
-        name: 'effects',
-        type: 'string',
-        required: true,
-        readonly: false,
-        validation: { minLength: 1 },
-        label: 'Effects',
-        placeholder: 'Enter effects',
-      },
-      {
-        name: 'causes',
-        type: 'string',
-        required: true,
-        readonly: false,
-        validation: { minLength: 1 },
-        label: 'Causes',
-        placeholder: 'Enter causes',
-      },
-      {
-        name: 'detection_method',
-        type: 'string',
-        required: false,
-        readonly: false,
-        label: 'Detection Method',
-        placeholder: 'Enter detection method',
-      },
       {
         name: 'occurrence',
         type: 'number',
@@ -490,6 +431,14 @@ export const NODE_TYPE_CONFIGS: Record<NodeType, NodeTypeConfig> = {
         label: 'Detectability',
         placeholder: 'Enter detectability rating (1-10)',
       },
+    ],
+  },
+
+  Mitigation: {
+    type: 'Mitigation',
+    label: 'Mitigation',
+    attributes: [
+      ...baseAttributes,
     ],
   },
 

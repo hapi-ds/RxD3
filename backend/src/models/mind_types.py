@@ -355,18 +355,6 @@ class Risk(BaseMind):
         le=10,
         description="Risk severity rating 1-10"
     )
-    probability: ProbabilityEnum = Field(
-        ...,
-        description="Risk probability"
-    )
-    mitigation_plan: Optional[str] = Field(
-        default=None,
-        description="Optional risk mitigation plan"
-    )
-    acceptable_limit: Optional[str] = Field(
-        default=None,
-        description="Acceptable risk threshold"
-    )
 
     @field_validator('severity', mode='before')
     @classmethod
@@ -383,25 +371,6 @@ class Risk(BaseMind):
                 return int(v)
             except ValueError:
                 raise ValueError(f"Invalid severity value: {v}")
-        return v
-
-    @field_serializer('probability')
-    def serialize_probability(self, probability: ProbabilityEnum, _info):
-        """Serialize ProbabilityEnum to its value."""
-        if isinstance(probability, ProbabilityEnum):
-            return probability.value
-        return probability
-
-    @field_validator('probability', mode='before')
-    @classmethod
-    def validate_probability(cls, v):
-        """Validate and normalize probability from various formats."""
-        if isinstance(v, ProbabilityEnum):
-            return v
-        if isinstance(v, str):
-            if v.startswith("ProbabilityEnum."):
-                v = v.replace("ProbabilityEnum.", "")
-            return ProbabilityEnum(v.lower())
         return v
 
 
@@ -426,25 +395,6 @@ class Failure(BaseMind):
 
     __primarylabel__: str = "Failure"
 
-    failure_mode: str = Field(
-        ...,
-        min_length=1,
-        description="Description of the failure mode"
-    )
-    effects: str = Field(
-        ...,
-        min_length=1,
-        description="Effects or consequences of the failure"
-    )
-    causes: str = Field(
-        ...,
-        min_length=1,
-        description="Root causes of the failure"
-    )
-    detection_method: Optional[str] = Field(
-        default=None,
-        description="Optional method for detecting the failure"
-    )
     occurrence: Optional[int] = Field(
         default=None,
         ge=1,
@@ -741,3 +691,14 @@ class ScheduledTask(BaseMind):
     def serialize_source_task_uuid(self, uuid: UUID, _info) -> str:
         """Serialize source_task_uuid to string for Neo4j compatibility."""
         return str(uuid)
+
+class Mitigation(BaseMind):
+    """
+    Mitigation Mind type representing a control measure to reduce risk.
+
+    Extends BaseMind without additional fields; uses the inherited title and
+    description to document the mitigation measure.
+    """
+    
+    __primarylabel__: str = "Mitigation"
+

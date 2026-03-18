@@ -236,6 +236,7 @@ export function CreateRelationshipModal({ isOpen, onClose }: CreateRelationshipM
               <option value="REFINES">REFINES</option>
               <option value="CAN_OCCUR" className="rel-option-can-occur">CAN_OCCUR</option>
               <option value="LEAD_TO" className="rel-option-lead-to">LEAD_TO</option>
+              <option value="MITIGATES">MITIGATES</option>
             </select>
           </div>
 
@@ -244,33 +245,33 @@ export function CreateRelationshipModal({ isOpen, onClose }: CreateRelationshipM
             <fieldset className="relationship-properties">
               <legend>CAN_OCCUR Properties</legend>
               <div className="form-group">
-                <label htmlFor="can-occur-p1">P1 (%)</label>
+                <label htmlFor="can-occur-p1">P1</label>
                 <input
                   id="can-occur-p1"
                   type="number"
                   min="0"
-                  max="100"
-                  step="any"
+                  max="1"
+                  step="0.01"
                   value={p1}
                   onChange={(e) => setP1(e.target.value)}
                   className="form-input"
-                  placeholder="0 – 100"
-                  aria-label="P1 probability percentage"
+                  placeholder="0.0 – 1.0"
+                  aria-label="P1 probability decimal"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="can-occur-p2">P2 (%)</label>
+                <label htmlFor="can-occur-p2">P2</label>
                 <input
                   id="can-occur-p2"
                   type="number"
                   min="0"
-                  max="100"
-                  step="any"
+                  max="1"
+                  step="0.01"
                   value={p2}
                   onChange={(e) => setP2(e.target.value)}
                   className="form-input"
-                  placeholder="0 – 100"
-                  aria-label="P2 probability percentage"
+                  placeholder="0.0 – 1.0"
+                  aria-label="P2 probability decimal"
                 />
               </div>
             </fieldset>
@@ -281,33 +282,33 @@ export function CreateRelationshipModal({ isOpen, onClose }: CreateRelationshipM
             <fieldset className="relationship-properties">
               <legend>LEAD_TO Properties</legend>
               <div className="form-group">
-                <label htmlFor="lead-to-occurrence">Occurrence Prob (%)</label>
+                <label htmlFor="lead-to-occurrence">Occurrence Prob</label>
                 <input
                   id="lead-to-occurrence"
                   type="number"
                   min="0"
-                  max="100"
-                  step="any"
+                  max="1"
+                  step="0.01"
                   value={occurrenceProbability}
                   onChange={(e) => setOccurrenceProbability(e.target.value)}
                   className="form-input"
-                  placeholder="0 – 100"
-                  aria-label="Occurrence probability percentage"
+                  placeholder="0.0 – 1.0"
+                  aria-label="Occurrence probability decimal"
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="lead-to-detectability">Detectability Prob (%)</label>
+                <label htmlFor="lead-to-detectability">Detectability Prob</label>
                 <input
                   id="lead-to-detectability"
                   type="number"
                   min="0"
-                  max="100"
-                  step="any"
+                  max="1"
+                  step="0.01"
                   value={detectabilityProbability}
                   onChange={(e) => setDetectabilityProbability(e.target.value)}
                   className="form-input"
-                  placeholder="0 – 100"
-                  aria-label="Detectability probability percentage"
+                  placeholder="0.0 – 1.0"
+                  aria-label="Detectability probability decimal"
                 />
               </div>
             </fieldset>

@@ -13,7 +13,11 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "All PCB solder joints shall meet IPC-A-610 Class 3 acceptance criteria with zero defects escaping to final test.",
-      "tags": ["process-fmea", "pcb", "soldering"],
+      "tags": [
+        "process-fmea",
+        "pcb",
+        "soldering"
+      ],
       "type_specific_attributes": {
         "requirement_type": "DESIGN_INPUT",
         "content": "PCB assemblies shall achieve a first-pass yield of >= 99.5% at in-circuit test with no solder defects classified as IPC-A-610 Class 3 rejects.",
@@ -33,7 +37,11 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "All threaded fasteners in the final assembly shall be torqued to specification and verified to prevent loosening under operational vibration.",
-      "tags": ["process-fmea", "assembly", "torque"],
+      "tags": [
+        "process-fmea",
+        "assembly",
+        "torque"
+      ],
       "type_specific_attributes": {
         "requirement_type": "DESIGN_INPUT",
         "content": "All critical fasteners shall be torqued within +/-5% of nominal specification and verified via torque audit sampling at 100% for safety-critical joints.",
@@ -42,6 +50,24 @@
         "compliance_standard": "ISO 5393",
         "safety_critical": true
       }
+    },
+    {
+      "uuid": "8f1adc59-f377-42f1-ba9f-3b1336c5d68f",
+      "mind_type": "Mitigation",
+      "title": "Mitigation for: Solder Joint Defects",
+      "version": 1,
+      "created_at": "2024-07-01T09:00:00Z",
+      "updated_at": "2024-07-01T09:00:00Z",
+      "creator": "fmea-process@example.com",
+      "status": "active",
+      "description": "Implement SPC on reflow oven profiles with automatic alerts. Perform daily first-article inspection per IPC-A-610.",
+      "tags": [
+        "process-fmea",
+        "solder",
+        "defect",
+        "mitigation"
+      ],
+      "type_specific_attributes": {}
     },
     {
       "uuid": "b1b2c3d4-0002-4000-8000-000000000001",
@@ -53,13 +79,32 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Solder joints fail to meet acceptance criteria due to insufficient wetting, bridging, voids, or cold joints resulting from process deviations.",
-      "tags": ["process-fmea", "solder", "defect"],
+      "tags": [
+        "process-fmea",
+        "solder",
+        "defect"
+      ],
       "type_specific_attributes": {
-        "severity": 7,
-        "probability": "possible",
-        "mitigation_plan": "Implement SPC on reflow oven profiles with automatic alerts. Perform daily first-article inspection per IPC-A-610.",
-        "acceptable_limit": "Defect rate shall not exceed 50 DPMO at in-circuit test"
+        "severity": 7
       }
+    },
+    {
+      "uuid": "819752be-2e55-4ac9-9c96-3f2d5daebb62",
+      "mind_type": "Mitigation",
+      "title": "Mitigation for: Component Misplacement",
+      "version": 1,
+      "created_at": "2024-07-01T09:00:00Z",
+      "updated_at": "2024-07-01T09:00:00Z",
+      "creator": "fmea-process@example.com",
+      "status": "active",
+      "description": "Calibrate pick-and-place machines weekly. Use AOI after placement to catch misalignment before reflow.",
+      "tags": [
+        "process-fmea",
+        "placement",
+        "smt",
+        "mitigation"
+      ],
+      "type_specific_attributes": {}
     },
     {
       "uuid": "b1b2c3d4-0002-4000-8000-000000000002",
@@ -71,13 +116,32 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Surface-mount components placed outside acceptable positional tolerance, causing open circuits or tombstoning after reflow.",
-      "tags": ["process-fmea", "placement", "smt"],
+      "tags": [
+        "process-fmea",
+        "placement",
+        "smt"
+      ],
       "type_specific_attributes": {
-        "severity": 6,
-        "probability": "unlikely",
-        "mitigation_plan": "Calibrate pick-and-place machines weekly. Use AOI after placement to catch misalignment before reflow.",
-        "acceptable_limit": "Placement accuracy within +/-0.05mm for fine-pitch components"
+        "severity": 6
       }
+    },
+    {
+      "uuid": "56d7fd6e-d3e0-4bf4-a392-95435c5e0219",
+      "mind_type": "Mitigation",
+      "title": "Mitigation for: Torque Out of Specification",
+      "version": 1,
+      "created_at": "2024-07-01T09:00:00Z",
+      "updated_at": "2024-07-01T09:00:00Z",
+      "creator": "fmea-process@example.com",
+      "status": "active",
+      "description": "Use electronic torque wrenches with preset limits and data logging. Implement 100% torque verification on safety-critical joints.",
+      "tags": [
+        "process-fmea",
+        "torque",
+        "fastener",
+        "mitigation"
+      ],
+      "type_specific_attributes": {}
     },
     {
       "uuid": "b1b2c3d4-0002-4000-8000-000000000003",
@@ -89,13 +153,32 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Fasteners torqued above or below specification, leading to joint loosening under vibration or thread stripping.",
-      "tags": ["process-fmea", "torque", "fastener"],
+      "tags": [
+        "process-fmea",
+        "torque",
+        "fastener"
+      ],
       "type_specific_attributes": {
-        "severity": 8,
-        "probability": "possible",
-        "mitigation_plan": "Use electronic torque wrenches with preset limits and data logging. Implement 100% torque verification on safety-critical joints.",
-        "acceptable_limit": "All fasteners within +/-5% of nominal torque specification"
+        "severity": 8
       }
+    },
+    {
+      "uuid": "5e38a95e-74b5-4b61-b203-db046bee34f0",
+      "mind_type": "Mitigation",
+      "title": "Mitigation for: Contamination in Assembly",
+      "version": 1,
+      "created_at": "2024-07-01T09:00:00Z",
+      "updated_at": "2024-07-01T09:00:00Z",
+      "creator": "fmea-process@example.com",
+      "status": "active",
+      "description": "Maintain ISO Class 7 cleanroom for final assembly. Implement particle count monitoring and operator gowning procedures.",
+      "tags": [
+        "process-fmea",
+        "contamination",
+        "cleanliness",
+        "mitigation"
+      ],
+      "type_specific_attributes": {}
     },
     {
       "uuid": "b1b2c3d4-0002-4000-8000-000000000004",
@@ -107,12 +190,13 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Foreign material contamination introduced during assembly process, causing electrical shorts, corrosion, or mechanical interference.",
-      "tags": ["process-fmea", "contamination", "cleanliness"],
+      "tags": [
+        "process-fmea",
+        "contamination",
+        "cleanliness"
+      ],
       "type_specific_attributes": {
-        "severity": 5,
-        "probability": "possible",
-        "mitigation_plan": "Maintain ISO Class 7 cleanroom for final assembly. Implement particle count monitoring and operator gowning procedures.",
-        "acceptable_limit": "Particulate contamination below 1mg per assembly measured by gravimetric analysis"
+        "severity": 5
       }
     },
     {
@@ -125,12 +209,12 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Reflow oven temperature profile deviates from specification, causing insufficient solder melting or excessive thermal stress on components.",
-      "tags": ["process-fmea", "reflow", "thermal"],
+      "tags": [
+        "process-fmea",
+        "reflow",
+        "thermal"
+      ],
       "type_specific_attributes": {
-        "failure_mode": "Peak reflow temperature deviates more than +/-5C from target profile",
-        "effects": "Cold solder joints, insufficient wetting, head-in-pillow defects on BGA packages, component thermal damage",
-        "causes": "Oven zone heater degradation, conveyor speed variation, thermocouple drift, recipe selection error",
-        "detection_method": "Inline thermal profiler with automatic pass/fail comparison to golden profile",
         "occurrence": 4,
         "detectability": 3
       }
@@ -145,12 +229,12 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Solder paste deposit volume falls below minimum threshold due to stencil or printer process issues.",
-      "tags": ["process-fmea", "solder-paste", "printing"],
+      "tags": [
+        "process-fmea",
+        "solder-paste",
+        "printing"
+      ],
       "type_specific_attributes": {
-        "failure_mode": "Solder paste volume below 60% of nominal deposit volume on fine-pitch pads",
-        "effects": "Insufficient solder fillet formation, open joints, reduced joint strength and reliability",
-        "causes": "Stencil aperture clogging, squeegee pressure drift, paste viscosity change due to aging or temperature, stencil wear",
-        "detection_method": "3D solder paste inspection (SPI) system with volume measurement on 100% of pads",
         "occurrence": 5,
         "detectability": 2
       }
@@ -165,12 +249,12 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Vacuum nozzle on pick-and-place machine wears or becomes contaminated, causing component placement errors.",
-      "tags": ["process-fmea", "pick-and-place", "nozzle"],
+      "tags": [
+        "process-fmea",
+        "pick-and-place",
+        "nozzle"
+      ],
       "type_specific_attributes": {
-        "failure_mode": "Nozzle tip deformation or contamination causing vacuum leak and component drop or skew",
-        "effects": "Component misplacement, tombstoning, missing components, wrong orientation",
-        "causes": "Normal nozzle wear from repeated pick cycles, solder paste contamination, inadequate nozzle cleaning schedule",
-        "detection_method": "Post-placement AOI with component presence and orientation verification",
         "occurrence": 4,
         "detectability": 3
       }
@@ -185,12 +269,12 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Component tape feeder on pick-and-place machine becomes misaligned, presenting components at incorrect pickup position.",
-      "tags": ["process-fmea", "feeder", "alignment"],
+      "tags": [
+        "process-fmea",
+        "feeder",
+        "alignment"
+      ],
       "type_specific_attributes": {
-        "failure_mode": "Feeder pitch error exceeds 0.1mm causing off-center component pickup",
-        "effects": "Nozzle picks component off-center leading to placement offset, increased nozzle wear from asymmetric contact",
-        "causes": "Feeder rail wear, improper feeder seating, tape splice irregularity, vibration-induced feeder shift",
-        "detection_method": "Machine vision pickup position verification with automatic feeder offset compensation",
         "occurrence": 3,
         "detectability": 4
       }
@@ -205,12 +289,12 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Electronic torque wrench calibration drifts outside acceptable tolerance between calibration intervals.",
-      "tags": ["process-fmea", "torque-tool", "calibration"],
+      "tags": [
+        "process-fmea",
+        "torque-tool",
+        "calibration"
+      ],
       "type_specific_attributes": {
-        "failure_mode": "Torque wrench output deviates more than +/-3% from displayed value",
-        "effects": "Fasteners torqued outside specification without operator awareness, potential joint failure under vibration",
-        "causes": "Transducer fatigue, gear train wear, temperature effects on strain gauge, impact damage to tool",
-        "detection_method": "Monthly calibration verification against NIST-traceable reference, daily torque check on calibration fixture",
         "occurrence": 3,
         "detectability": 5
       }
@@ -225,12 +309,12 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Operator applies torque with inconsistent technique, causing variation in achieved clamp load despite correct torque reading.",
-      "tags": ["process-fmea", "operator", "technique"],
+      "tags": [
+        "process-fmea",
+        "operator",
+        "technique"
+      ],
       "type_specific_attributes": {
-        "failure_mode": "Clamp load variation exceeds +/-15% due to inconsistent torque application speed and angle",
-        "effects": "Joint preload outside design intent, potential loosening under vibration or thermal cycling",
-        "causes": "Insufficient operator training, fatigue during repetitive operations, non-ergonomic tool access angle, time pressure",
-        "detection_method": "Torque-angle monitoring with electronic torque wrench, periodic operator certification audit",
         "occurrence": 5,
         "detectability": 4
       }
@@ -245,12 +329,12 @@
       "creator": "fmea-process@example.com",
       "status": "active",
       "description": "Airborne particles or debris from the assembly environment settle on or inside the product during assembly operations.",
-      "tags": ["process-fmea", "contamination", "environment"],
+      "tags": [
+        "process-fmea",
+        "contamination",
+        "environment"
+      ],
       "type_specific_attributes": {
-        "failure_mode": "Particle count exceeds ISO Class 7 limits in assembly area during production shift",
-        "effects": "Conductive particle bridging on PCB traces, corrosion initiation sites, mechanical interference in moving parts",
-        "causes": "HVAC filter degradation, operator gowning non-compliance, material shedding from packaging, door seal failure",
-        "detection_method": "Continuous airborne particle counter with alarm threshold, visual inspection under UV light at final assembly",
         "occurrence": 3,
         "detectability": 5
       }
@@ -262,8 +346,8 @@
       "target_uuid": "b1b2c3d4-0001-4000-8000-000000000001",
       "relationship_type": "CAN_OCCUR",
       "properties": {
-        "p1": 25.0,
-        "p2": 70.0
+        "p1": 0.0025,
+        "p2": 0.006999999999999999
       }
     },
     {
@@ -271,8 +355,8 @@
       "target_uuid": "b1b2c3d4-0001-4000-8000-000000000001",
       "relationship_type": "CAN_OCCUR",
       "properties": {
-        "p1": 15.0,
-        "p2": 55.0
+        "p1": 0.0015,
+        "p2": 0.0055000000000000005
       }
     },
     {
@@ -280,8 +364,8 @@
       "target_uuid": "b1b2c3d4-0001-4000-8000-000000000002",
       "relationship_type": "CAN_OCCUR",
       "properties": {
-        "p1": 20.0,
-        "p2": 85.0
+        "p1": 0.002,
+        "p2": 0.0085
       }
     },
     {
@@ -289,8 +373,8 @@
       "target_uuid": "b1b2c3d4-0001-4000-8000-000000000002",
       "relationship_type": "CAN_OCCUR",
       "properties": {
-        "p1": 30.0,
-        "p2": 40.0
+        "p1": 0.003,
+        "p2": 0.004
       }
     },
     {
@@ -298,8 +382,8 @@
       "target_uuid": "b1b2c3d4-0002-4000-8000-000000000001",
       "relationship_type": "LEAD_TO",
       "properties": {
-        "occurrence_probability": 40.0,
-        "detectability_probability": 75.0
+        "occurrence_probability": 0.004,
+        "detectability_probability": 0.0075
       }
     },
     {
@@ -307,8 +391,8 @@
       "target_uuid": "b1b2c3d4-0002-4000-8000-000000000001",
       "relationship_type": "LEAD_TO",
       "properties": {
-        "occurrence_probability": 50.0,
-        "detectability_probability": 85.0
+        "occurrence_probability": 0.005,
+        "detectability_probability": 0.0085
       }
     },
     {
@@ -316,8 +400,8 @@
       "target_uuid": "b1b2c3d4-0002-4000-8000-000000000002",
       "relationship_type": "LEAD_TO",
       "properties": {
-        "occurrence_probability": 35.0,
-        "detectability_probability": 70.0
+        "occurrence_probability": 0.0034999999999999996,
+        "detectability_probability": 0.006999999999999999
       }
     },
     {
@@ -325,8 +409,8 @@
       "target_uuid": "b1b2c3d4-0003-4000-8000-000000000003",
       "relationship_type": "LEAD_TO",
       "properties": {
-        "occurrence_probability": 25.0,
-        "detectability_probability": 60.0
+        "occurrence_probability": 0.0025,
+        "detectability_probability": 0.006
       }
     },
     {
@@ -334,8 +418,8 @@
       "target_uuid": "b1b2c3d4-0002-4000-8000-000000000003",
       "relationship_type": "LEAD_TO",
       "properties": {
-        "occurrence_probability": 30.0,
-        "detectability_probability": 50.0
+        "occurrence_probability": 0.003,
+        "detectability_probability": 0.005
       }
     },
     {
@@ -343,8 +427,8 @@
       "target_uuid": "b1b2c3d4-0002-4000-8000-000000000003",
       "relationship_type": "LEAD_TO",
       "properties": {
-        "occurrence_probability": 45.0,
-        "detectability_probability": 60.0
+        "occurrence_probability": 0.0045000000000000005,
+        "detectability_probability": 0.006
       }
     },
     {
@@ -352,9 +436,33 @@
       "target_uuid": "b1b2c3d4-0002-4000-8000-000000000004",
       "relationship_type": "LEAD_TO",
       "properties": {
-        "occurrence_probability": 35.0,
-        "detectability_probability": 45.0
+        "occurrence_probability": 0.0034999999999999996,
+        "detectability_probability": 0.0045000000000000005
       }
+    },
+    {
+      "source_uuid": "8f1adc59-f377-42f1-ba9f-3b1336c5d68f",
+      "target_uuid": "b1b2c3d4-0002-4000-8000-000000000001",
+      "relationship_type": "MITIGATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "819752be-2e55-4ac9-9c96-3f2d5daebb62",
+      "target_uuid": "b1b2c3d4-0002-4000-8000-000000000002",
+      "relationship_type": "MITIGATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "56d7fd6e-d3e0-4bf4-a392-95435c5e0219",
+      "target_uuid": "b1b2c3d4-0002-4000-8000-000000000003",
+      "relationship_type": "MITIGATES",
+      "properties": {}
+    },
+    {
+      "source_uuid": "5e38a95e-74b5-4b61-b203-db046bee34f0",
+      "target_uuid": "b1b2c3d4-0002-4000-8000-000000000004",
+      "relationship_type": "MITIGATES",
+      "properties": {}
     }
   ],
   "posts": []

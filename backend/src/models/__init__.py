@@ -27,6 +27,7 @@ from .mind_types import (
     ScheduleHistory,
     ScheduledTask,
     Requirement,
+    Mitigation,
 )
 from .skill import SkillNode
 
@@ -60,4 +61,6 @@ __all__ = [
     "ScheduleHistory",
     "ScheduledTask",
     "SkillNode",
+    "Mitigation",
 ]
+

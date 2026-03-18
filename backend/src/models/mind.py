@@ -239,8 +239,8 @@ class CanOccur(BaseRelationship):
 
     source: BaseMind  # Risk
     target: BaseMind  # Requirement
-    p1: Optional[float] = Field(default=None, ge=0.0, le=100.0)
-    p2: Optional[float] = Field(default=None, ge=0.0, le=100.0)
+    p1: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    p2: Optional[float] = Field(default=None, ge=0.0, le=1.0)
 
 
 class LeadTo(BaseRelationship):
@@ -258,5 +258,19 @@ class LeadTo(BaseRelationship):
 
     source: BaseMind  # Failure
     target: BaseMind  # Risk or Failure
-    occurrence_probability: Optional[float] = Field(default=None, ge=0.0, le=100.0)
-    detectability_probability: Optional[float] = Field(default=None, ge=0.0, le=100.0)
+    occurrence_probability: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    detectability_probability: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+
+class Mitigates(BaseRelationship):
+    """
+    Relationship linking a Mitigation node to a Risk or Failure node.
+
+    This relationship indicates that a mitigation measure reduces the likelihood
+    or impact of a given risk or failure mode.
+    """
+
+    __relationshiptype__: str = "MITIGATES"
+
+    source: BaseMind  # Mitigation
+    target: BaseMind  # Risk or Failure
+

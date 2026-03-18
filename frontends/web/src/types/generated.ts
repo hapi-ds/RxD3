@@ -224,9 +224,6 @@ export interface Risk {
   description?: string | null; // Optional detailed description
   tags?: string[] | null; // Optional list of tags for categorization
   severity: number; // Risk severity rating 1-10
-  probability: ProbabilityEnum; // Risk probability
-  mitigation_plan?: string | null; // Optional risk mitigation plan
-  acceptable_limit?: string | null; // Acceptable risk threshold
 }
 
 export interface Failure {
@@ -240,10 +237,6 @@ export interface Failure {
   status?: StatusEnum; // Current lifecycle state
   description?: string | null; // Optional detailed description
   tags?: string[] | null; // Optional list of tags for categorization
-  failure_mode: string; // Description of the failure mode
-  effects: string; // Effects or consequences of the failure
-  causes: string; // Root causes of the failure
-  detection_method?: string | null; // Optional method for detecting the failure
   occurrence?: number | null; // Occurrence rating 1-10
   detectability?: number | null; // Detectability rating 1-10
 }
@@ -392,10 +385,23 @@ export interface ScheduledTask {
   total_cost?: number | null; // Total cost
 }
 
+export interface Mitigation {
+  __primarylabel__: 'Mitigation';
+  uuid?: string; // Unique identifier that remains constant across all versions
+  title: string; // Human-readable name for the Mind node
+  version?: number; // Auto-incrementing version number
+  created_at?: string;
+  updated_at?: string;
+  creator: string; // User identifier who created the node
+  status?: StatusEnum; // Current lifecycle state
+  description?: string | null; // Optional detailed description
+  tags?: string[] | null; // Optional list of tags for categorization
+}
+
 // ============================================================================
 // Union Types
 // ============================================================================
 
-export type Mind = Project | Task | Company | Department | Email | Knowledge | AcceptanceCriteria | Risk | Failure | Requirement | Resource | Journalentry | Booking | Sprint | Account | ScheduleHistory | ScheduledTask;
+export type Mind = Project | Task | Company | Department | Email | Knowledge | AcceptanceCriteria | Risk | Failure | Requirement | Resource | Journalentry | Booking | Sprint | Account | ScheduleHistory | ScheduledTask | Mitigation;
 
-export type NodeType = 'Project' | 'Task' | 'Company' | 'Department' | 'Email' | 'Knowledge' | 'AcceptanceCriteria' | 'Risk' | 'Failure' | 'Requirement' | 'Resource' | 'Journalentry' | 'Booking' | 'Sprint' | 'Account' | 'ScheduleHistory' | 'ScheduledTask';
+export type NodeType = 'Project' | 'Task' | 'Company' | 'Department' | 'Email' | 'Knowledge' | 'AcceptanceCriteria' | 'Risk' | 'Failure' | 'Requirement' | 'Resource' | 'Journalentry' | 'Booking' | 'Sprint' | 'Account' | 'ScheduleHistory' | 'ScheduledTask' | 'Mitigation';

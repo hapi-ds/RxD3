@@ -148,32 +148,18 @@ class FMEAReportService:
         return buf.getvalue()
 
     def _traverse_failure_chains(self) -> list[dict[str, Any]]:
-        """Traverse the graph to collect failure chain rows via DFS.
-
-        Algorithm:
-        1. Query all Requirement nodes with incoming CAN_OCCUR relationships.
-        2. For each (Requirement, Risk) pair, find Failure nodes linked to the
-           Risk via LEAD_TO.
-        3. For each Failure, recursively follow outgoing LEAD_TO relationships
-           to other Failures (DFS).
-        4. Each unique path from Requirement → Risk → … → terminal Failure
-           produces one output row.
-
-        Returns:
-            A list of dicts, one per unique failure chain path.
-
-        **Validates: Requirements 6.7, 6.8, 6.9**
-        """
+        """Traverse the graph to collect failure chain rows via DFS."""
         gc = GraphConnection()
 
-        # Step 1 & 2: Get all (Requirement, Risk, CanOccur) triples
+        # Step 1 & 2: Get all (Requirement, Risk, CanOccur) triples and Optional Mitigation
         req_risk_query = """
         MATCH (risk)-[co:CAN_OCCUR]->(req:Requirement)
+        OPTIONAL MATCH (m:Mitigation)-[:MITIGATES]->(risk)
         RETURN req.title AS req_title,
                risk.title AS risk_title,
+               risk.description AS effects,
                risk.severity AS severity,
-               risk.mitigation_plan AS mitigation_plan,
-               risk.acceptable_limit AS acceptable_limit,
+               m.title AS mitigation_plan,
                co.p1 AS p1,
                co.p2 AS p2,
                elementId(risk) AS risk_eid
@@ -189,25 +175,22 @@ class FMEAReportService:
             risk_eid = record["risk_eid"]
             base_info: dict[str, Any] = {
                 "requirement": record["req_title"],
-                "risk_title": record["risk_title"],
+                "effects": record["effects"] or record["risk_title"],
                 "severity": record["severity"],
                 "mitigation_plan": record.get("mitigation_plan"),
-                "acceptable_limit": record.get("acceptable_limit"),
+                "acceptable_limit": None,
                 "p1": record.get("p1"),
                 "p2": record.get("p2"),
             }
 
-            # Step 3: Find Failure nodes that LEAD_TO this Risk
+            # Step 3: Find nearest Failure nodes that LEAD_TO this Risk
             failure_to_risk_query = """
             MATCH (f:Failure)-[lt:LEAD_TO]->(risk)
             WHERE elementId(risk) = $risk_eid
             RETURN elementId(f) AS f_eid,
-                   f.failure_mode AS failure_mode,
-                   f.effects AS effects,
-                   f.causes AS causes,
+                   f.title AS failure_mode,
                    f.occurrence AS occurrence,
                    f.detectability AS detectability,
-                   f.detection_method AS detection_method,
                    lt.occurrence_probability AS occ_prob,
                    lt.detectability_probability AS det_prob
             """
@@ -225,12 +208,21 @@ class FMEAReportService:
                         "det_prob": f_rec.get("det_prob"),
                     }
                 ]
-                # DFS from this failure node upward through more failures
+                
+                failure_data = {
+                    "failure_mode": f_rec["failure_mode"],
+                    "occurrence": f_rec.get("occurrence"),
+                    "detectability": f_rec.get("detectability"),
+                }
+                
+                causes_chain: list[str] = []
+
                 self._dfs_failure_chains(
                     gc,
                     f_rec["f_eid"],
-                    f_rec,
+                    failure_data,
                     chain_probs,
+                    causes_chain,
                     base_info,
                     rows,
                 )
@@ -243,35 +235,17 @@ class FMEAReportService:
         failure_eid: str,
         failure_data: dict[str, Any],
         chain_probs: list[dict[str, Optional[float]]],
+        causes_chain: list[str],
         base_info: dict[str, Any],
         rows: list[dict[str, Any]],
     ) -> None:
-        """Recursively follow LEAD_TO from Failure → Failure via DFS.
-
-        If the current failure has no incoming LEAD_TO from other Failures,
-        it is a terminal node and we emit a row. Otherwise we recurse into
-        each upstream Failure.
-
-        Args:
-            gc: Active graph connection.
-            failure_eid: Element ID of the current Failure node.
-            failure_data: Properties of the current Failure node.
-            chain_probs: Accumulated probability pairs along the chain so far.
-            base_info: Requirement/Risk level data shared by all rows in this chain.
-            rows: Accumulator list for output rows.
-        """
-        # Find Failures that LEAD_TO this Failure
+        """Recursively follow LEAD_TO from Failure → Failure via DFS."""
         upstream_query = """
         MATCH (f:Failure)-[lt:LEAD_TO]->(target)
         WHERE elementId(target) = $target_eid
           AND f:Failure
         RETURN elementId(f) AS f_eid,
-               f.failure_mode AS failure_mode,
-               f.effects AS effects,
-               f.causes AS causes,
-               f.occurrence AS occurrence,
-               f.detectability AS detectability,
-               f.detection_method AS detection_method,
+               f.title AS cause_title,
                lt.occurrence_probability AS occ_prob,
                lt.detectability_probability AS det_prob
         """
@@ -286,20 +260,21 @@ class FMEAReportService:
         )
 
         if not has_upstream:
-            # Terminal node — emit a row using this failure's data
             cum = self._calculate_cumulative_probabilities(chain_probs)
+            causes_str = " <- ".join(reversed(causes_chain)) if causes_chain else "None"
+            
             rows.append(
                 {
                     "requirement": base_info["requirement"],
                     "severity": base_info["severity"],
+                    "effects": base_info["effects"],
                     "failure_mode": failure_data["failure_mode"],
-                    "effects": failure_data["effects"],
-                    "causes": failure_data["causes"],
+                    "causes": causes_str,
                     "occurrence": failure_data.get("occurrence"),
                     "detectability": failure_data.get("detectability"),
-                    "detection_method": failure_data.get("detection_method"),
+                    "detection_method": None,
                     "mitigation_plan": base_info.get("mitigation_plan"),
-                    "acceptable_limit": base_info.get("acceptable_limit"),
+                    "acceptable_limit": None,
                     "p1": base_info.get("p1"),
                     "p2": base_info.get("p2"),
                     **cum,
@@ -313,11 +288,14 @@ class FMEAReportService:
                         "det_prob": u_rec.get("det_prob"),
                     }
                 ]
+                new_causes_chain = causes_chain + [u_rec["cause_title"]]
+                
                 self._dfs_failure_chains(
                     gc,
                     u_rec["f_eid"],
-                    u_rec,
+                    failure_data,
                     new_probs,
+                    new_causes_chain,
                     base_info,
                     rows,
                 )

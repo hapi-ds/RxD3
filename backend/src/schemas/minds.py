@@ -634,10 +634,6 @@ class FailureCreate(BaseModel):
     status: StatusEnum | None = StatusEnum.DRAFT
     description: str | None = None
     tags: list[str] | None = None
-    failure_mode: str
-    effects: str
-    causes: str
-    detection_method: str | None = None
     occurrence: int | None = None
     detectability: int | None = None
 
@@ -667,10 +663,6 @@ class FailureUpdate(BaseModel):
     status: StatusEnum | None = None
     description: str | None = None
     tags: list[str] | None = None
-    failure_mode: str | None = None
-    effects: str | None = None
-    causes: str | None = None
-    detection_method: str | None = None
     occurrence: int | None = None
     detectability: int | None = None
 
@@ -703,10 +695,6 @@ class FailureResponse(BaseModel):
     status: StatusEnum | None = None
     description: str | None = None
     tags: list[str] | None = None
-    failure_mode: str
-    effects: str
-    causes: str
-    detection_method: str | None = None
     occurrence: int | None = None
     detectability: int | None = None
 
@@ -926,6 +914,90 @@ class KnowledgeResponse(BaseModel):
     category: str
     tags: list[str]
     content: str
+
+    @field_serializer('status')
+    def serialize_status(self, value: StatusEnum | None) -> str | None:
+        if value is None:
+            return None
+        return value.value if isinstance(value, StatusEnum) else value
+
+    @field_validator('status', mode='before')
+    @classmethod
+    def validate_status(cls, value):
+        if value is None:
+            return None
+        if isinstance(value, str):
+            return StatusEnum(value)
+        return value
+
+
+
+class MitigationCreate(BaseModel):
+    """Schema for creating a Mitigation."""
+
+    title: str
+    created_at: datetime | None = None
+    creator: str
+    status: StatusEnum | None = StatusEnum.DRAFT
+    description: str | None = None
+    tags: list[str] | None = None
+
+    @field_serializer('status')
+    def serialize_status(self, value: StatusEnum | None) -> str | None:
+        if value is None:
+            return None
+        return value.value if isinstance(value, StatusEnum) else value
+
+    @field_validator('status', mode='before')
+    @classmethod
+    def validate_status(cls, value):
+        if value is None:
+            return None
+        if isinstance(value, str):
+            return StatusEnum(value)
+        return value
+
+
+
+class MitigationUpdate(BaseModel):
+    """Schema for updating a Mitigation. All fields are optional."""
+
+    title: str | None = None
+    created_at: datetime | None = None
+    creator: str | None = None
+    status: StatusEnum | None = None
+    description: str | None = None
+    tags: list[str] | None = None
+
+    @field_serializer('status')
+    def serialize_status(self, value: StatusEnum | None) -> str | None:
+        if value is None:
+            return None
+        return value.value if isinstance(value, StatusEnum) else value
+
+    @field_validator('status', mode='before')
+    @classmethod
+    def validate_status(cls, value):
+        if value is None:
+            return None
+        if isinstance(value, str):
+            return StatusEnum(value)
+        return value
+
+
+
+class MitigationResponse(BaseModel):
+    """Schema for Mitigation responses."""
+
+    uuid: UUID | None = None
+    title: str
+    version: int | None = None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+    creator: str
+    status: StatusEnum | None = None
+    description: str | None = None
+    tags: list[str] | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1333,9 +1405,6 @@ class RiskCreate(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     severity: int
-    probability: ProbabilityEnum
-    mitigation_plan: str | None = None
-    acceptable_limit: str | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1350,17 +1419,6 @@ class RiskCreate(BaseModel):
             return None
         if isinstance(value, str):
             return StatusEnum(value)
-        return value
-
-    @field_serializer('probability')
-    def serialize_probability(self, value: ProbabilityEnum) -> str:
-        return value.value if isinstance(value, ProbabilityEnum) else value
-
-    @field_validator('probability', mode='before')
-    @classmethod
-    def validate_probability(cls, value):
-        if isinstance(value, str):
-            return ProbabilityEnum(value)
         return value
 
 
@@ -1375,9 +1433,6 @@ class RiskUpdate(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     severity: int | None = None
-    probability: ProbabilityEnum | None = None
-    mitigation_plan: str | None = None
-    acceptable_limit: str | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1392,21 +1447,6 @@ class RiskUpdate(BaseModel):
             return None
         if isinstance(value, str):
             return StatusEnum(value)
-        return value
-
-    @field_serializer('probability')
-    def serialize_probability(self, value: ProbabilityEnum | None) -> str | None:
-        if value is None:
-            return None
-        return value.value if isinstance(value, ProbabilityEnum) else value
-
-    @field_validator('probability', mode='before')
-    @classmethod
-    def validate_probability(cls, value):
-        if value is None:
-            return None
-        if isinstance(value, str):
-            return ProbabilityEnum(value)
         return value
 
 
@@ -1424,9 +1464,6 @@ class RiskResponse(BaseModel):
     description: str | None = None
     tags: list[str] | None = None
     severity: int
-    probability: ProbabilityEnum
-    mitigation_plan: str | None = None
-    acceptable_limit: str | None = None
 
     @field_serializer('status')
     def serialize_status(self, value: StatusEnum | None) -> str | None:
@@ -1441,17 +1478,6 @@ class RiskResponse(BaseModel):
             return None
         if isinstance(value, str):
             return StatusEnum(value)
-        return value
-
-    @field_serializer('probability')
-    def serialize_probability(self, value: ProbabilityEnum) -> str:
-        return value.value if isinstance(value, ProbabilityEnum) else value
-
-    @field_validator('probability', mode='before')
-    @classmethod
-    def validate_probability(cls, value):
-        if isinstance(value, str):
-            return ProbabilityEnum(value)
         return value
 
 

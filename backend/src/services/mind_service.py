@@ -37,6 +37,7 @@ from ..models.mind_types import (
     ScheduledTask,
     Sprint,
     Task,
+    Mitigation,
 )
 from ..schemas.mind_generic import (
     MindBulkUpdate,
@@ -78,6 +79,7 @@ class MindService:
         "sprint": Sprint,
         "schedulehistory": ScheduleHistory,
         "scheduledtask": ScheduledTask,
+        "mitigation": Mitigation,
     }
 
     async def create_mind(self, mind_data: MindCreate) -> MindResponse:
