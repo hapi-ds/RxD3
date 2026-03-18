@@ -33,6 +33,9 @@ def mock_knowledge_store():
     class MockKnowledgeStore:
         async def generate_context_prompt(self):
             return "Test context prompt"
+            
+        async def get_mind_node_types(self):
+            return ["project", "task"]
         
         async def get_relationship_types(self):
             return ["CONTAINS", "DEPENDS_ON", "ASSIGNED_TO"]
@@ -94,11 +97,11 @@ def test_build_messages_limits_history(mock_settings, mock_knowledge_store):
     assert messages[2]["content"] == "Message 4"
 
 
-def test_build_tools(mock_settings, mock_knowledge_store):
-    """Test tool definitions are correctly formatted."""
+@pytest.mark.asyncio
+async def test_build_tools(mock_settings, mock_knowledge_store):
+    """Test building tool definitions."""
     service = AIChatService(mock_settings, mock_knowledge_store)
-    
-    tools = service._build_tools()
+    tools = await service._build_tools()
     
     assert len(tools) == 2
     

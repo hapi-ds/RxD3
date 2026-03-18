@@ -98,7 +98,11 @@ class AIChatService:
             # Take the most recent messages up to the limit
             limited_history = conversation_history[-max_history:]
             for msg in limited_history:
-                messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")})
+                role = msg.get("role", "user")
+                # Map system messages from history to user to avoid overwriting the main system prompt
+                if role == "system":
+                    role = "user"
+                messages.append({"role": role, "content": msg.get("content", "")})
 
         # Add current user message
         messages.append({"role": "user", "content": user_message})

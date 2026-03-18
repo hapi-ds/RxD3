@@ -26,6 +26,7 @@ interface ChatPanelState {
   error: string | null;
   pendingToolCalls: ToolCall[];
   suggestionLog: SuggestionLogEntry[];
+  isAutoAccept: boolean;
 }
 
 export function ChatPanel() {
@@ -37,6 +38,7 @@ export function ChatPanel() {
     error: null,
     pendingToolCalls: [],
     suggestionLog: [],
+    isAutoAccept: false,
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -46,6 +48,17 @@ export function ChatPanel() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [state.messages]);
+
+  // Auto-execute pending tool calls if Auto-Accept is enabled and stream finished
+  useEffect(() => {
+    if (!state.isLoading && state.pendingToolCalls.length > 0 && state.isAutoAccept) {
+      // Small timeout to allow state settling
+      setTimeout(() => {
+        handleConfirmAllToolCalls();
+      }, 50);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.isLoading, state.isAutoAccept]);
 
   // Handle sending a message
   const handleSendMessage = useCallback(async (messageContent?: string) => {
@@ -238,8 +251,8 @@ export function ChatPanel() {
         const createdMind = await mindsAPI.create(createPayload as Omit<Mind, 'uuid' | 'version' | 'created_at' | 'updated_at'>);
 
         const successMessage: ChatMessageType = {
-          role: 'system',
-          content: `✓ Successfully created ${mind_type} node: "${title}" (uuid: ${createdMind.uuid})`,
+          role: 'user', // We use "user" internally to pass feedback to the AI clearly without breaking context
+          content: `System: Successfully created ${mind_type} node: "${title}" (uuid: ${createdMind.uuid})`,
           timestamp: new Date().toISOString(),
         };
 
@@ -261,8 +274,8 @@ export function ChatPanel() {
         });
 
         const successMessage: ChatMessageType = {
-          role: 'system',
-          content: `✓ Successfully created ${relationship_type} relationship`,
+          role: 'user',
+          content: `System: Successfully created ${relationship_type} relationship`,
           timestamp: new Date().toISOString(),
         };
 
@@ -279,8 +292,8 @@ export function ChatPanel() {
       console.error('Tool call execution error:', error);
 
       const errorMessage: ChatMessageType = {
-        role: 'system',
-        content: `✗ Failed to execute action: ${error.message || 'Unknown error'}`,
+        role: 'user',
+        content: `System: Failed to execute action: ${error.message || 'Unknown error'}`,
         timestamp: new Date().toISOString(),
       };
 
@@ -314,13 +327,17 @@ export function ChatPanel() {
       isLoading: true,
     }));
 
-    await executeToolCall(toolCall);
+    const success = await executeToolCall(toolCall);
 
     setState(prev => ({
       ...prev,
       isLoading: false,
     }));
-  }, [state.pendingToolCalls, executeToolCall]);
+
+    setTimeout(() => {
+      handleSendMessage(`System Feedback: Tool ${toolCall.tool_name} execution was ${success ? 'successful' : 'failed'}. Please continue.`);
+    }, 100);
+  }, [state.pendingToolCalls, executeToolCall, handleSendMessage]);
 
   // Handle confirming all pending tool calls at once
   const handleConfirmAllToolCalls = useCallback(async () => {
@@ -345,15 +362,21 @@ export function ChatPanel() {
     }));
 
     // Execute all sequentially
+    let feedbackMsgs: string[] = [];
     for (const toolCall of allCalls) {
-      await executeToolCall(toolCall);
+      const success = await executeToolCall(toolCall);
+      feedbackMsgs.push(`${toolCall.tool_name} ${success ? 'succeeded' : 'failed'}`);
     }
 
     setState(prev => ({
       ...prev,
       isLoading: false,
     }));
-  }, [state.pendingToolCalls, executeToolCall]);
+
+    setTimeout(() => {
+      handleSendMessage(`System Feedback for batch execution: ${feedbackMsgs.join(", ")}. Please continue if requested.`);
+    }, 100);
+  }, [state.pendingToolCalls, executeToolCall, handleSendMessage]);
 
   // Handle canceling the current tool call (first in queue)
   const handleCancelToolCall = useCallback(() => {
@@ -375,8 +398,8 @@ export function ChatPanel() {
     }));
 
     const cancelMessage: ChatMessageType = {
-      role: 'system',
-      content: 'Action cancelled by user',
+      role: 'user',
+      content: 'System: Action cancelled by user',
       timestamp: new Date().toISOString(),
     };
 
@@ -407,8 +430,8 @@ export function ChatPanel() {
     }));
 
     const cancelMessage: ChatMessageType = {
-      role: 'system',
-      content: `Cancelled ${count} pending action${count > 1 ? 's' : ''}`,
+      role: 'user',
+      content: `System: Cancelled ${count} pending action${count > 1 ? 's' : ''}`,
       timestamp: new Date().toISOString(),
     };
 
@@ -491,6 +514,17 @@ export function ChatPanel() {
       </div>
 
       <div className="chat-panel__input-area">
+        <div className="chat-panel__controls">
+          <label className="auto-accept-toggle" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem', color: '#64748b', cursor: 'pointer' }}>
+            <input 
+              type="checkbox" 
+              checked={state.isAutoAccept}
+              onChange={(e) => setState(prev => ({ ...prev, isAutoAccept: e.target.checked }))}
+              style={{ cursor: 'pointer' }}
+            />
+            <span>Auto-Accept Generated Nodes & Continue</span>
+          </label>
+        </div>
         <textarea
           className="chat-panel__input"
           value={state.inputValue}
