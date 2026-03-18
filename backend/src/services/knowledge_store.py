@@ -70,7 +70,6 @@ class KnowledgeStore:
         """
         self._cache[key] = (time.time(), value)
 
-
     def invalidate_cache(self, key: str | None = None) -> None:
         """
         Invalidate cached data.
@@ -82,7 +81,6 @@ class KnowledgeStore:
             self._cache.clear()
         else:
             self._cache.pop(key, None)
-
 
     async def get_relationship_types(self) -> list[str]:
         """
@@ -237,7 +235,6 @@ class KnowledgeStore:
 
         return f"Available relationship types: {', '.join(relationships)}"
 
-
     async def get_mind_nodes(self) -> list[dict[str, str]]:
         """
         Retrieve existing Mind nodes (uuid, title, mind_type) from Neo4j.
@@ -271,11 +268,13 @@ class KnowledgeStore:
             nodes: list[dict[str, str]] = []
             if results and results.records_raw:
                 for record in results.records_raw:
-                    nodes.append({
-                        "uuid": record["uuid"],
-                        "title": record["title"],
-                        "mind_type": record.get("mind_type", "unknown"),
-                    })
+                    nodes.append(
+                        {
+                            "uuid": record["uuid"],
+                            "title": record["title"],
+                            "mind_type": record.get("mind_type", "unknown"),
+                        }
+                    )
             self._set_cached("mind_nodes", nodes)
             return nodes
         except Exception as e:
@@ -300,9 +299,8 @@ class KnowledgeStore:
 
         lines = ["Existing Mind nodes:"]
         for node in nodes:
-            lines.append(f"  - [{node['mind_type']}] \"{node['title']}\" (uuid: {node['uuid']})")
+            lines.append(f'  - [{node["mind_type"]}] "{node["title"]}" (uuid: {node["uuid"]})')
         return "\n".join(lines)
-
 
     def format_risks(self, risks: list[dict[str, Any]]) -> str:
         """
@@ -358,10 +356,12 @@ class KnowledgeStore:
             skills: list[dict[str, str]] = []
             if results and results.records_raw:
                 for record in results.records_raw:
-                    skills.append({
-                        "name": record["name"],
-                        "content": record["content"],
-                    })
+                    skills.append(
+                        {
+                            "name": record["name"],
+                            "content": record["content"],
+                        }
+                    )
             return skills
         except Exception as e:
             logger.warning(
@@ -436,7 +436,11 @@ class KnowledgeStore:
 
         # Format each section
         relationships_text = self.format_relationships(relationship_types)
-        node_types_text = f"Available Mind node types: {', '.join(node_types)}" if node_types else "Available Mind node types: None"
+        node_types_text = (
+            f"Available Mind node types: {', '.join(node_types)}"
+            if node_types
+            else "Available Mind node types: None"
+        )
         risks_text = self.format_risks(risks)
         mind_nodes_text = self.format_mind_nodes(mind_nodes)
         skills_text = self.format_skills(skills)
@@ -446,6 +450,7 @@ class KnowledgeStore:
             "# Project Context",
             "",
             "You are an AI assistant for a Mind-based project management system.",
+            "You have access to specialized AI skills that provide expert guidance and capabilities. When appropriate, leverage these skills by applying their methodology, templates, or expert knowledge to the user's request.",
             "When the user asks you to create a node, always use the exact mind_type from the available types listed below.",
             "Do NOT substitute one type for another (e.g., do not use 'resource' when the user asks for 'department').",
             "When creating relationships, look up the UUIDs from the 'Existing Nodes' section below. NEVER ask the user for UUIDs.",
@@ -471,6 +476,8 @@ class KnowledgeStore:
         # Append AI Skills section if any skills are enabled
         if skills_text:
             sections.append("")
+            sections.append("## AI Skills")
+            sections.append("")
             sections.append(skills_text)
 
         full_prompt = "\n".join(sections)
@@ -495,7 +502,7 @@ class KnowledgeStore:
         if skills_text:
             schema_sections.append(skills_text)
             schema_sections.append("")
-            
+
         schema_sections.append("## Risk Analyses")
         schema_text = "\n".join(schema_sections)
         schema_tokens = self._estimate_token_count(schema_text)
