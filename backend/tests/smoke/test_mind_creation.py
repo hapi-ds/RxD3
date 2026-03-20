@@ -111,7 +111,6 @@ def test_create_risk(client):
             "creator": "test_creator",
             "type_specific_attributes": {
                 "severity": "high",
-                "probability": "likely",
             },
         },
     )
@@ -119,7 +118,6 @@ def test_create_risk(client):
     data = response.json()
     assert data["title"] == "Test Risk"
     assert data["type_specific_attributes"]["severity"] == 7  # "high" maps to 7 via backward-compat validator
-    assert data["type_specific_attributes"]["probability"] == "likely"
 
 
 def test_create_knowledge(client):

@@ -261,13 +261,27 @@ class MindService:
         if field_name in defaults_by_name:
             return defaults_by_name[field_name]
 
-        # Handle by type annotation
+        # Extract ge/le constraints from Pydantic field metadata
+        ge = None
+        le = None
+        for m in getattr(field_info, "metadata", []):
+            if hasattr(m, "ge"):
+                ge = m.ge
+            if hasattr(m, "le"):
+                le = m.le
+
         if annotation is str or annotation == str:
             return "TBD"
         if annotation is int or annotation == int:
-            return 0
+            default = ge if ge is not None else 0
+            if le is not None and default > le:
+                default = le
+            return default
         if annotation is float or annotation == float:
-            return 0.0
+            default = float(ge) if ge is not None else 0.0
+            if le is not None and default > le:
+                default = float(le)
+            return default
         if annotation is bool or annotation == bool:
             return False
         if annotation is list or (origin is list):
