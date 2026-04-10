@@ -63,60 +63,62 @@ function ActiveBookingRow({
 
   return (
     <div className={styles.row}>
-      <div className={styles.info}>
-        <span className={styles.title} data-testid="active-title">
-          {booking.taskTitle}
-        </span>
-        <div className={styles.meta}>
-          {editingStart ? (
-            <input
-              type="datetime-local"
-              className={styles.timeInput}
-              value={startTimeValue}
-              onChange={handleStartTimeChange}
-              onBlur={() => setEditingStart(false)}
-              aria-label="Edit start time"
-              autoFocus
-              data-testid="active-start-time"
-            />
-          ) : (
-            <span
-              data-testid="active-start-time"
-              className={styles.tappableTime}
-              onClick={() => setEditingStart(true)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter') setEditingStart(true); }}
-            >
-              {new Date(booking.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </span>
-          )}
+      <span className={styles.title} data-testid="active-title">
+        {booking.taskTitle}
+      </span>
 
-          {editingStop || booking.manualStopTime ? (
-            <input
-              type="datetime-local"
-              className={styles.timeInput}
-              value={booking.manualStopTime ? toDatetimeLocalString(new Date(booking.manualStopTime)) : ''}
-              onChange={handleStopTimeChange}
-              onBlur={() => { if (!booking.manualStopTime) setEditingStop(false); }}
-              aria-label="Edit stop time"
-              autoFocus={editingStop}
-              data-testid="active-elapsed"
-            />
-          ) : (
-            <span
-              data-testid="active-elapsed"
-              className={styles.tappableTime}
-              onClick={() => setEditingStop(true)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter') setEditingStop(true); }}
-            >
-              {formatElapsed(elapsed)}
-            </span>
-          )}
-        </div>
-      </div>
+      <span className={styles.startTime}>
+        {editingStart ? (
+          <input
+            type="datetime-local"
+            className={styles.timeInput}
+            value={startTimeValue}
+            onChange={handleStartTimeChange}
+            onBlur={() => setEditingStart(false)}
+            aria-label="Edit start time"
+            autoFocus
+            data-testid="active-start-time"
+          />
+        ) : (
+          <span
+            data-testid="active-start-time"
+            className={styles.tappableTime}
+            onClick={() => setEditingStart(true)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter') setEditingStart(true); }}
+          >
+            {new Date(booking.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </span>
+        )}
+      </span>
+
+      <span className={styles.elapsed}>
+        {editingStop || booking.manualStopTime ? (
+          <input
+            type="datetime-local"
+            className={styles.timeInput}
+            value={booking.manualStopTime ? toDatetimeLocalString(new Date(booking.manualStopTime)) : ''}
+            onChange={handleStopTimeChange}
+            onBlur={() => { if (!booking.manualStopTime) setEditingStop(false); }}
+            aria-label="Edit stop time"
+            autoFocus={editingStop}
+            data-testid="active-elapsed"
+          />
+        ) : (
+          <span
+            data-testid="active-elapsed"
+            className={styles.tappableTime}
+            onClick={() => setEditingStop(true)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter') setEditingStop(true); }}
+          >
+            {formatElapsed(elapsed)}
+          </span>
+        )}
+      </span>
+
       <button
         data-testid="active-stop-button"
         className={styles.stopButton}

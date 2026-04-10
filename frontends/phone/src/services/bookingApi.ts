@@ -119,6 +119,25 @@ export async function fetchAssignments(resourceUuid: string): Promise<Assignment
   }));
 }
 
+/**
+ * Fetch all relationships and return a map of booking UUID → task UUID
+ * for TO relationships (Booking → Task).
+ */
+export async function fetchBookingToTaskMap(bookingUuids: Set<string>): Promise<Map<string, string>> {
+  const response = await api.get<RawRelationshipResponse[]>('/api/v1/relationships');
+
+  const map = new Map<string, string>();
+  for (const rel of response.data) {
+    if (
+      rel.relationship_type.toUpperCase() === 'TO' &&
+      bookingUuids.has(rel.source_uuid)
+    ) {
+      map.set(rel.source_uuid, rel.target_uuid);
+    }
+  }
+  return map;
+}
+
 /** Module-level cache for the resolved resource (persists for the session) */
 let cachedResource: ResourceMind | null = null;
 let cachedResourceEmail: string | null = null;

@@ -5,6 +5,7 @@ import {
   fetchTasks,
   fetchBookings,
   fetchAssignments,
+  fetchBookingToTaskMap,
   resolveResource,
   commitBooking,
 } from '../services/bookingApi';
@@ -72,16 +73,26 @@ export function BookingTracker(): React.JSX.Element {
       const assigned = new Set<string>(assignments.map((a) => a.target));
       setAssignedTaskUuids(assigned);
 
-      // Build booked-by-task map
-      // TODO: Mapping bookings to tasks requires relationship data (Booking→Task TO).
-      // A bulk endpoint or client-side relationship resolution is needed.
-      // For now, totalBooked is set to 0 for all tasks.
+      // Build booked-by-task map using booking→task relationships
       const booked = new Map<string, number>();
-      for (const _task of fetchedTasks) {
-        booked.set(_task.uuid, 0);
+      for (const task of fetchedTasks) {
+        booked.set(task.uuid, 0);
       }
-      // We still store fetchedBookings count for future use
-      void fetchedBookings;
+
+      if (fetchedBookings.length > 0) {
+        const bookingUuids = new Set(fetchedBookings.map((b) => b.uuid));
+        const bookingToTask = await fetchBookingToTaskMap(bookingUuids).catch(
+          () => new Map<string, string>(),
+        );
+
+        for (const booking of fetchedBookings) {
+          const taskUuid = bookingToTask.get(booking.uuid);
+          if (taskUuid && booked.has(taskUuid)) {
+            booked.set(taskUuid, (booked.get(taskUuid) ?? 0) + (booking.hours_worked ?? 0));
+          }
+        }
+      }
+
       setBookedByTask(booked);
     } catch (err: unknown) {
       const msg =
@@ -187,18 +198,18 @@ export function BookingTracker(): React.JSX.Element {
 
   return (
     <div className={styles.container} data-testid="booking-tracker">
-      {noResource && (
-        <div className={styles.noResourceBanner} data-testid="no-resource-banner">
-          No Resource profile found for your account. Bookings will not be linked to a resource.
-        </div>
-      )}
-
       <ActiveBookingHeader
         activeBookings={activeBookingsList}
         onStop={(taskUuid) => void handleStop(taskUuid)}
         onEditStartTime={editStartTime}
         onEditStopTime={editStopTime}
       />
+
+      {noResource && (
+        <div className={styles.noResourceBanner} data-testid="no-resource-banner">
+          No Resource profile found — bookings will not be linked to a resource.
+        </div>
+      )}
 
       <div className={styles.content}>
         <TaskList
