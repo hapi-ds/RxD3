@@ -121,14 +121,7 @@ Tokens expire after 40 minutes. You'll need to login again to get a fresh token.
 # CORS middleware for multiple frontends
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
-        "http://web:3000",
-        "http://xr:3001",
-        "http://phone:3002",
-    ],
+    allow_origin_regex=r"^https?://(localhost|(\d{1,3}\.){3}\d{1,3}|web|xr|phone)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
